@@ -1,7 +1,7 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import LayoutDefault from "@/components/layouts/LayoutDefault";
+import LayoutDefault from "../components/layouts/LayoutDefault";
 import type { PropsWithChildren } from 'react'
 import { RootStyleRegistry } from '../modules/shared/components/Root-style-registry';
 
