@@ -4,37 +4,38 @@ import React, { useState } from 'react';
 import { HomeOutlined, BankOutlined } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { Menu } from 'antd';
+import Link from 'next/link';
 
 const items: MenuProps['items'] = [
   {
-    label: <a href='/'>TRANG CHỦ</a>,
+    label: <Link href='/'>TRANG CHỦ</Link>,
     key: 'home',
     icon: <HomeOutlined />,
   },
   {
-    label: <a href='/khach-san.htm'><span>KHÁCH SẠN</span></a>,
+    label: <Link href='/khach-san.htm'><span>KHÁCH SẠN</span></Link>,
     key: 'hotel',
     icon: <BankOutlined />
   },
   {
-    label: <a href='/tour.htm'><span>TOUR DU LỊCH</span></a>,
+    label: <Link href='/tour.htm'><span>TOUR DU LỊCH</span></Link>,
     key: 'tour',
     children: [
       {
-        label: <a href='/tour/trong-nuoc.htm'><span>TRONG NƯỚC</span></a>,
+        label: <Link href='/tour/trong-nuoc.htm'><span>TRONG NƯỚC</span></Link>,
         key: 'local'
       },
       {
-        label: <a href='/tour/ngoai-nuoc.htm'><span>NGOÀI NƯỚC</span></a>,
+        label: <Link href='/tour/ngoai-nuoc.htm'><span>NGOÀI NƯỚC</span></Link>,
         key: 'global'
       },
     ],
   },
   {
     label: (
-      <a href="https://ant.design" target="_blank" rel="noopener noreferrer">
+      <Link href="https://ant.design" target="_blank" rel="noopener noreferrer">
         Vé máy bay
-      </a>
+      </Link>
     ),
     key: 'airplane',
   },
