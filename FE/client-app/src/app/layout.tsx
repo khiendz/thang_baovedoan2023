@@ -1,9 +1,7 @@
-import "./globals.css";
+import "./global.scss";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import LayoutDefault from "../components/layouts/LayoutDefault";
-import type { PropsWithChildren } from 'react'
-import { RootStyleRegistry } from '../modules/shared/components/Root-style-registry';
+import { RootStyleRegistry } from "../modules/shared/components/Root-style-registry";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,10 +17,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="vn">
-    <head />
-    <body>
-      <RootStyleRegistry>{children}</RootStyleRegistry>
-    </body>
-  </html>
+      <head>
+      </head>
+      <body className={inter.className}>
+        <RootStyleRegistry>{children}</RootStyleRegistry>
+      </body>
+    </html>
   );
 }
