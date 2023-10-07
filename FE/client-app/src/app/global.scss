@@ -5,4 +5,12 @@
 
 body {
     background: #FFF none;
+    max-height: fit-content;
+}
+
+.main {
+    &-container {
+        background: url("../assets/images/travel-background.jpg");
+        background-repeat: no-repeat;
+    }
 }

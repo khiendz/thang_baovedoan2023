@@ -3,18 +3,20 @@ import Navigation from "components/Navigation/Navigation";
 import Header from "components/Header";
 import "app/global.scss";
 import { RootStyleRegistry } from "modules/shared/components/Root-style-registry";
+import Footer from "components/Footer/Footer";
 const LayoutDefault = ({ children }: { children: React.ReactNode }) => {
   return (
     <>
       <Header></Header>
       <Navigation />
       <RootStyleRegistry>
-        <div className="dk-w-full dk-flex dk-justify-center dk-mt-5 dk-items">
-          <div className="dk-w-[1158px] dk-flex dk-justify-center dk-mt-5 dk-gap-8 dk-items">
-            <div className="container dk-w-[516px]">{children}</div>
+        <div className="main-container dk-h-fit dk-w-full dk-flex dk-justify-center dk-items" style={{'minHeight': '1270px'}}>
+          <div className="dk-w-[1158px] dk-flex dk-justify-center dk-mt-5 dk-gap-8 dk-items dk-h-[118px]">
+            <div className="container dk-w-[516px] dk-h-[1180px]">{children}</div>
           </div>
         </div>
       </RootStyleRegistry>
+      <Footer/>
     </>
   );
 };

@@ -4,6 +4,8 @@ export default function Home() {
   return (
     <LayoutDefault>
       <main className="">
+        <div className="">
+        </div>
       </main>
     </LayoutDefault>
   );
