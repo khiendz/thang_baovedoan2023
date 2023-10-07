@@ -8,33 +8,33 @@ import Link from 'next/link';
 
 const items: MenuProps['items'] = [
   {
-    label: <Link href='/'>TRANG CHỦ</Link>,
+    label: <Link href='/' className='dk-text-sm dk-text-[#222] dk-font-Inter dk-font-bold'>TRANG CHỦ</Link>,
     key: 'home',
     icon: <HomeOutlined />,
   },
   {
-    label: <Link href='/khach-san.htm'><span>KHÁCH SẠN</span></Link>,
+    label: <Link href='/khach-san' className='dk-text-sm dk-text-[#222] dk-font-Inter dk-font-bold'><span>KHÁCH SẠN</span></Link>,
     key: 'hotel',
     icon: <BankOutlined />
   },
   {
-    label: <Link href='/tour.htm'><span>TOUR DU LỊCH</span></Link>,
+    label: <Link href='/tour' className='dk-text-sm dk-text-[#222] dk-font-Inter dk-font-bold'><span>TOUR DU LỊCH</span></Link>,
     key: 'tour',
     children: [
       {
-        label: <Link href='/tour/trong-nuoc.htm'><span>TRONG NƯỚC</span></Link>,
+        label: <Link href='/tour/trong-nuoc' className='dk-text-sm dk-text-[#222] dk-font-Inter dk-font-bold'><span>TRONG NƯỚC</span></Link>,
         key: 'local'
       },
       {
-        label: <Link href='/tour/ngoai-nuoc.htm'><span>NGOÀI NƯỚC</span></Link>,
+        label: <Link href='/tour/ngoai-nuoc' className='dk-text-sm dk-text-[#222] dk-font-Inter dk-font-bold'><span>NGOÀI NƯỚC</span></Link>,
         key: 'global'
       },
     ],
   },
   {
     label: (
-      <Link href="https://ant.design" target="_blank" rel="noopener noreferrer">
-        Vé máy bay
+      <Link href="https://ant.design" target="_blank" rel="noopener noreferrer" className='dk-text-sm dk-text-[#222] dk-font-Inter dk-font-bold'>
+        VÉ MÁY BAY
       </Link>
     ),
     key: 'airplane',
@@ -49,7 +49,7 @@ const Navigation: React.FC = () => {
   };
 
   return <nav>
-    <Menu className="dk-text-[#222] dk-text-lg dk-font-medium dk-pb-3 dk-border-none dk-shadow-sm" onClick={onClick} selectedKeys={[current]} mode="horizontal" items={items} />
+    <Menu className="dk-text-[#222] dk-text-lg dk-font-bold dk-py-3 dk-border-none dk-shadow-md dk-font-Inter" onClick={onClick} selectedKeys={[current]} mode="horizontal" items={items} />
     </nav>;
 };
 

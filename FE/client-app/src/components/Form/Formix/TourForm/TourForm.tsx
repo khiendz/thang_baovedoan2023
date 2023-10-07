@@ -66,7 +66,7 @@ export default function TourForm() {
                   type="search"
                   id="name"
                   name="name"
-                  placeHolder="Bạn muốn đi đâu ?"
+                  placeholder="Bạn muốn đi đâu ?"
                   onChange={(e: any) => {
                     setFieldValue("name", e.target.value);
                     setInitialValues({
