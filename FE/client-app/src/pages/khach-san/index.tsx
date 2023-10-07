@@ -1,5 +1,5 @@
 "use client";
-import LayoutDefault from "components/layouts/LayoutDefault";
+import LayoutDefault from "../../components/layouts/LayoutDefault"
 import React from "react";
 import {
   QuestionCircleOutlined,
