@@ -1,7 +1,10 @@
 "use client";
 import LayoutDefault from "components/layouts/LayoutDefault";
 import React from "react";
-import { QuestionCircleOutlined, SecurityScanOutlined } from "@ant-design/icons";
+import {
+  QuestionCircleOutlined,
+  SecurityScanOutlined,
+} from "@ant-design/icons";
 
 export default function tour() {
   return (
@@ -82,14 +85,24 @@ export default function tour() {
             </div>
           </div>
           <div className="dk-w-full dk-flex dk-items-center dk-justify-center dk-relative dk-z-10">
-                <button className="dk-p-4 dk-flex dk-gap-4 dk-bg-[#F79321] dk-text-sm dk-font-bold dk-font-Roboto dk-rounded dk-text-[#FFf]"><SecurityScanOutlined /><span>Tìm kiếm</span></button>
+            <button className="dk-p-4 dk-flex dk-gap-4 dk-bg-[#F79321] dk-text-sm dk-font-bold dk-font-Roboto dk-rounded dk-text-[#FFf]">
+              <SecurityScanOutlined />
+              <span>Tìm kiếm</span>
+            </button>
           </div>
         </div>
         <div className="search-form dk-flex dk-flex-col dk-h-fit dk-min-h-[220px] dk-w-fit dk-min-w-[760px] dk-p-4 dk-rounded dk-shadow-sm dk-mt-4 content-miss content-miss-v2 dk-gap-5 dk-relative dk-z-10">
-
+          <div className="dk-flex dk-gap-4">
+            <h2 className="dk-text-[#FFF] dk-font-bold dk-text-2xl dk-relative dk-z-[14]">
+              Combo tốt nhất hôm nay
+            </h2>
+            <div className="dk-flex dk-items-center dk-p-2 dk-bg-red-200 dk-text-red-500 dk-rounded-xl dk-relative dk-z-[14] dk-h-9 dk-text-sm">
+                <img width="20" src="https://res.ivivu.com/hotel/img/fire-sale.svg"/>
+                498 khách đã đặt dịch vụ này
+            </div>
+          </div>
         </div>
       </div>
-      
     </LayoutDefault>
   );
 }
