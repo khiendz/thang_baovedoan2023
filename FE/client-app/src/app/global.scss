@@ -12,5 +12,22 @@ body {
     &-container {
         background: url("../assets/images/travel-background.jpg");
         background-repeat: no-repeat;
+        background-size: cover;
     }
+}
+
+.display-none {
+    display: none;
+}
+
+.user-infos::before {
+    content: "";
+    position: absolute;
+    top: -8px;
+    right: 35px;
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 9px solid #FFF;
 }
