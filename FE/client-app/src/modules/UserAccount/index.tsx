@@ -38,7 +38,7 @@ export default function UserAccount() {
         <div
           className={`${
             isLogin ? "display-none" : ""
-          } dk-absolute dk-bg-[#FFF] dk-p-4 dk-h-fit dk-text-[#222] dk-font-Inter dk-font-medium dk-text-sm dk-top-[64px] dk-rounded-sm dk-shadow-2xl user-infos dk-right-[82px]`}
+          } dk-absolute dk-z-[99] dk-bg-[#FFF] dk-p-4 dk-h-fit dk-text-[#222] dk-font-Inter dk-font-medium dk-text-sm dk-top-[64px] dk-rounded-sm dk-shadow-2xl user-infos dk-right-[82px]`}
         >
           <ul className="dk-flex dk-flex-col dk-items-center dk-justify-center dk-z-[99]">
             <li className="dk-w-full dk-flex dk-justify-start">
