@@ -69,12 +69,32 @@ body {
         }
         &-miss-v2 {
             &::after {
-                background-color: rgba(0,0,0,0.3)
+                background-color: rgba(0,0,0,0.3);
             }
+        }
+    }
+    &-base {
+        &::after {
+            opacity: 1;
+            z-index: -1;
         }
     }
 }
 
 .default-color {
     color: #003C71;
+}
+
+.list-marker {
+    li {
+      &::marker {
+        color: #8b0000;
+      }
+    }
+  }
+
+a {
+    &:hover {
+        color: #8b0000;
+    }
 }
