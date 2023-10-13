@@ -14,7 +14,6 @@ type Props = {
   buzz: number[]
 };
 
-
 export default function Home() {
   return (
     <LayoutDefault>

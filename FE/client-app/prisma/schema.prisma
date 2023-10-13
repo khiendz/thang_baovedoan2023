@@ -18,7 +18,6 @@ model Tour {
   StartDate  DateTime
   EndDate    DateTime
   Location   String?
-
   Bookings   Booking[]
   Feedback   Feedback[] // Add this line
 }
