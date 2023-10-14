@@ -18,7 +18,7 @@ const items: MenuProps['items'] = [
     icon: <BankOutlined />
   },
   {
-    label: <Link href='/tour' className='dk-text-sm dk-text-[#222] dk-font-Inter dk-font-bold'><span>TOUR DU LỊCH</span></Link>,
+    label: <Link href='/tour/trong-nuoc' className='dk-text-sm dk-text-[#222] dk-font-Inter dk-font-bold'><span>TOUR DU LỊCH</span></Link>,
     key: 'tour',
     children: [
       {
@@ -26,7 +26,7 @@ const items: MenuProps['items'] = [
         key: 'local'
       },
       {
-        label: <Link href='/tour/ngoai-nuoc' className='dk-text-sm dk-text-[#222] dk-font-Inter dk-font-bold'><span>NGOÀI NƯỚC</span></Link>,
+        label: <Link href='/tour/nuoc-ngoai' className='dk-text-sm dk-text-[#222] dk-font-Inter dk-font-bold'><span>NGOÀI NƯỚC</span></Link>,
         key: 'global'
       },
     ],
