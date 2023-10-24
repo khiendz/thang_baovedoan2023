@@ -1,0 +1,156 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+// Bảng tour du lịch
+model Tour {
+  TourID      Int         @id
+  TourName    String
+  Description String?
+  PriceTotal  Float
+  StartDate   DateTime
+  EndDate     DateTime
+  Location    String?
+  PromotionId Int
+  TourTypeId  Int
+  Img         String?
+  TourType    TourType    @relation(fields: [TourTypeId], references: [TourTypeId])
+  Bookings    Booking[]
+  Feedback    Feedback[]
+  Promotion   Promotion[]
+}
+
+// Bảng kiểu tour
+model TourType {
+  TourTypeId    Int     @id
+  Name          String
+  Description   String?
+  PriceElder    Float?
+  PriceChildren Float?
+  Tours         Tour[]
+}
+
+// Bảng tour khách hàng
+model Customer {
+  CustomerID Int               @id
+  FirstName  String
+  LastName   String
+  Email      String            @unique
+  Phone      String?
+  Address    String?
+  Bookings   Booking[]
+  Feedback   Feedback[]
+  Support    CustomerSupport[]
+}
+
+// Bảng kiểu khách hàng (VIP - Normal)
+model CustomerType {
+  CustomerTypeId Int     @id
+  Name           String
+  Description    String?
+}
+
+// Bảng đặt tour
+model Booking {
+  BookingID   Int       @id
+  CustomerID  Int
+  TourID      Int
+  BookingDate DateTime
+  Customer    Customer  @relation(fields: [CustomerID], references: [CustomerID])
+  Tour        Tour      @relation(fields: [TourID], references: [TourID])
+  Payments    Payment[]
+}
+
+// Bảng thanh toán
+model Payment {
+  PaymentID   Int      @id
+  BookingID   Int
+  PaymentDate DateTime
+  Amount      Float
+  Booking     Booking  @relation(fields: [BookingID], references: [BookingID])
+}
+
+// Bảng phản hồi
+model Feedback {
+  FeedbackID Int      @id
+  CustomerID Int
+  TourID     Int
+  Rating     Int?
+  Comment    String?
+  Customer   Customer @relation(fields: [CustomerID], references: [CustomerID])
+  Tour       Tour     @relation(fields: [TourID], references: [TourID])
+}
+
+// Bảng hỗ trợ
+model CustomerSupport {
+  SupportID     Int         @id
+  CustomerID    Int
+  SupportTypeId Int
+  SupportDate   DateTime
+  Description   String?
+  Customer      Customer    @relation(fields: [CustomerID], references: [CustomerID])
+  SupportType   SupportType @relation(fields: [SupportTypeId], references: [SupportTypeId])
+}
+
+// Bảng kiểu báo cáo
+model SupportType {
+  SupportTypeId   Int               @id
+  Name            String
+  Description     String?
+  CustomerSupport CustomerSupport[]
+}
+
+// Bảng khuyến mãi
+model Promotion {
+  PromotionID Int      @id
+  PromoCode   String
+  Description String?
+  Discount    Float?
+  StartDate   DateTime
+  EndDate     DateTime
+  Tour        Tour?    @relation(fields: [TourID], references: [TourID])
+  TourID      Int?
+}
+
+// Bảng Khách sạn
+model Hotel {
+  HotelId     Int        @id
+  Name        String
+  Address     String?
+  City        String?
+  Country     String?
+  StarRating  Int?
+  Description String?
+  Phone       String?
+  Website     String?
+  Email       String
+  RoomTypes   RoomType[]
+}
+
+// Bảng kiểu phòng
+model RoomType {
+  RoomTypeId   Int            @id
+  Name         String?
+  MaxOccupancy Int?
+  Price        Float?
+  HotelId      Int?
+  Availability Availability[]
+  Hotel        Hotel?         @relation(fields: [HotelId], references: [HotelId])
+}
+
+// Bảng tình trạng phòng trống
+model Availability {
+  AvailabilityId Int       @id
+  DateCheck      DateTime?
+  AvailableRooms Int?
+  RoomTypeId     Int?
+  RoomType       RoomType? @relation(fields: [RoomTypeId], references: [RoomTypeId])
+}
