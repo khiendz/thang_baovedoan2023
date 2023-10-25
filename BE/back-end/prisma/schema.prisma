@@ -12,50 +12,60 @@ datasource db {
 
 // Bảng tour du lịch
 model Tour {
-  TourID      Int         @id
-  TourName    String
-  Description String?
-  PriceTotal  Float
-  StartDate   DateTime
-  EndDate     DateTime
-  Location    String?
-  PromotionId Int
-  TourTypeId  Int
-  Img         String?
-  TourType    TourType    @relation(fields: [TourTypeId], references: [TourTypeId])
-  Bookings    Booking[]
-  Feedback    Feedback[]
-  Promotion   Promotion[]
+  TourID        Int        @id
+  TourName      String
+  Description   String?
+  PriceTotal    Float
+  StartDate     DateTime
+  EndDate       DateTime
+  Location      String?
+  TotalMember   Int
+  TotalChd      Int
+  TotalElder    Int
+  TourTypeId    Int
+  RoomTypeId    Int
+  Img           String?
+  RoomStartDate DateTime
+  RoomEndDate   DateTime
+  TourType      TourType   @relation(fields: [TourTypeId], references: [TourTypeId])
+  RoomType      RoomType   @relation(fields: [RoomTypeId], references: [RoomTypeId])
+  Bookings      Booking[]
+  Feedback      Feedback[]
 }
 
 // Bảng kiểu tour
 model TourType {
-  TourTypeId    Int     @id
+  TourTypeId    Int         @id
   Name          String
   Description   String?
   PriceElder    Float?
   PriceChildren Float?
+  PromotionId   Int
   Tours         Tour[]
+  Promotion     Promotion[]
 }
 
 // Bảng tour khách hàng
 model Customer {
-  CustomerID Int               @id
-  FirstName  String
-  LastName   String
-  Email      String            @unique
-  Phone      String?
-  Address    String?
-  Bookings   Booking[]
-  Feedback   Feedback[]
-  Support    CustomerSupport[]
+  CustomerID     Int               @id
+  FirstName      String
+  LastName       String
+  Email          String            @unique
+  Phone          String?
+  Address        String?
+  CustomerTypeId Int
+  Bookings       Booking[]
+  Feedback       Feedback[]
+  Support        CustomerSupport[]
+  CustomerType   CustomerType      @relation(fields: [CustomerTypeId], references: [CustomerTypeId])
 }
 
 // Bảng kiểu khách hàng (VIP - Normal)
 model CustomerType {
-  CustomerTypeId Int     @id
+  CustomerTypeId Int        @id
   Name           String
   Description    String?
+  Customer       Customer[]
 }
 
 // Bảng đặt tour
@@ -110,14 +120,14 @@ model SupportType {
 
 // Bảng khuyến mãi
 model Promotion {
-  PromotionID Int      @id
+  PromotionID Int       @id
   PromoCode   String
   Description String?
   Discount    Float?
   StartDate   DateTime
   EndDate     DateTime
-  Tour        Tour?    @relation(fields: [TourID], references: [TourID])
-  TourID      Int?
+  TourTypeId  Int?
+  TourType    TourType? @relation(fields: [TourTypeId], references: [TourTypeId])
 }
 
 // Bảng Khách sạn
@@ -142,8 +152,10 @@ model RoomType {
   MaxOccupancy Int?
   Price        Float?
   HotelId      Int?
+  KateFee      Int
   Availability Availability[]
   Hotel        Hotel?         @relation(fields: [HotelId], references: [HotelId])
+  Tour         Tour[]
 }
 
 // Bảng tình trạng phòng trống
