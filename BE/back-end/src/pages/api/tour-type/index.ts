@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { PrismaClient, Tour, TourType } from '@prisma/client';
+import { PrismaClient, TourType } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
@@ -33,13 +33,13 @@ const GetToursType = async () => {
 
         if (tour) {
             return {
-                tour: tour,
+                data: tour,
                 message: "Success",
                 status: "200"
             };
         } else {
             return {
-                tour: null,
+                data: null,
                 message: "No Success",
                 status: "500"
             };
@@ -54,7 +54,7 @@ const GetToursType = async () => {
     }
 }
 
-const AddTourType = async (tourTypeData: Tour) => {
+const AddTourType = async (tourTypeData: TourType) => {
     try {
         const tour = await prisma.tourType.create({
             data: tourTypeData,

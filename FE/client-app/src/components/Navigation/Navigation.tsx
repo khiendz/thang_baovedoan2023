@@ -31,22 +31,6 @@ const items: MenuProps['items'] = [
       },
     ],
   },
-  {
-    label: (
-      <Link href="/ve-may-bay" rel="noopener noreferrer" className='dk-text-sm dk-text-[#222] dk-font-Inter dk-font-bold'>
-        VÉ MÁY BAY
-      </Link>
-    ),
-    key: 'airplane',
-  },
-  {
-    label: (
-      <Link href="/quan-ly-tour" rel="noopener noreferrer" className='dk-text-sm dk-text-[#222] dk-font-Inter dk-font-bold'>
-        Quản lý tour
-      </Link>
-    ),
-    key: 'tour manage',
-  },
 ];
 
 const Navigation: React.FC = () => {

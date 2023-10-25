@@ -35,14 +35,27 @@ model Tour {
 
 // Bảng kiểu tour
 model TourType {
-  TourTypeId    Int         @id
+  TourTypeId    Int          @id
   Name          String
   Description   String?
   PriceElder    Float?
   PriceChildren Float?
   PromotionId   Int
+  Img           String
+  IsLocal       Int
+  RateTourType  Int
   Tours         Tour[]
   Promotion     Promotion[]
+  CollectImg    CollectImg[]
+}
+
+//Bảng ảnh sưu tầm
+model CollectImg {
+  CollectImgId Int      @id
+  Name         String?
+  Src          String
+  TourTypeId   Int
+  TourType     TourType @relation(fields: [TourTypeId], references: [TourTypeId])
 }
 
 // Bảng tour khách hàng
