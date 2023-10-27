@@ -1,10 +1,9 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import TourForm from "components/Form/Formix/TourForm/TourForm";
 import LayoutDefault from "components/layouts/LayoutDefault";
 import TourCard from "components/TourCard/indext";
 import { getTourByRegion, typeRegion } from "services";
-import { Tour, TourType } from "Models";
+import { TourType } from "Models";
 
 export default function LocalTour() {
   const [tourTypesList, setTourTypeList] = useState<TourType[]>([]);

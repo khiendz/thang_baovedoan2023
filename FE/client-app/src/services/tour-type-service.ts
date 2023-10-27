@@ -7,7 +7,6 @@ export const typeRegion = {
 }
 
 export async function getTourTypeById(id: number) {
-    debugger
     if (!id)
         return null;
     
