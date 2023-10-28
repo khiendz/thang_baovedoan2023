@@ -1,41 +1,36 @@
-'use client'
-import React, { createContext, useState, ReactNode } from 'react';
+"use client"
+import React, { createContext, useState, ReactNode, useEffect } from 'react';
 
-interface StoreType {
-    [key: string]: any;
-}
+type InitialValues = {
+    store: any,
+    updateStore(key: any, payload: any): void
+};
 
-interface AppContextType {
-    store: StoreType;
-    updateStore: (key: string, payload: any) => void;
-}
+const initialValues: InitialValues = {
+  store: {},
+  updateStore: (key: any, payload: any) => {},
+};
 
-const initialValues: StoreType = {};
-
-export const AppContext = createContext<AppContextType>({
-    store: initialValues,
-    updateStore: () => {},
-});
+export const AppContext = createContext<InitialValues>(initialValues);
 
 interface AppProviderProps {
-    children: ReactNode;
-    initialValues?: StoreType;
+  children: any;
+  initialValues?: any;
 }
 
 export const AppProvider: React.FC<AppProviderProps> = ({ children, initialValues }) => {
-    const [store, setStore] = useState<StoreType>(initialValues || {});
+  const [state, setState] = useState<any>({...initialValues});
+  const value = {
+    store: state,
+    updateStore: (key: any, payload: any) => {
+        setState((prevState: any) => {
+            return {
+                ...prevState,
+                [key]: payload
+            }
+        });
+    },
+  };
 
-    const updateStore = (key: string, payload: any) => {
-        setStore((prevStore) => ({
-            ...prevStore,
-            [key]: payload,
-        }));
-    };
-
-    const value: AppContextType = {
-        store,
-        updateStore,
-    };
-
-    return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
+  return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 };

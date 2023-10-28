@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router"; // Import the useRouter
 import LayoutDefault from "components/layouts/LayoutDefault";
 import { getTourTypeById, getCollectionImageByTourTypeId } from "services";
-import { TourType } from "Models";
+import { Tour, TourType } from "Models";
 import { CollectionImage } from "Models/CollectionImage";
 import { calRankRating, checkStateRating, stateRating } from "utils";
 import type { DatePickerProps } from "antd";
@@ -11,14 +11,15 @@ import { QuestionCircleOutlined } from "@ant-design/icons";
 import { InputNumber } from "antd";
 import Slides from "modules/Slides";
 import AcceptOrder from "modules/AcceptOrder";
+import { useAppContext } from "hook/use-app-context";
 
 export default function LocalTour() {
   const router = useRouter();
   const [stateRate, setStateRating] = useState<string>(stateRating.Normal);
   const { id } = router.query;
   const [tourTypes, setTourType] = useState<TourType>(new TourType());
-  const [totalElder, setTotalElder] = useState(1);
-  const [totalChildren, setTotalChildern] = useState(1);
+  const [orderAccept,setOrrderAccept] = useState(false);
+  const [tour, setTour] = useState<Tour>(new Tour());
 
   useEffect(() => {
     initData();
@@ -26,6 +27,10 @@ export default function LocalTour() {
 
   const initData = () => {
     initTourType();
+    let tourInit = new Tour();
+    tourInit.TotalChd = 0;
+    tourInit.TotalElder = 0;
+    setTour(tourInit);
   };
 
   const initTourType = async () => {
@@ -63,12 +68,25 @@ export default function LocalTour() {
   };
 
   const onChangeTotalElder = (value: any) => {
-    setTotalElder(value);
+    setTour((prevTour: any) => ({
+      ...prevTour,
+      TotalElder: value,
+    }));
   };
 
   const onChangeTotalChildren = (value: any) => {
-    setTotalChildern(value);
+    setTour((prevTour: any) => ({
+      ...prevTour,
+      TotalChd: value,
+    }));
   };
+
+  const onChangeDatePicker = (value: any,dateString: string) => {
+    setTour((prevTour: any) => ({
+      ...prevTour,
+      StartDate: new Date(dateString),
+    }));
+  }
 
   return (
     <>
@@ -96,7 +114,7 @@ export default function LocalTour() {
                 Lịch khởi hành & giá
               </p>
               <p>Chọn ngày khởi hành:</p>
-              <DatePicker className="dk-mt-3" />
+              <DatePicker className="dk-mt-3" onChange={(date,dateString) => {onChangeDatePicker(date,dateString)}}/>
               <div className="dk-font-bold dk-text-sm dk-flex dk-gap-2 dk-items-center">
                 <div>
                   <span className="dk-text-sm dk-font-bold">
@@ -105,9 +123,9 @@ export default function LocalTour() {
                   {tourTypes.PriceElder?.toLocaleString("vi-VN")} VND
                 </div>
                 <InputNumber
-                  min={1}
-                  max={10}
-                  defaultValue={totalElder}
+                  min={0}
+                  max={99}
+                  defaultValue={1}
                   onChange={(e) => onChangeTotalElder(e)}
                 />
               </div>
@@ -117,9 +135,9 @@ export default function LocalTour() {
                   {tourTypes.PriceChildren?.toLocaleString("vi-VN")} VND
                 </div>
                 <InputNumber
-                  min={1}
-                  max={10}
-                  defaultValue={totalChildren}
+                  min={0}
+                  max={99}
+                  defaultValue={1}
                   onChange={(e) => onChangeTotalChildren(e)}
                 />
               </div>
@@ -133,13 +151,17 @@ export default function LocalTour() {
                 <span className="dk-text-xl dk-font-Roboto dk-font-medium dk-text-yellow-400">
                   Tổng giá:{" "}
                   {(
-                    totalChildren * (tourTypes.PriceChildren || 0) +
-                    totalElder * (tourTypes.PriceElder || 0)
+                    tour?.TotalChd * (tourTypes.PriceChildren || 0) +
+                    tour?.TotalElder * (tourTypes.PriceElder || 0)
                   ).toLocaleString("vi-VN")}{" "}
                   VND
                 </span>
               </div>
-              <button className="dk-text-[18px] dk-p-4 dk-bg-orange-400 dk-text-white dk-font-bold dk-w-fit dk-rounded-lg dk-mx-auto dk-mt-0">
+              <button className="dk-text-[18px] dk-p-4 dk-bg-orange-400 dk-text-white 
+              dk-font-bold dk-w-fit dk-rounded-lg dk-mx-auto dk-mt-0"
+              onClick={() => {
+                setOrrderAccept(!orderAccept);
+              }}>
                 Yêu cầu đặt
               </button>
             </div>
@@ -188,7 +210,10 @@ export default function LocalTour() {
           </div>
         </div>
       </LayoutDefault>
-      {/* <AcceptOrder /> */}
+      {
+        orderAccept ? 
+        <AcceptOrder tour={tour} setTour={setTour} setOrder={setOrrderAccept}/> : null
+      }
     </>
   );
 }

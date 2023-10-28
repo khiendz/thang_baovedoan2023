@@ -22,7 +22,7 @@ export default function Home() {
   const [searchingData,setSeachingData] = useState<TourType[]>([]);
   const searchInputRef = useRef(searchInput);
   searchInputRef.current = searchInput;
-
+  
   useEffect(() => {
     const initData = async () => {
       try {

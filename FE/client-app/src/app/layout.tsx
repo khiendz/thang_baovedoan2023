@@ -2,7 +2,6 @@ import "./global.scss";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { RootStyleRegistry } from "../modules/shared/components/Root-style-registry";
-import {AppProvider} from 'contexts';
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,9 +20,7 @@ export default function RootLayout({
       <head>
       </head>
       <body className={inter.className}>
-        <AppProvider initialValues={{}}>
           <RootStyleRegistry>{children}</RootStyleRegistry>
-        </AppProvider>
       </body>
     </html>
   );
