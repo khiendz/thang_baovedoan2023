@@ -213,7 +213,7 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <div className="dk-text-[#222] dk-font-Inter content-container content-miss content-base dk-flex dk-flex-col dk-font-Roboto dk-gap-2 dk-relative dk-z-10 dk-mb-5 dk-flex dk-flex-col">
+      <div className="dk-text-[#222] content-container content-miss content-base dk-font-Roboto dk-gap-2 dk-relative dk-z-10 dk-mb-5 dk-flex dk-flex-col">
         <h2 className="dk-text-[#222] dk-font-semibold dk-text-lg">
           Tours du lịch mùa đông
         </h2>

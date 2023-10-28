@@ -131,7 +131,7 @@ export default function AcceptOrder(props: Props) {
                     type="text"
                     id="different"
                     name="different"
-                    placeholder="Địa chỉ email"
+                    placeholder="Khác"
                     onChange={(e: any) => {
                       setFieldValue("different", e.target.value);
                     }}
