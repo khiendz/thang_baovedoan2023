@@ -217,7 +217,7 @@ const ManagerPromotion = () => {
       render: (_: any, record: Promotion) => {
         const editable = isEditing(record);
         return (
-          <div className="dk-flex dk-gap-3 dk-text-[#1677ff]">
+          <div className="dk-flex dk-gap-3 dk-text-[#1677ff] dk-w-[150px]">
             <Popconfirm
               title="Sure to delete?"
               onConfirm={() => handleDelete(record.PromotionID)}
