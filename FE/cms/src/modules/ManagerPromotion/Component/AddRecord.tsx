@@ -21,8 +21,8 @@ interface CollectionCreateFormProps {
   open: boolean;
   onCreate: () => void;
   onCancel: () => void;
-  tourTypes: TourType[],
-  promotions: Promotion[],
+  tourTypes: TourType[];
+  promotions: Promotion[];
   save: any;
   form: FormInstance;
 }
@@ -46,18 +46,17 @@ const CollectionCreateForm: React.FC<CollectionCreateFormProps> = ({
   return (
     <Modal
       open={open}
-      title="Tạo một sách mới"
-      okText="Tạo sách"
+      title="Tạo một ưu đãi mới"
+      okText="Tạo ưu đãi"
       cancelText="Hủy"
       onCancel={onCancel}
       onOk={async (ob) => {
-        const row = (await form.validateFields()) as TourType;
+        const row = (await form.validateFields()) as Promotion;
         save({
           ...row,
-          Description: row.Description?.toString(),
-          PriceElder: parseInt(row?.PriceElder ? row?.PriceElder?.toString() : "0"),
-          PriceChildren: parseInt(row?.PriceChildren ? row?.PriceChildren?.toString() : "0"),
-          RateTourType: parseInt(row?.RateTourType ? row?.RateTourType?.toString() : "0"),
+          Discount: parseInt(
+            row?.Discount ? row?.Discount?.toString() : "0"
+          )
         });
         onCreate();
       }}
@@ -70,65 +69,72 @@ const CollectionCreateForm: React.FC<CollectionCreateFormProps> = ({
       >
         <Form.Item
           name="Name"
-          label="Tên tour"
-          rules={[{ required: true, message: "Làm ơn nhập tên tour" }]}
+          label="Tên ưu đãi"
+          rules={[{ required: true, message: "Làm ơn nhập tên ưu đãi" }]}
         >
           <Input />
         </Form.Item>
-        <Form.Item name="Description" label="Mô tả tour">
-          <Input type="text"/>
+        <Form.Item name="Description" label="Mô tả ưu đãi">
+          <Input />
         </Form.Item>
         <Form.Item
-          name="PriceElder"
-          label="Giá người lớn"
-          rules={[{ required: true, message: "Làm ơn nhập giá người lớn" }]}
+          name="PromoCode"
+          label="Mã ưu đãi"
+          rules={[{ required: true, message: "Làm ơn nhập mã ưu đãi" }]}
         >
           <Input />
         </Form.Item>
         <Form.Item
-          name="PriceChildren"
-          label="Giá trẻ em"
-          rules={[{ required: true, message: "Làm ơn nhập giá trẻ em" }]}
+          name="Discount"
+          label="Tỷ lệ ưu đãi"
+          rules={[{ required: true, message: "Làm ơn nhập tỷ lệ ưu đãi" }]}
         >
-          <Input/>
+          <Input />
         </Form.Item>
         <Form.Item
-          name="Location"
-          label="Vị trí"
-          rules={[{ required: true, message: "Làm ơn nhập vị trí!" }]}
+          name="StartDate"
+          label="Ngày bắt đầu"
+          rules={[{ required: true, message: "Làm ơn nhập ngày bắt đầu!" }]}
         >
-            <Input />
-        </Form.Item>
-        <Form.Item name="PromotionId" label="Ưu đãi" className="dk-w-full">
-          <Select
+          <DatePicker
+            format={"DD-MM-YYYY"}
+            defaultValue={dayjs(new Date())}
             className="dk-w-full"
-            options={[
-              ...promotions?.map((ob: Promotion) => {
-                return { value: ob.PromotionID, label: ob.Name, ob: ob };
-              }),
-            ]}
             onChange={(value) => {
-              form.setFieldValue("Description", value);
-            }}
-           />
-        </Form.Item>
-        <Form.Item name="Img" label="Ảnh đại diện" className="dk-w-full">
-          <Input />
-        </Form.Item>
-        <Form.Item name="IsLocal" label="Địa lý" className="dk-w-full">
-        <Select
-            className="dk-w-full"
-            options={[
-              { value: 0, label: "Trong nước" },
-              { value: 1, label: "Ngoài nước" },
-            ]}
-            onChange={(value) => {
-              form.setFieldValue("Description", value);
+              form.setFieldValue("StartDate", value);
             }}
           />
         </Form.Item>
-        <Form.Item name="RateTourType" label="Đánh giá" className="dk-w-full">
-          <Input />
+        <Form.Item
+          name="EndDate"
+          label="Ngày kết thúc"
+          rules={[{ required: true, message: "Làm ơn nhập ngày kết thúc!" }]}
+        >
+          <DatePicker
+            format={"DD-MM-YYYY"}
+            defaultValue={dayjs(new Date())}
+            className="dk-w-full"
+            onChange={(value) => {
+              form.setFieldValue("EndDate", value);
+            }}
+          />
+        </Form.Item>
+        <Form.Item
+          name="TourTypeId"
+          label="Áp dụng kiểu tour"
+          className="dk-w-full"
+        >
+          <Select
+            className="dk-w-full"
+            options={[
+              ...tourTypes?.map((ob: TourType) => {
+                return { value: ob.TourTypeId, label: ob.Name, ob: ob };
+              }),
+            ]}
+            onChange={(value) => {
+              form.setFieldValue("TourTypeId", value);
+            }}
+          />
         </Form.Item>
       </Form>
     </Modal>

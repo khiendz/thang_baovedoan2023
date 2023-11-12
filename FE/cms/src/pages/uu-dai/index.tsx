@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { TourType } from "Models";
 import { getTourByRegion, typeRegion } from "services";
 import { removeAccents } from "utils/charactor-util";
-import ManagerTourType from "modules/ManagerTourType";
+import ManagerPromotion from "modules/ManagerPromotion";
 
 export default function Home() {
   const [tourTypesList, setTourTypeList] = useState<TourType[]>([]);
@@ -83,7 +83,7 @@ export default function Home() {
         <h2 className="dk-font-medium dk-text-xs dk-text-[#FFF]">
           Combo khách sạn - vé máy bay - đưa đón sân bay giá tốt nhất
         </h2>
-        <ManagerTourType/>
+        <ManagerPromotion/>
       </div>
     </LayoutDefault>
   );

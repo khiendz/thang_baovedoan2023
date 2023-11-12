@@ -1,7 +1,6 @@
 import dayjs from "dayjs";
 import { Form, Input, Select, FormInstance } from "antd";
 import { Promotion, TourType } from "Models";
-import TextArea from "antd/es/input/TextArea";
 
 interface EditableCellProps extends React.HTMLAttributes<HTMLElement> {
   editing: boolean;
@@ -58,10 +57,10 @@ export const EditableCell: React.FC<EditableCellProps> = ({
    />
     break;
     case "Description": 
-    inputNode =  <TextArea className="dk-w-[350px]"/>
+    inputNode =  <Input className="dk-w-[350px]"/>
    break;
    case "Name": 
-   inputNode =  <TextArea className="dk-w-[350px]"/>
+   inputNode =  <Input className="dk-w-[350px]"/>
   break;
     default:
       inputNode = <Input />;
