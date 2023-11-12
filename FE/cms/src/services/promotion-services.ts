@@ -1,16 +1,16 @@
 import React from 'react';
 import axios from 'axios';
-import { Tour } from 'Models';
+import { Promotion, Tour } from 'Models';
 
 const domainBE = process?.env?.DOMAIN_BACK_END ?? "http://localhost:3000"; 
 
-export async function getTourById(id: string) {
+export async function getPromotionById(id: string) {
 
     if (!id)
         return null;
     
     try {
-        const res: any = await axios.get(`${domainBE}/api/tour/${id}`)
+        const res: any = await axios.get(`${domainBE}/api/promotion/${id}`)
         .then(respones => {
             console.log(respones)
             return respones?.data;
@@ -27,9 +27,9 @@ export async function getTourById(id: string) {
     }
 }
 
-export async function getAllTour () {
+export async function getAllPromotion () {
     try {
-        const res: any = await axios.get(`${domainBE}/api/tour`);
+        const res: any = await axios.get(`${domainBE}/api/promotion`);
         if (res.status == 200) 
             return res.data;
         
@@ -38,9 +38,9 @@ export async function getAllTour () {
     }
 }
 
-export async function UpdateTour(tour: Tour) {
+export async function UpdatePromotion(promotion: Promotion) {
     try {
-        const res: any = await axios.put(`${domainBE}/api/tour`, JSON.stringify(tour), {
+        const res: any = await axios.put(`${domainBE}/api/promotion`, JSON.stringify(promotion), {
             headers: {
                 'Content-Type': 'application/json', 
             },
@@ -56,9 +56,9 @@ export async function UpdateTour(tour: Tour) {
     return null;
 }
 
-export async function AddTour(tour: Tour) {
+export async function AddPromotion(promotion: Promotion) {
     try {
-        const res: any = await axios.post(`${domainBE}/api/tour`, JSON.stringify(tour), {
+        const res: any = await axios.post(`${domainBE}/api/promotion`, JSON.stringify(promotion), {
             headers: {
                 'Content-Type': 'application/json', 
             },
@@ -74,9 +74,9 @@ export async function AddTour(tour: Tour) {
     return null;
 }
 
-export async function DeleteTourById(tourId: number) {
+export async function DeletePromotionById(promotionId: number) {
     try {
-        const res: any = await axios.delete(`${domainBE}/api/tour?tourTypeId=${tourId}`);
+        const res: any = await axios.delete(`${domainBE}/api/tour?tourTypeId=${promotionId}`);
 
         if (res.status === 200) {
             return res.data;

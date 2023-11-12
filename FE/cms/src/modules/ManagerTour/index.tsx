@@ -17,14 +17,16 @@ import type { FilterConfirmProps } from "antd/es/table/interface";
 import Highlighter from "react-highlight-words";
 import { EditableCell } from "./EdittableCell";
 import AddRecord from "./Component/AddRecord";
-import { TourType } from "Models";
+import { Promotion, TourType } from "Models";
 import { AddTourType, DeleteTourTypeById, UpdateTourType, getAllTourType } from "services";
 import "./style.scss";
+import { getAllPromotion } from "services/promotion-services";
 
 type DataIndex = keyof TourType;
 
 const ManagerTourType = () => {
   const [tourTypes, setTourTypes] = useState<TourType[]>([]);
+  const [promotions, setPromotions] = useState<Promotion[]>([]);
   const [form] = Form.useForm();
   const [editingKey, setEditingKey] = useState("");
   const [searchText, setSearchText] = useState("");
@@ -273,6 +275,8 @@ const ManagerTourType = () => {
         inputType: inputType,
         dataIndex: col.dataIndex,
         title: col.title,
+        tourTypes: tourTypes,
+        promotions: promotions,
         editing: isEditing(record),
         form: form,
       }),
@@ -362,6 +366,7 @@ const ManagerTourType = () => {
 
   useEffect(() => {
     initData();
+    initPromotion();
   }, []);
 
   const initData = async () => {
@@ -373,12 +378,22 @@ const ManagerTourType = () => {
     } catch (e) {}
   };
 
+  const initPromotion = async () => {
+    try {
+      const result = await getAllPromotion();
+      if (result && result?.data) {
+        setPromotions(result?.data?.reverse());
+      }
+    } catch (e) {}
+  };
+
   return tourTypes ? (
     <Form form={form} component={false}>
       <AddRecord
         Save={handleAdd}
         Form={form}
         TourTypes={tourTypes}
+        Promotions={promotions}
       />
       <Table
         columns={mergedColumns}
@@ -390,16 +405,6 @@ const ManagerTourType = () => {
         }}
         rowClassName="editable-row"
         bordered
-        title={() => (
-          <p className="dk-font-Inter dk-font-semibold dk-text-[14xp]">
-            {"Danh sách các loại sách đang có trong thư viện"}
-          </p>
-        )}
-        footer={() => (
-          <p className="dk-font-Inter dk-font-semibold dk-text-[14xp]">
-            {"Sách là tri thức của nhân loại"}
-          </p>
-        )}
       ></Table>
     </Form>
   ) : null;

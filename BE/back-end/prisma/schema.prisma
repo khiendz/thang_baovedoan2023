@@ -12,7 +12,7 @@ datasource db {
 
 // Bảng tour du lịch
 model Tour {
-  TourID        Int        @id
+  TourID        Int        @id @default(autoincrement()) @map(name: "TourID")
   TourName      String
   Description   String?
   PriceTotal    Float
@@ -35,7 +35,7 @@ model Tour {
 
 // Bảng kiểu tour
 model TourType {
-  TourTypeId    Int          @id
+  TourTypeId    Int          @id @default(autoincrement()) @map(name: "TourTypeId")
   Name          String
   Description   String?
   PriceElder    Float?
@@ -51,7 +51,7 @@ model TourType {
 
 //Bảng ảnh sưu tầm
 model CollectImg {
-  CollectImgId Int      @id
+  CollectImgId Int      @id @default(autoincrement()) @map(name: "CollectImgId")
   Name         String?
   Src          String
   TourTypeId   Int
@@ -60,7 +60,7 @@ model CollectImg {
 
 // Bảng tour khách hàng
 model Customer {
-  CustomerID     Int               @id
+  CustomerID     Int               @id @default(autoincrement()) @map(name: "CustomerID")
   FirstName      String
   LastName       String
   Email          String            @unique
@@ -75,7 +75,7 @@ model Customer {
 
 // Bảng kiểu khách hàng (VIP - Normal)
 model CustomerType {
-  CustomerTypeId Int        @id
+  CustomerTypeId Int        @id @default(autoincrement()) @map(name: "CustomerTypeId")
   Name           String
   Description    String?
   Customer       Customer[]
@@ -83,7 +83,7 @@ model CustomerType {
 
 // Bảng đặt tour
 model Booking {
-  BookingID   Int       @id
+  BookingID   Int       @id @default(autoincrement()) @map(name: "BookingID")
   CustomerID  Int
   TourID      Int
   BookingDate DateTime
@@ -94,7 +94,7 @@ model Booking {
 
 // Bảng thanh toán
 model Payment {
-  PaymentID   Int      @id
+  PaymentID   Int      @id @default(autoincrement()) @map(name: "PaymentID")
   BookingID   Int
   PaymentDate DateTime
   Amount      Float
@@ -103,7 +103,7 @@ model Payment {
 
 // Bảng phản hồi
 model Feedback {
-  FeedbackID Int      @id
+  FeedbackID Int      @id @default(autoincrement()) @map(name: "FeedbackID")
   CustomerID Int
   TourID     Int
   Rating     Int?
@@ -114,7 +114,7 @@ model Feedback {
 
 // Bảng hỗ trợ
 model CustomerSupport {
-  SupportID     Int         @id
+  SupportID     Int         @id @default(autoincrement()) @map(name: "SupportID")
   CustomerID    Int
   SupportTypeId Int
   SupportDate   DateTime
@@ -125,7 +125,7 @@ model CustomerSupport {
 
 // Bảng kiểu báo cáo
 model SupportType {
-  SupportTypeId   Int               @id
+  SupportTypeId   Int               @id @default(autoincrement()) @map(name: "SupportTypeId")
   Name            String
   Description     String?
   CustomerSupport CustomerSupport[]
@@ -133,8 +133,9 @@ model SupportType {
 
 // Bảng khuyến mãi
 model Promotion {
-  PromotionID Int       @id
+  PromotionID Int       @id @default(autoincrement()) @map(name: "PromotionID")
   PromoCode   String
+  Name        String?
   Description String?
   Discount    Float?
   StartDate   DateTime
@@ -145,7 +146,7 @@ model Promotion {
 
 // Bảng Khách sạn
 model Hotel {
-  HotelId     Int        @id
+  HotelId     Int        @id @default(autoincrement()) @map(name: "HotelId")
   Name        String
   Address     String?
   City        String?
@@ -160,7 +161,7 @@ model Hotel {
 
 // Bảng kiểu phòng
 model RoomType {
-  RoomTypeId   Int            @id
+  RoomTypeId   Int            @id @default(autoincrement()) @map(name: "RoomTypeId")
   Name         String?
   MaxOccupancy Int?
   Price        Float?
@@ -173,7 +174,7 @@ model RoomType {
 
 // Bảng tình trạng phòng trống
 model Availability {
-  AvailabilityId Int       @id
+  AvailabilityId Int       @id @default(autoincrement()) @map(name: "AvailabilityId")
   DateCheck      DateTime?
   AvailableRooms Int?
   RoomTypeId     Int?

@@ -82,7 +82,16 @@ const GetToursTypes = async () => {
 const AddTourType = async (tourTypeData: TourType) => {
     try {
         const tour = await prisma.tourType.create({
-            data: tourTypeData,
+            data: {
+                Name: tourTypeData.Name,
+                Description: tourTypeData.Description,
+                PriceElder: tourTypeData.PriceElder,
+                PriceChildren: tourTypeData.PriceChildren,
+                PromotionId: tourTypeData.PromotionId,
+                Img: tourTypeData.Img,
+                IsLocal: tourTypeData.IsLocal,
+                RateTourType: tourTypeData.RateTourType
+            },
         });
 
         if (tour) {

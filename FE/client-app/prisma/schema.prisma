@@ -11,81 +11,80 @@ datasource db {
 }
 
 model Tour {
-  TourID     Int       @id @map(name: "TourID")
-  TourName   String
+  TourID      Int        @id @default(autoincrement()) @map(name: "TourID")
+  TourName    String
   Description String?
-  Price      Decimal
-  StartDate  DateTime
-  EndDate    DateTime
-  Location   String?
-  Bookings   Booking[]
-  Feedback   Feedback[] // Add this line
+  Price       Decimal
+  StartDate   DateTime
+  EndDate     DateTime
+  Location    String?
+  Bookings    Booking[]
+  Feedback    Feedback[] // Add this line
 }
 
 model Customer {
-  CustomerID Int       @id @map(name: "CustomerID")
+  CustomerID Int     @id @default(autoincrement()) @map(name: "CustomerID")
   FirstName  String
   LastName   String
-  Email      String    @unique
+  Email      String  @unique
   Phone      String?
   Address    String?
 
-  Bookings   Booking[]
-  Feedback   Feedback[]
-  Support    CustomerSupport[]
+  Bookings Booking[]
+  Feedback Feedback[]
+  Support  CustomerSupport[]
 }
 
 model Booking {
-  BookingID  Int       @id @map(name: "BookingID")
-  CustomerID Int       @map(name: "CustomerID")
-  TourID     Int       @map(name: "TourID")
+  BookingID   Int      @id @default(autoincrement()) @map(name: "BookingID")
+  CustomerID  Int      @map(name: "CustomerID")
+  TourID      Int      @map(name: "TourID")
   BookingDate DateTime
 
-  Customer   Customer  @relation(fields: [CustomerID], references: [CustomerID])
-  Tour       Tour      @relation(fields: [TourID], references: [TourID])
-  Payment    Payment[]
+  Customer Customer  @relation(fields: [CustomerID], references: [CustomerID])
+  Tour     Tour      @relation(fields: [TourID], references: [TourID])
+  Payment  Payment[]
 
   @@index([CustomerID], name: "idx_customer_id")
   @@index([TourID], name: "idx_tour_id")
 }
 
 model Payment {
-  PaymentID  Int       @id @map(name: "PaymentID")
-  BookingID  Int       @map(name: "BookingID")
+  PaymentID   Int      @id @default(autoincrement()) @map(name: "PaymentID")
+  BookingID   Int      @map(name: "BookingID")
   PaymentDate DateTime
-  Amount     Decimal
+  Amount      Decimal
 
-  Booking    Booking   @relation(fields: [BookingID], references: [BookingID])
+  Booking Booking @relation(fields: [BookingID], references: [BookingID])
 }
 
 model Feedback {
-  FeedbackID Int      @id @map(name: "FeedbackID")
-  CustomerID Int      @map(name: "CustomerID")
-  TourID     Int      @map(name: "TourID")
+  FeedbackID Int     @id @default(autoincrement()) @map(name: "FeedbackID")
+  CustomerID Int     @map(name: "CustomerID")
+  TourID     Int     @map(name: "TourID")
   Rating     Int?
   Comment    String?
 
-  Customer   Customer @relation(fields: [CustomerID], references: [CustomerID])
-  Tour       Tour     @relation(fields: [TourID], references: [TourID])
+  Customer Customer @relation(fields: [CustomerID], references: [CustomerID])
+  Tour     Tour     @relation(fields: [TourID], references: [TourID])
 }
 
 model CustomerSupport {
-  SupportID   Int      @id @map(name: "SupportID")
+  SupportID   Int      @id @default(autoincrement()) @map(name: "SupportID")
   CustomerID  Int      @map(name: "CustomerID")
   SupportType String
   SupportDate DateTime
   Description String?
 
-  Customer    Customer @relation(fields: [CustomerID], references: [CustomerID])
+  Customer Customer @relation(fields: [CustomerID], references: [CustomerID])
 }
 
 model Promotion {
-  PromotionID Int      @id @map(name: "PromotionID")
+  PromotionID Int      @id @default(autoincrement()) @map(name: "PromotionID")
   PromoCode   String
   Description String?
+  Name        String?
   Discount    Decimal?
   StartDate   DateTime
   EndDate     DateTime
 }
-
-
