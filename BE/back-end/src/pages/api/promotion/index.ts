@@ -128,7 +128,8 @@ const UpdatePromotion = async (promotion: Promotion) => {
                 Discount: promotion.Discount,
                 StartDate: promotion.StartDate,
                 EndDate: promotion.EndDate,
-                TourTypeId: promotion.TourTypeId
+                TourTypeId: promotion.TourTypeId,
+                Name: promotion.Name
             }
         });
 

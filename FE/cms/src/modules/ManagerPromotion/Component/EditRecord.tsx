@@ -39,8 +39,10 @@ const CollectionCreateForm: React.FC<CollectionCreateFormProps> = ({
   save,
   form,
 }) => {
-  form.setFieldValue("StartDate", dayjs(form?.getFieldValue("StartDate") || new Date()));
-  form.setFieldValue("EndDate", dayjs(form?.getFieldValue("EndDate") || new Date()));
+  
+  form?.setFieldValue("StartDate", form?.getFieldValue("StartDate") ? dayjs(form?.getFieldValue("StartDate")) : dayjs(new Date()));
+  form?.setFieldValue("EndDate", form?.getFieldValue("EndDate") ? dayjs(form?.getFieldValue("EndDate")) : dayjs(new Date()));
+  
   return (
     <Modal
       open={open}
@@ -50,10 +52,7 @@ const CollectionCreateForm: React.FC<CollectionCreateFormProps> = ({
       onCancel={onCancel}
       onOk={async (ob) => {
         const row = (await form.validateFields()) as Promotion;
-        save({
-          ...row,
-          Discount: parseInt(row?.Discount ? row?.Discount?.toString() : "0"),
-        });
+        save();
         onCreate();
       }}
     >
@@ -140,7 +139,11 @@ const EditRecord: React.FC<Props> = (props) => {
   const { TourTypes, Save, Form, Promotions, onInit, Cancel } = props;
 
   useEffect(() => {
-    if (open) onInit();
+    if (open) {
+      onInit();
+      Form?.setFieldValue("StartDate", Form?.getFieldValue("StartDate") ? dayjs(Form?.getFieldValue("StartDate")) : dayjs(new Date()));
+      Form?.setFieldValue("EndDate", Form?.getFieldValue("EndDate") ? dayjs(Form?.getFieldValue("EndDate")) : dayjs(new Date()));
+    }
   }, [open]);
 
   const onCreate = () => {

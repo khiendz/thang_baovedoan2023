@@ -152,7 +152,7 @@ const Columns = (
         <div className="dk-flex dk-gap-3 dk-text-[#1677ff] dk-w-[150px]">
            <EditRecord
               onInit={() => {
-                edit(record, record.PromotionID?.toString() || "");
+                edit(record, record?.PromotionID?.toString() || "");
               }}
               Save={() => save(record?.PromotionID || "")}
               Cancel={cancel}
