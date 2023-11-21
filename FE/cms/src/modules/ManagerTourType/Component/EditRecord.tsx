@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from "react";
 import {
   Button,
-  DatePicker,
   Form,
   FormInstance,
   Input,
   Modal,
   Select,
 } from "antd";
-import dayjs from "dayjs";
 import { Promotion, TourType } from "Models";
 
 interface CollectionEditFormProps {
@@ -36,7 +34,6 @@ const CollectionCreateForm: React.FC<CollectionEditFormProps> = ({
   open,
   onCreate,
   onCancel,
-  tourTypes,
   promotions,
   save,
   form,

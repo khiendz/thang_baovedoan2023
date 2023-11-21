@@ -157,7 +157,7 @@ const AddRecord: React.FC<Props> = (props) => {
           setOpen(true);
         }}
       >
-        Thêm tour
+        Thêm ưu đãi
       </Button>
       <CollectionCreateForm
         open={open}

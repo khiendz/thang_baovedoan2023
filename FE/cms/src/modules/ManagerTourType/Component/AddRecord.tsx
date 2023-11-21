@@ -1,14 +1,12 @@
 import React, { useState } from "react";
 import {
   Button,
-  DatePicker,
   Form,
   FormInstance,
   Input,
   Modal,
   Select,
 } from "antd";
-import dayjs from "dayjs";
 import { Promotion, TourType } from "Models";
 interface CollectionCreateFormProps {
   open: boolean;
@@ -128,7 +126,6 @@ const CollectionCreateForm: React.FC<CollectionCreateFormProps> = ({
 };
 
 const AddRecord: React.FC<Props> = (props) => {
-  debugger
   const [open, setOpen] = useState(false);
   const { TourTypes, Save, Form, Promotions } = props;
 

@@ -13,7 +13,7 @@ import "./style.scss";
 import { getAllPromotion } from "services/promotion-services";
 import Columns from "./Component/Columns";
 import MergedColumns from "./Component/MergedColumns";
-import { changeTourType, handleDelete, handleAdd } from "./Service";
+import { changeTourType, handleDelete, handleAdd } from "./Services";
 
 const ManagerTourType = () => {
   const [tourTypes, setTourTypes] = useState<TourType[]>([]);
