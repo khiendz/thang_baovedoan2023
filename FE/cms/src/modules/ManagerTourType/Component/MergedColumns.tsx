@@ -17,7 +17,7 @@ const MergedColumns = (columns: any, isEditing: any, tourTypes: TourType[], prom
         title: col.title,
         tourTypes: tourTypes,
         promotions: promotions,
-        editing: isEditing(record),
+        editing: record ? isEditing(record).toString() : "true",
         form: form,
       }),
     };

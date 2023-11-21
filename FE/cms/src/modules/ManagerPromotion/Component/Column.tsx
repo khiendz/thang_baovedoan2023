@@ -2,6 +2,7 @@ import { Promotion, TourType } from "Models";
 import { FormInstance, Popconfirm } from "antd";
 import GetColumnSearchProps from "components/GetColumnSearchProps";
 import EditRecord from "./EditRecord";
+import format from 'date-fns/format';
 
 const Columns = (
   setSearchText: any,
@@ -96,6 +97,11 @@ const Columns = (
       searchedColumn,
       searchText
     ),
+    render: (date: string) => (
+      <p className="dk-block dk-w-[150px] dk-text-sm dk-font-medium dk-font-Inter">
+        {format(new Date(date), 'dd-MM-yyyy')}
+      </p>
+    ),
     editable: true,
     align: "left",
   },
@@ -110,6 +116,11 @@ const Columns = (
       searchInput,
       searchedColumn,
       searchText
+    ),
+    render: (date: string) => (
+      <p className="dk-block dk-w-[150px] dk-text-sm dk-font-medium dk-font-Inter">
+        {format(new Date(date), 'dd-MM-yyyy')}
+      </p>
     ),
     editable: true,
     align: "left",
@@ -137,7 +148,6 @@ const Columns = (
     dataIndex: "operation",
     align: "center",
     render: (_: any, record: Promotion) => {
-      const editable = isEditing(record);
       return (
         <div className="dk-flex dk-gap-3 dk-text-[#1677ff] dk-w-[150px]">
            <EditRecord

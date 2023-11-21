@@ -143,7 +143,7 @@ const EditRecord: React.FC<Props> = (props) => {
         open={open}
         save={Save}
         form={Form}
-        tourTypes={TourTypes}
+        tourTypes={TourTypes ? TourTypes : TourTypes}
         promotions={Promotions}
         onCreate={onCreate}
         onCancel={() => {
