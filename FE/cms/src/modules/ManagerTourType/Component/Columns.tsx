@@ -101,7 +101,7 @@ const Columns = (
       align: "left",
     },
     {
-      title: "operation",
+      title: "Cập nhật",
       dataIndex: "operation",
       align: "center",
       render: (_: any, record: TourType) => {

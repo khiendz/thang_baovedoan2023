@@ -10,13 +10,6 @@ import {
 } from "antd";
 import dayjs from "dayjs";
 import { Promotion, TourType } from "Models";
-
-interface Values {
-  title: string;
-  description: string;
-  modifier: string;
-}
-
 interface CollectionCreateFormProps {
   open: boolean;
   onCreate: () => void;
@@ -38,7 +31,6 @@ const CollectionCreateForm: React.FC<CollectionCreateFormProps> = ({
   open,
   onCreate,
   onCancel,
-  tourTypes,
   promotions,
   save,
   form,
@@ -136,6 +128,7 @@ const CollectionCreateForm: React.FC<CollectionCreateFormProps> = ({
 };
 
 const AddRecord: React.FC<Props> = (props) => {
+  debugger
   const [open, setOpen] = useState(false);
   const { TourTypes, Save, Form, Promotions } = props;
 
@@ -151,7 +144,7 @@ const AddRecord: React.FC<Props> = (props) => {
           setOpen(true);
         }}
       >
-        Thêm tour
+        Thêm loại tour
       </Button>
       <CollectionCreateForm
         open={open}
