@@ -15,10 +15,15 @@ import dayjs from "dayjs";
 import type { ColumnType } from "antd/es/table/interface";
 import type { FilterConfirmProps } from "antd/es/table/interface";
 import Highlighter from "react-highlight-words";
-import { EditableCell } from "./EdittableCell";
 import AddRecord from "./Component/AddRecord";
+import EditRecord from "./Component/EditRecord";
 import { Promotion, TourType } from "Models";
-import { AddTourType, DeleteTourTypeById, UpdateTourType, getAllTourType } from "services";
+import {
+  AddTourType,
+  DeleteTourTypeById,
+  UpdateTourType,
+  getAllTourType,
+} from "services";
 import "./style.scss";
 import { getAllPromotion } from "services/promotion-services";
 
@@ -32,7 +37,8 @@ const ManagerTourType = () => {
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
   const searchInput = useRef<InputRef>(null);
-  const isEditing = (record: TourType) => record?.TourTypeId?.toString() === editingKey;
+  const isEditing = (record: TourType) =>
+    record?.TourTypeId?.toString() === editingKey;
 
   const handleSearch = (
     selectedKeys: string[],
@@ -49,7 +55,9 @@ const ManagerTourType = () => {
     setSearchText("");
   };
 
-  const getColumnSearchProps = (dataIndex: DataIndex): ColumnType<TourType> => ({
+  const getColumnSearchProps = (
+    dataIndex: DataIndex
+  ): ColumnType<TourType> => ({
     filterDropdown: ({
       setSelectedKeys,
       selectedKeys,
@@ -155,9 +163,7 @@ const ManagerTourType = () => {
       ...getColumnSearchProps("Description"),
       render: (description: string) => (
         <p className="dk-block dk-w-[150px] dk-text-sm dk-font-medium dk-font-Inter">
-         {
-            description
-         }
+          {description}
         </p>
       ),
       editable: true,
@@ -205,9 +211,7 @@ const ManagerTourType = () => {
       ...getColumnSearchProps("IsLocal"),
       render: (IsLocal: number) => (
         <p className="dk-block dk-w-[150px] dk-text-sm dk-font-medium dk-font-Inter">
-         {
-            IsLocal === 0 ? "Trong nước" : "Ngoài nước"
-         }
+          {IsLocal === 0 ? "Trong nước" : "Ngoài nước"}
         </p>
       ),
       editable: true,
@@ -229,32 +233,22 @@ const ManagerTourType = () => {
         const editable = isEditing(record);
         return (
           <div className="dk-flex dk-gap-3 dk-text-[#1677ff] dk-w-[150px]">
+            <EditRecord
+                  onInit={() => {
+                    edit(record, record.TourTypeId?.toString() || "")
+                  }} 
+                  Save={handleAdd}
+                  Cancel={cancel}
+                  Form={form}
+                  TourTypes={tourTypes}
+                  Promotions={promotions}
+                />
             <Popconfirm
               title="Sure to delete?"
               onConfirm={() => handleDelete(record.TourTypeId)}
             >
               <a>Delete</a>
             </Popconfirm>
-            {editable ? (
-              <span className="dk-block dk-w-[88px] dk-font-semibold">
-                <Typography.Link
-                  onClick={() => save(record?.TourTypeId || "")}
-                  style={{ marginRight: 8 }}
-                >
-                  Save
-                </Typography.Link>
-                <Popconfirm title="Sure to cancel?" onConfirm={cancel}>
-                  <a>Cancel</a>
-                </Popconfirm>
-              </span>
-            ) : (
-              <Typography.Link
-                disabled={editingKey !== ""}
-                onClick={() => edit(record, record.TourTypeId?.toString() || "")}
-              >
-                Edit
-              </Typography.Link>
-            )}
           </div>
         );
       },
@@ -267,7 +261,7 @@ const ManagerTourType = () => {
     }
 
     let inputType = "text";
-   
+
     return {
       ...col,
       onCell: (record: TourType) => ({
@@ -348,13 +342,18 @@ const ManagerTourType = () => {
 
   const handleDelete = async (key: number) => {
     const result = await clearTheTourType(key);
-    const newData = tourTypes.filter((item: TourType) => item.TourTypeId !== key);
+    const newData = tourTypes.filter(
+      (item: TourType) => item.TourTypeId !== key
+    );
     setTourTypes(newData);
   };
 
   const handleAdd = async (tourType: TourType) => {
     const result = await handleAddTourType(tourType);
-    setTourTypes([{ ...tourType, TourTypeId: tourTypes.length + 1 }, ...tourTypes]);
+    setTourTypes([
+      { ...tourType, TourTypeId: tourTypes.length + 1 },
+      ...tourTypes,
+    ]);
   };
 
   const edit = (record: TourType, key: string) => {
@@ -398,11 +397,6 @@ const ManagerTourType = () => {
       <Table
         columns={mergedColumns}
         dataSource={tourTypes}
-        components={{
-          body: {
-            cell: EditableCell,
-          },
-        }}
         rowClassName="editable-row"
         bordered
       ></Table>
