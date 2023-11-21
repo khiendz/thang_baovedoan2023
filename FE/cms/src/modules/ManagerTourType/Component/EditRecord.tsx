@@ -11,12 +11,6 @@ import {
 import dayjs from "dayjs";
 import { Promotion, TourType } from "Models";
 
-interface Values {
-  title: string;
-  description: string;
-  modifier: string;
-}
-
 interface CollectionEditFormProps {
   open: boolean;
   onCreate: () => void;
@@ -36,6 +30,8 @@ interface Props {
   Form: FormInstance;
 }
 
+const { TextArea } = Input;
+
 const CollectionCreateForm: React.FC<CollectionEditFormProps> = ({
   open,
   onCreate,
@@ -49,18 +45,11 @@ const CollectionCreateForm: React.FC<CollectionEditFormProps> = ({
     <Modal
       open={open}
       title="Tạo một loại tour mới"
-      okText="Tạo loại tour"
+      okText="Cập nhật tour"
       cancelText="Hủy"
       onCancel={onCancel}
-      onOk={async (ob) => {
-        const row = (await form.validateFields()) as TourType;
-        save({
-          ...row,
-          Description: row.Description?.toString(),
-          PriceElder: parseInt(row?.PriceElder ? row?.PriceElder?.toString() : "0"),
-          PriceChildren: parseInt(row?.PriceChildren ? row?.PriceChildren?.toString() : "0"),
-          RateTourType: parseInt(row?.RateTourType ? row?.RateTourType?.toString() : "0"),
-        });
+      onOk={() => {
+        save();
         onCreate();
       }}
     >
@@ -78,7 +67,7 @@ const CollectionCreateForm: React.FC<CollectionEditFormProps> = ({
           <Input />
         </Form.Item>
         <Form.Item name="Description" label="Mô tả tour">
-          <Input type="text"/>
+          <TextArea/>
         </Form.Item>
         <Form.Item
           name="PriceElder"
@@ -93,13 +82,6 @@ const CollectionCreateForm: React.FC<CollectionEditFormProps> = ({
           rules={[{ required: true, message: "Làm ơn nhập giá trẻ em" }]}
         >
           <Input/>
-        </Form.Item>
-        <Form.Item
-          name="Location"
-          label="Vị trí"
-          rules={[{ required: true, message: "Làm ơn nhập vị trí!" }]}
-        >
-            <Input />
         </Form.Item>
         <Form.Item name="PromotionId" label="Ưu đãi" className="dk-w-full">
           <Select

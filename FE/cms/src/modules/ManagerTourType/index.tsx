@@ -190,6 +190,11 @@ const ManagerTourType = () => {
       className: "column-money",
       dataIndex: "PromotionId",
       ...getColumnSearchProps("PromotionId"),
+      render: (PromotionId: number) => (
+        <p>
+          {promotions.filter((ob) => ob.PromotionID == PromotionId)[0]?.Name}
+        </p>
+      ),
       editable: true,
       align: "left",
     },
@@ -234,15 +239,15 @@ const ManagerTourType = () => {
         return (
           <div className="dk-flex dk-gap-3 dk-text-[#1677ff] dk-w-[150px]">
             <EditRecord
-                  onInit={() => {
-                    edit(record, record.TourTypeId?.toString() || "")
-                  }} 
-                  Save={handleAdd}
-                  Cancel={cancel}
-                  Form={form}
-                  TourTypes={tourTypes}
-                  Promotions={promotions}
-                />
+              onInit={() => {
+                edit(record, record.TourTypeId?.toString() || "");
+              }}
+              Save={() => save(record?.TourTypeId || "")}
+              Cancel={cancel}
+              Form={form}
+              TourTypes={tourTypes}
+              Promotions={promotions}
+            />
             <Popconfirm
               title="Sure to delete?"
               onConfirm={() => handleDelete(record.TourTypeId)}
