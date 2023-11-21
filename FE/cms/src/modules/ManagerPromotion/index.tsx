@@ -15,7 +15,6 @@ import dayjs from "dayjs";
 import type { ColumnType } from "antd/es/table/interface";
 import type { FilterConfirmProps } from "antd/es/table/interface";
 import Highlighter from "react-highlight-words";
-import { EditableCell } from "./EdittableCell";
 import AddRecord from "./Component/AddRecord";
 import { Promotion, TourType } from "Models";
 import { AddTourType, DeleteTourTypeById, UpdateTourType, getAllTourType } from "services";
@@ -387,11 +386,6 @@ const ManagerPromotion = () => {
       <Table
         columns={mergedColumns}
         dataSource={promotions}
-        components={{
-          body: {
-            cell: EditableCell,
-          },
-        }}
         rowClassName="editable-row"
         bordered
       ></Table>
