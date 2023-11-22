@@ -46,12 +46,11 @@ const CollectionCreateForm: React.FC<CollectionCreateFormProps> = ({
   return (
     <Modal
       open={open}
-      title="Tạo một ưu đãi mới"
-      okText="Tạo ưu đãi"
+      title="Cập nhật ưu đãi"
+      okText="Cập nhật ưu đãi"
       cancelText="Hủy"
       onCancel={onCancel}
       onOk={async (ob) => {
-        const row = (await form.validateFields()) as Promotion;
         save();
         onCreate();
       }}
@@ -84,7 +83,7 @@ const CollectionCreateForm: React.FC<CollectionCreateFormProps> = ({
           label="Tỷ lệ ưu đãi"
           rules={[{ required: true, message: "Làm ơn nhập tỷ lệ ưu đãi" }]}
         >
-          <Input />
+          <Input type="number"/>
         </Form.Item>
         <Form.Item
           name="StartDate"

@@ -138,7 +138,7 @@ const Columns = (
       searchText
     ),
     render: (tourType: number) => (
-      <p>{tourTypes.find((ob) => ob.TourTypeId === tourType)?.Name}</p>
+      <p>{tourTypes.find((ob) => ob.TourTypeId === tourType)?.Name || "Không áp dụng kiểu tour"}</p>
     ),
     editable: true,
     align: "left",

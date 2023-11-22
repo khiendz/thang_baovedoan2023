@@ -30,11 +30,17 @@ const ManagerPromotion = () => {
       const index = newData.findIndex((item) => key === item.PromotionID);
       if (index > -1) {
         const item = newData[index];
-        const newTourType = { ...item, ...row };
+        const newTourType = { 
+          ...item, 
+          ...row, 
+          Discount: parseInt(
+            row?.Discount ? row?.Discount?.toString() : "0"
+          )
+        };
         const result = changePromotion(newTourType);
         newData.splice(index, 1, {
           ...item,
-          ...row,
+          ...row
         });
         setPromotions(newData);
         setEditingKey("");

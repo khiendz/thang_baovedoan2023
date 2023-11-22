@@ -16,6 +16,9 @@ const handler =  async (req: NextApiRequest, res: NextApiResponse) => {
         where: {
           TourTypeId: tourTypeId,
         },
+        include: {
+          Promotion: true
+        }
       });
 
       if (tourType) {
