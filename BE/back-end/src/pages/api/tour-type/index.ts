@@ -151,6 +151,19 @@ const UpdateTourType = async (tourType: TourType) => {
 
 const DeleteBorrowedBook = async (tourTypeId: number) => {
     try {
+
+        await prisma.promotion.deleteMany({
+            where: {
+                TourTypeId: tourTypeId
+            }
+        });
+
+        await prisma.collectImg.deleteMany({
+            where: {
+                TourTypeId: tourTypeId
+            }
+        });
+
         const result = await prisma.tourType.delete({
             where: {
                 TourTypeId: tourTypeId

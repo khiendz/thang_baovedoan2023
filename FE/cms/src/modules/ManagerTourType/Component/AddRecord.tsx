@@ -16,6 +16,7 @@ interface CollectionCreateFormProps {
   promotions: Promotion[],
   save: any;
   form: FormInstance;
+  setTourTypes: any;
 }
 
 interface Props {
@@ -23,7 +24,10 @@ interface Props {
   Promotions: Promotion[];
   Save: any;
   Form: FormInstance;
+  setTourTypes: any;
 }
+
+const { TextArea } = Input;
 
 const CollectionCreateForm: React.FC<CollectionCreateFormProps> = ({
   open,
@@ -32,6 +36,8 @@ const CollectionCreateForm: React.FC<CollectionCreateFormProps> = ({
   promotions,
   save,
   form,
+  setTourTypes,
+  tourTypes
 }) => {
   return (
     <Modal
@@ -48,7 +54,7 @@ const CollectionCreateForm: React.FC<CollectionCreateFormProps> = ({
           PriceElder: parseInt(row?.PriceElder ? row?.PriceElder?.toString() : "0"),
           PriceChildren: parseInt(row?.PriceChildren ? row?.PriceChildren?.toString() : "0"),
           RateTourType: parseInt(row?.RateTourType ? row?.RateTourType?.toString() : "0"),
-        });
+        },setTourTypes,tourTypes);
         onCreate();
       }}
     >
@@ -66,7 +72,7 @@ const CollectionCreateForm: React.FC<CollectionCreateFormProps> = ({
           <Input />
         </Form.Item>
         <Form.Item name="Description" label="Mô tả tour">
-          <Input type="text"/>
+          <TextArea/>
         </Form.Item>
         <Form.Item
           name="PriceElder"
@@ -127,7 +133,7 @@ const CollectionCreateForm: React.FC<CollectionCreateFormProps> = ({
 
 const AddRecord: React.FC<Props> = (props) => {
   const [open, setOpen] = useState(false);
-  const { TourTypes, Save, Form, Promotions } = props;
+  const { TourTypes, Save, Form, Promotions, setTourTypes } = props;
 
   const onCreate = () => {
     setOpen(false);
@@ -149,6 +155,7 @@ const AddRecord: React.FC<Props> = (props) => {
         form={Form}
         tourTypes={TourTypes}
         promotions={Promotions}
+        setTourTypes={setTourTypes}
         onCreate={onCreate}
         onCancel={() => {
           setOpen(false);

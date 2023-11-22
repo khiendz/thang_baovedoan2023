@@ -17,7 +17,8 @@ const Columns = (
     save: any,
     cancel: any,
     form: FormInstance,
-    handleDelete: any
+    handleDelete: any,
+    setTourType: any
     ) => [
     {
       title: "Tên Tour",
@@ -120,7 +121,7 @@ const Columns = (
             />
             <Popconfirm
               title="Sure to delete?"
-              onConfirm={() => handleDelete(record.TourTypeId)}
+              onConfirm={() => handleDelete(record.TourTypeId,tourTypes,setTourType)}
             >
               <a>Delete</a>
             </Popconfirm>

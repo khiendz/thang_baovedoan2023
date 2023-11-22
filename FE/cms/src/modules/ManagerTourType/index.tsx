@@ -85,7 +85,7 @@ const ManagerTourType = () => {
     } catch (e) {}
   };
 
-  const columns = Columns(setSearchText,setSearchedColumn,searchInput,searchedColumn,searchText,promotions,tourTypes,isEditing,edit,save,cancel,form,handleDelete);
+  const columns = Columns(setSearchText,setSearchedColumn,searchInput,searchedColumn,searchText,promotions,tourTypes,isEditing,edit,save,cancel,form,handleDelete,setTourTypes);
   const mergedColumns = MergedColumns(columns,isEditing,tourTypes,promotions,form);
 
   return tourTypes ? (
@@ -95,6 +95,7 @@ const ManagerTourType = () => {
         Form={form}
         TourTypes={tourTypes}
         Promotions={promotions}
+        setTourTypes={setTourTypes}
       />
       <Table
         columns={mergedColumns}
