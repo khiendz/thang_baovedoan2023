@@ -88,7 +88,7 @@ const ManagerPromotion = () => {
     } catch (e) {}
   };
 
-  const columns = Columns(setSearchText,setSearchedColumn,searchInput,searchedColumn,searchText,promotions,tourTypes,isEditing,edit,save,cancel,form,handleDelete);
+  const columns = Columns(setSearchText,setSearchedColumn,searchInput,searchedColumn,searchText,promotions,tourTypes,setPromotions,isEditing,edit,save,cancel,form,handleDelete);
   const mergedColumns = MergedColumns(columns,tourTypes,promotions,isEditing,form);
 
   return promotions ? (

@@ -35,10 +35,11 @@ export const clearThePromotion = async (promotionId: number) => {
     }
 };
 
-export const handleDelete = async (key: number, tourTypes: TourType[], setTourTypes: any) => {
+export const handleDelete = async (key: number, promotion: Promotion[], setPromotions: any) => {
+    debugger
     const result = await clearThePromotion(key);
-    const newData = tourTypes.filter((item: TourType) => item.TourTypeId !== key);
-    setTourTypes(newData);
+    const newData = promotion.filter((item: Promotion) => item.PromotionID !== key);
+    setPromotions(newData);
 };
 
 export const handleAdd = async (promotion: Promotion, setPromotions: any, promotions: Promotion[]) => {

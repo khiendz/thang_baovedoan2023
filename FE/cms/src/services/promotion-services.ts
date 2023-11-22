@@ -76,7 +76,7 @@ export async function AddPromotion(promotion: Promotion) {
 
 export async function DeletePromotionById(promotionId: number) {
     try {
-        const res: any = await axios.delete(`${domainBE}/api/tour?tourTypeId=${promotionId}`);
+        const res: any = await axios.delete(`${domainBE}/api/promotion?promotionId=${promotionId}`);
 
         if (res.status === 200) {
             return res.data;

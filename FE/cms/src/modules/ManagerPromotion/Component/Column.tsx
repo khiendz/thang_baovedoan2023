@@ -12,6 +12,7 @@ const Columns = (
   searchText: any,
   promotions: Promotion[],
   tourTypes: TourType[],
+  setPromotion: any,
   isEditing: any,
   edit: any,
   save: any,
@@ -97,9 +98,9 @@ const Columns = (
       searchedColumn,
       searchText
     ),
-    render: (date: string) => (
+    render: (date: Date) => (
       <p className="dk-block dk-w-[150px] dk-text-sm dk-font-medium dk-font-Inter">
-        {format(new Date(date), 'dd-MM-yyyy')}
+        {format(date ? new Date(date) : new Date(), 'dd-MM-yyyy')}
       </p>
     ),
     editable: true,
@@ -117,9 +118,9 @@ const Columns = (
       searchedColumn,
       searchText
     ),
-    render: (date: string) => (
+    render: (date: Date) => (
       <p className="dk-block dk-w-[150px] dk-text-sm dk-font-medium dk-font-Inter">
-        {format(new Date(date), 'dd-MM-yyyy')}
+        {format(date ? new Date(date) : new Date(), 'dd-MM-yyyy')}
       </p>
     ),
     editable: true,
@@ -162,7 +163,7 @@ const Columns = (
             />
           <Popconfirm
             title="Sure to delete?"
-            onConfirm={() => handleDelete(record.PromotionID)}
+            onConfirm={() => handleDelete(record.PromotionID,promotions,setPromotion)}
           >
             <a>Delete</a>
           </Popconfirm>
