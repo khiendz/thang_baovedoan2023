@@ -85,11 +85,12 @@ const AddPromotion = async (promotion: Promotion) => {
             data: {
                 PromotionID: promotion.PromotionID,
                 PromoCode: promotion.PromoCode,
-                Description: promotion.Description,
+                Description: promotion?.Description,
                 Discount: promotion.Discount,
                 StartDate: promotion.StartDate,
                 EndDate: promotion.EndDate,
-                TourTypeId: promotion.TourTypeId
+                TourTypeId: promotion?.TourTypeId,
+                Name: promotion.Name
             },
         });
 
@@ -124,11 +125,11 @@ const UpdatePromotion = async (promotion: Promotion) => {
             },
             data: {
                 PromoCode: promotion.PromoCode,
-                Description: promotion.Description,
+                Description: promotion?.Description,
                 Discount: promotion.Discount,
                 StartDate: promotion.StartDate,
                 EndDate: promotion.EndDate,
-                TourTypeId: promotion.TourTypeId,
+                TourTypeId: promotion?.TourTypeId,
                 Name: promotion.Name
             }
         });

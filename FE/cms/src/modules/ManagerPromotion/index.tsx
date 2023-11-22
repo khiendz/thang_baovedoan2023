@@ -92,6 +92,7 @@ const ManagerPromotion = () => {
         Form={form}
         TourTypes={tourTypes}
         Promotions={promotions}
+        SetPromotion={setPromotions}
       />
       <Table
         columns={mergedColumns}

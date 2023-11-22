@@ -40,7 +40,7 @@ model TourType {
   Description   String?
   PriceElder    Float?
   PriceChildren Float?
-  PromotionId   Int
+  PromotionId   Int?
   Img           String
   IsLocal       Int
   RateTourType  Int

@@ -23,6 +23,7 @@ interface CollectionCreateFormProps {
   onCancel: () => void;
   tourTypes: TourType[];
   promotions: Promotion[];
+  setPromotion: any;
   save: any;
   form: FormInstance;
 }
@@ -30,6 +31,7 @@ interface CollectionCreateFormProps {
 interface Props {
   TourTypes: TourType[];
   Promotions: Promotion[];
+  SetPromotion: any;
   Save: any;
   Form: FormInstance;
 }
@@ -40,6 +42,7 @@ const CollectionCreateForm: React.FC<CollectionCreateFormProps> = ({
   onCancel,
   tourTypes,
   promotions,
+  setPromotion,
   save,
   form,
 }) => {
@@ -57,7 +60,7 @@ const CollectionCreateForm: React.FC<CollectionCreateFormProps> = ({
           Discount: parseInt(
             row?.Discount ? row?.Discount?.toString() : "0"
           )
-        });
+        },setPromotion,promotions);
         onCreate();
       }}
     >
@@ -143,7 +146,7 @@ const CollectionCreateForm: React.FC<CollectionCreateFormProps> = ({
 
 const AddRecord: React.FC<Props> = (props) => {
   const [open, setOpen] = useState(false);
-  const { TourTypes, Save, Form, Promotions } = props;
+  const { TourTypes, Save, Form, Promotions, SetPromotion } = props;
 
   const onCreate = () => {
     setOpen(false);
@@ -165,6 +168,7 @@ const AddRecord: React.FC<Props> = (props) => {
         form={Form}
         tourTypes={TourTypes}
         promotions={Promotions}
+        setPromotion={SetPromotion}
         onCreate={onCreate}
         onCancel={() => {
           setOpen(false);
