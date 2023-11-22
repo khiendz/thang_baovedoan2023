@@ -17,6 +17,7 @@ interface CollectionCreateFormProps {
   save: any;
   form: FormInstance;
   setTourTypes: any;
+  setMessagePopup: any;
 }
 
 interface Props {
@@ -25,6 +26,7 @@ interface Props {
   Save: any;
   Form: FormInstance;
   setTourTypes: any;
+  setMessagePopup: any;
 }
 
 const { TextArea } = Input;
@@ -37,6 +39,7 @@ const CollectionCreateForm: React.FC<CollectionCreateFormProps> = ({
   save,
   form,
   setTourTypes,
+  setMessagePopup,
   tourTypes
 }) => {
   return (
@@ -48,13 +51,14 @@ const CollectionCreateForm: React.FC<CollectionCreateFormProps> = ({
       onCancel={onCancel}
       onOk={async (ob) => {
         const row = (await form.validateFields()) as TourType;
-        save({
+        const result = await save({
           ...row,
           Description: row.Description?.toString(),
           PriceElder: parseInt(row?.PriceElder ? row?.PriceElder?.toString() : "0"),
           PriceChildren: parseInt(row?.PriceChildren ? row?.PriceChildren?.toString() : "0"),
           RateTourType: parseInt(row?.RateTourType ? row?.RateTourType?.toString() : "0"),
         },setTourTypes,tourTypes);
+        setMessagePopup("Đã lưu thành công");
         onCreate();
       }}
     >
@@ -111,7 +115,7 @@ const CollectionCreateForm: React.FC<CollectionCreateFormProps> = ({
         <Form.Item name="Img" label="Ảnh đại diện" className="dk-w-full">
           <Input />
         </Form.Item>
-        <Form.Item name="IsLocal" label="Địa lý" className="dk-w-full">
+        <Form.Item name="IsLocal" label="Địa lý" className="dk-w-full" rules={[{ required: true, message: "Làm ơn chọn địa lý" }]}>
         <Select
             className="dk-w-full"
             options={[
@@ -133,7 +137,7 @@ const CollectionCreateForm: React.FC<CollectionCreateFormProps> = ({
 
 const AddRecord: React.FC<Props> = (props) => {
   const [open, setOpen] = useState(false);
-  const { TourTypes, Save, Form, Promotions, setTourTypes } = props;
+  const { TourTypes, Save, Form, Promotions, setTourTypes, setMessagePopup } = props;
 
   const onCreate = () => {
     setOpen(false);
@@ -156,6 +160,7 @@ const AddRecord: React.FC<Props> = (props) => {
         tourTypes={TourTypes}
         promotions={Promotions}
         setTourTypes={setTourTypes}
+        setMessagePopup={setMessagePopup}
         onCreate={onCreate}
         onCancel={() => {
           setOpen(false);

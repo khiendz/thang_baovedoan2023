@@ -8,6 +8,7 @@ import { getAllPromotion } from "services/promotion-services";
 import Columns from "./Component/Columns";
 import MergedColumns from "./Component/MergedColumns";
 import { changeTourType, handleDelete, handleAdd } from "./Services";
+import NotifYPopup from "components/NotifyPopup";
 
 const ManagerTourType = () => {
   const [tourTypes, setTourTypes] = useState<TourType[]>([]);
@@ -17,6 +18,7 @@ const ManagerTourType = () => {
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
   const searchInput = useRef<InputRef>(null);
+  const [messagePopup,setMessagePopup] = useState("");
   const isEditing = (record: TourType) =>
     record?.TourTypeId?.toString() === editingKey;
 
@@ -112,6 +114,7 @@ const ManagerTourType = () => {
           TourTypes={tourTypes}
           Promotions={promotions}
           setTourTypes={setTourTypes}
+          setMessagePopup={setMessagePopup}
         />
         <Table
           columns={mergedColumns}
@@ -120,6 +123,7 @@ const ManagerTourType = () => {
           bordered
         ></Table>
       </Form>
+      <NotifYPopup  messagePopup={messagePopup || ""} state={true} title={"Thành công"}/>
     </>
   ) : null;
 };

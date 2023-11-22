@@ -49,4 +49,5 @@ export const handleAdd = async (tourType: TourType, setTourTypes: any, tourTypes
       { ...tourType, TourTypeId: tourTypes.length + 1 },
       ...tourTypes,
     ]);
+    return result;
   };
