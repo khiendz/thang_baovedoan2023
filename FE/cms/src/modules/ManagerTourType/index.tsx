@@ -1,14 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
-import {
-  Form,
-  InputRef,
-  Table,
-} from "antd";
+import { Form, InputRef, Table } from "antd";
 import AddRecord from "./Component/AddRecord";
 import { Promotion, TourType } from "Models";
-import {
-  getAllTourType,
-} from "services";
+import { getAllTourType } from "services";
 import "./style.scss";
 import { getAllPromotion } from "services/promotion-services";
 import Columns from "./Component/Columns";
@@ -85,25 +79,48 @@ const ManagerTourType = () => {
     } catch (e) {}
   };
 
-  const columns = Columns(setSearchText,setSearchedColumn,searchInput,searchedColumn,searchText,promotions,tourTypes,isEditing,edit,save,cancel,form,handleDelete,setTourTypes);
-  const mergedColumns = MergedColumns(columns,isEditing,tourTypes,promotions,form);
+  const columns = Columns(
+    setSearchText,
+    setSearchedColumn,
+    searchInput,
+    searchedColumn,
+    searchText,
+    promotions,
+    tourTypes,
+    isEditing,
+    edit,
+    save,
+    cancel,
+    form,
+    handleDelete,
+    setTourTypes
+  );
+  const mergedColumns = MergedColumns(
+    columns,
+    isEditing,
+    tourTypes,
+    promotions,
+    form
+  );
 
   return tourTypes ? (
-    <Form form={form} component={false}>
-      <AddRecord
-        Save={handleAdd}
-        Form={form}
-        TourTypes={tourTypes}
-        Promotions={promotions}
-        setTourTypes={setTourTypes}
-      />
-      <Table
-        columns={mergedColumns}
-        dataSource={tourTypes}
-        rowClassName="editable-row"
-        bordered
-      ></Table>
-    </Form>
+    <>
+      <Form form={form} component={false}>
+        <AddRecord
+          Save={handleAdd}
+          Form={form}
+          TourTypes={tourTypes}
+          Promotions={promotions}
+          setTourTypes={setTourTypes}
+        />
+        <Table
+          columns={mergedColumns}
+          dataSource={tourTypes}
+          rowClassName="editable-row"
+          bordered
+        ></Table>
+      </Form>
+    </>
   ) : null;
 };
 
