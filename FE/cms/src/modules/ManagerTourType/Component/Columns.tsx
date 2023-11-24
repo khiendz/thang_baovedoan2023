@@ -33,9 +33,10 @@ const Columns = (
       title: "Mô tả",
       className: "column-money",
       dataIndex: "Description",
+      width: '27%',
       ...GetColumnSearchProps("Description",setSearchText,setSearchedColumn,searchInput,searchedColumn,searchText),
       render: (description: string) => (
-        <p className="dk-block dk-w-[150px] dk-text-sm dk-font-medium dk-font-Inter">
+        <p className="dk-block dk-min-w-[350px] dk-text-sm dk-font-medium dk-font-Inter">
           {description}
         </p>
       ),
@@ -105,10 +106,12 @@ const Columns = (
       title: "Cập nhật",
       dataIndex: "operation",
       align: "center",
+      width: "13%",
+      fixed: 'right',
       render: (_: any, record: TourType) => {
         const editable = isEditing(record);
         return (
-          <div className="dk-flex dk-gap-3 dk-text-[#1677ff] dk-w-[150px]">
+          <div className="dk-flex dk-gap-3 dk-text-[#1677ff]">
             <EditRecord
               onInit={() => {
                 edit(record, record.TourTypeId?.toString() || "");

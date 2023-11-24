@@ -148,9 +148,11 @@ const Columns = (
     title: "operation",
     dataIndex: "operation",
     align: "center",
+    width: "13%",
+    fixed: 'right',
     render: (_: any, record: Promotion) => {
       return (
-        <div className="dk-flex dk-gap-3 dk-text-[#1677ff] dk-w-[150px]">
+        <div className="dk-flex dk-gap-3 dk-text-[#1677ff]">
            <EditRecord
               onInit={() => {
                 edit(record, record?.PromotionID?.toString() || "");

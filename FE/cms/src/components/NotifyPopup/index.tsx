@@ -14,25 +14,24 @@ interface Props {
 
 const NotifYPopup: React.FC<Props> = (props: Props) => {
   const [api, contextHolder] = notification.useNotification();
-  const { messagePopup, setPopup, state, title } = props;
 
   useEffect(() => {
-    if (messagePopup && messagePopup != "")
+    if (props.messagePopup && props.messagePopup != "")
     openNotification('topRight');
-  }, [messagePopup]);
+  }, [props]);
 
   const openNotification = (placement: NotificationPlacement) => {
     api.info(
       {
       
-      message: `${title ? title : "Thành công"}`,
+      message: `${props.title ? props.title : "Thành công"}`,
       description: (
-          messagePopup || ""
+        props.messagePopup || ""
       ),
       placement,
-      icon: state ? <SmileOutlined style={{ color: '##a0db8e' }} /> : <RobotOutlined style={{ color: '##f26522' }} />,
+      icon: props.state ? <SmileOutlined style={{ color: '##a0db8e' }} /> : <RobotOutlined style={{ color: '##f26522' }} />,
     });
-    setPopup("");
+    props.setPopup("");
   };
   
   return <>

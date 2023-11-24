@@ -65,7 +65,7 @@ const CollectionCreateForm: React.FC<CollectionCreateFormProps> = ({
         setPopup({
           title: result?.status == 200 ? "Thành công" : "Thất bại",
           messagePopup: result?.message,
-          status: result?.status
+          state: result?.status == 200
         })
         onCreate();
       }}

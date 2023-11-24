@@ -104,6 +104,7 @@ const ManagerPromotion = () => {
         columns={mergedColumns}
         dataSource={promotions}
         rowClassName="editable-row"
+        scroll={{ x: 1500, y: 700 }}
         bordered
       ></Table>
     </Form>

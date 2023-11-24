@@ -128,6 +128,7 @@ const ManagerTourType = () => {
           columns={mergedColumns}
           dataSource={tourTypes}
           rowClassName="editable-row"
+          scroll={{ x: 1600, y: 700 }}
           bordered
         ></Table>
       </Form>
