@@ -17,7 +17,7 @@ interface CollectionCreateFormProps {
   save: any;
   form: FormInstance;
   setTourTypes: any;
-  setMessagePopup: any;
+  setPopup: any;
   setTitlePopup: any;
   setStatePopup: any;
 }
@@ -28,7 +28,7 @@ interface Props {
   Save: any;
   Form: FormInstance;
   setTourTypes: any;
-  setMessagePopup: any;
+  setPopup: any;
   setTitlePopup: any;
   setStatePopup: any;
 }
@@ -43,7 +43,7 @@ const CollectionCreateForm: React.FC<CollectionCreateFormProps> = ({
   save,
   form,
   setTourTypes,
-  setMessagePopup,
+  setPopup,
   tourTypes
 }) => {
   return (
@@ -61,7 +61,12 @@ const CollectionCreateForm: React.FC<CollectionCreateFormProps> = ({
           PriceElder: parseInt(row?.PriceElder ? row?.PriceElder?.toString() : "0"),
           PriceChildren: parseInt(row?.PriceChildren ? row?.PriceChildren?.toString() : "0"),
           RateTourType: parseInt(row?.RateTourType ? row?.RateTourType?.toString() : "0"),
-        },setTourTypes,tourTypes,setMessagePopup);
+        },setTourTypes,tourTypes);
+        setPopup({
+          title: result?.status == 200 ? "Thành công" : "Thất bại",
+          messagePopup: result?.message,
+          status: result?.status
+        })
         onCreate();
       }}
     >
@@ -140,7 +145,7 @@ const CollectionCreateForm: React.FC<CollectionCreateFormProps> = ({
 
 const AddRecord: React.FC<Props> = (props) => {
   const [open, setOpen] = useState(false);
-  const { TourTypes, Save, Form, Promotions, setTourTypes, setMessagePopup, setTitlePopup, setStatePopup } = props;
+  const { TourTypes, Save, Form, Promotions, setTourTypes, setPopup, setTitlePopup, setStatePopup } = props;
 
   const onCreate = () => {
     setOpen(false);
@@ -163,7 +168,7 @@ const AddRecord: React.FC<Props> = (props) => {
         tourTypes={TourTypes}
         promotions={Promotions}
         setTourTypes={setTourTypes}
-        setMessagePopup={setMessagePopup}
+        setPopup={setPopup}
         setTitlePopup={setTitlePopup}
         setStatePopup={setStatePopup}
         onCreate={onCreate}

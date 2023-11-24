@@ -7,14 +7,14 @@ const Context = React.createContext({ name: "Default" });
 
 interface Props {
   messagePopup: string,
-  setMessagePopup: any,
+  setPopup: any,
   title: string,
   state: boolean
 }
 
 const NotifYPopup: React.FC<Props> = (props: Props) => {
   const [api, contextHolder] = notification.useNotification();
-  const { messagePopup, setMessagePopup, state, title } = props;
+  const { messagePopup, setPopup, state, title } = props;
 
   useEffect(() => {
     if (messagePopup && messagePopup != "")
@@ -32,7 +32,7 @@ const NotifYPopup: React.FC<Props> = (props: Props) => {
       placement,
       icon: state ? <SmileOutlined style={{ color: '##a0db8e' }} /> : <RobotOutlined style={{ color: '##f26522' }} />,
     });
-    setMessagePopup("");
+    setPopup("");
   };
   
   return <>

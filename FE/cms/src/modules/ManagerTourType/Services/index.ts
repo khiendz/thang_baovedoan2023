@@ -12,10 +12,10 @@ export const changeTourType = async (tourType: TourType) => {
     }
   };
 
-export const handleAddTourType = async (tourType: TourType,setMessagePopup: any) => {
+export const handleAddTourType = async (tourType: TourType) => {
     try {
       const result = await AddTourType(tourType);
-      if (result) return result?.data;
+      if (result) return result;
       else return null;
     } catch (e) {
       console.log(e);
@@ -43,8 +43,8 @@ export const handleDelete = async (key: number, tourTypes: TourType[], setTourTy
     setTourTypes(newData);
   };
 
-export const handleAdd = async (tourType: TourType, setTourTypes: any, tourTypes: TourType[], setMessagePopup: any) => {
-    const result = await handleAddTourType(tourType,setMessagePopup);
+export const handleAdd = async (tourType: TourType, setTourTypes: any, tourTypes: TourType[]) => {
+    const result = await handleAddTourType(tourType);
     setTourTypes([
       { ...tourType, TourTypeId: tourTypes.length + 1 },
       ...tourTypes,
