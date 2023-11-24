@@ -18,6 +18,8 @@ interface CollectionCreateFormProps {
   form: FormInstance;
   setTourTypes: any;
   setMessagePopup: any;
+  setTitlePopup: any;
+  setStatePopup: any;
 }
 
 interface Props {
@@ -27,6 +29,8 @@ interface Props {
   Form: FormInstance;
   setTourTypes: any;
   setMessagePopup: any;
+  setTitlePopup: any;
+  setStatePopup: any;
 }
 
 const { TextArea } = Input;
@@ -57,8 +61,7 @@ const CollectionCreateForm: React.FC<CollectionCreateFormProps> = ({
           PriceElder: parseInt(row?.PriceElder ? row?.PriceElder?.toString() : "0"),
           PriceChildren: parseInt(row?.PriceChildren ? row?.PriceChildren?.toString() : "0"),
           RateTourType: parseInt(row?.RateTourType ? row?.RateTourType?.toString() : "0"),
-        },setTourTypes,tourTypes);
-        setMessagePopup("Đã lưu thành công");
+        },setTourTypes,tourTypes,setMessagePopup);
         onCreate();
       }}
     >
@@ -137,7 +140,7 @@ const CollectionCreateForm: React.FC<CollectionCreateFormProps> = ({
 
 const AddRecord: React.FC<Props> = (props) => {
   const [open, setOpen] = useState(false);
-  const { TourTypes, Save, Form, Promotions, setTourTypes, setMessagePopup } = props;
+  const { TourTypes, Save, Form, Promotions, setTourTypes, setMessagePopup, setTitlePopup, setStatePopup } = props;
 
   const onCreate = () => {
     setOpen(false);
@@ -161,6 +164,8 @@ const AddRecord: React.FC<Props> = (props) => {
         promotions={Promotions}
         setTourTypes={setTourTypes}
         setMessagePopup={setMessagePopup}
+        setTitlePopup={setTitlePopup}
+        setStatePopup={setStatePopup}
         onCreate={onCreate}
         onCancel={() => {
           setOpen(false);

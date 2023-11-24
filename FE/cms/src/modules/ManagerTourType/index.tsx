@@ -19,6 +19,8 @@ const ManagerTourType = () => {
   const [searchedColumn, setSearchedColumn] = useState("");
   const searchInput = useRef<InputRef>(null);
   const [messagePopup,setMessagePopup] = useState("");
+  const [titlePopup,setTitlePopup] = useState("Thành công");
+  const [statePopup,setStatePopup] = useState(true);
   const isEditing = (record: TourType) =>
     record?.TourTypeId?.toString() === editingKey;
 
@@ -115,6 +117,8 @@ const ManagerTourType = () => {
           Promotions={promotions}
           setTourTypes={setTourTypes}
           setMessagePopup={setMessagePopup}
+          setTitlePopup={setTitlePopup}
+          setStatePopup={setStatePopup}
         />
         <Table
           columns={mergedColumns}
@@ -123,7 +127,7 @@ const ManagerTourType = () => {
           bordered
         ></Table>
       </Form>
-      <NotifYPopup  messagePopup={messagePopup || ""} state={true} title={"Thành công"}/>
+      <NotifYPopup  messagePopup={messagePopup || ""} setMessagePopup={setMessagePopup} state={statePopup} title={titlePopup}/>
     </>
   ) : null;
 };
