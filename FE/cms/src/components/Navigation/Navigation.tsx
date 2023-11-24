@@ -16,6 +16,11 @@ const items: MenuProps['items'] = [
     label: <Link href='/uu-dai' className='dk-text-sm dk-text-[#222] dk-font-Inter dk-font-bold'>Quản lý ưu đãi</Link>,
     key: 'discount',
     icon: <BankOutlined />,
+  },
+  {
+    label: <Link href='/tour' className='dk-text-sm dk-text-[#222] dk-font-Inter dk-font-bold'>Quản lý tour</Link>,
+    key: 'tour',
+    icon: <BankOutlined />,
   }
 ];
 
