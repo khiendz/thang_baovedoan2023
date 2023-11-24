@@ -36,7 +36,12 @@ const ManagerTourType = () => {
       if (index > -1) {
         const item = newData[index];
         const newTourType = { ...item, ...row };
-        const result = changeTourType(newTourType);
+        const result = await changeTourType(newTourType);
+        setPopup({
+          title: result?.status == 200 ? "Thành công" : "Thất bại",
+          messagePopup: result?.message,
+          state: result?.status == 200
+        })
         newData.splice(index, 1, {
           ...item,
           ...row,
@@ -101,7 +106,8 @@ const ManagerTourType = () => {
     cancel,
     form,
     handleDelete,
-    setTourTypes
+    setTourTypes,
+    setPopup
   );
   const mergedColumns = MergedColumns(
     columns,

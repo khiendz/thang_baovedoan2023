@@ -4,7 +4,7 @@ import { AddTourType, DeleteTourTypeById, UpdateTourType } from "services";
 export const changeTourType = async (tourType: TourType) => {
     try {
       const result = await UpdateTourType(tourType);
-      if (result) return result?.data;
+      if (result) return result;
       else return null;
     } catch (e) {
       console.log(e);
@@ -28,7 +28,7 @@ export const clearTheTourType = async (tourTypeId: number) => {
 
     try {
       const result = await DeleteTourTypeById(tourTypeId);
-      if (result) return result?.data;
+      if (result) return result;
     } catch (e) {
       console.log(e);
       return null;
@@ -41,6 +41,7 @@ export const handleDelete = async (key: number, tourTypes: TourType[], setTourTy
       (item: TourType) => item.TourTypeId !== key
     );
     setTourTypes(newData);
+    return result;
   };
 
 export const handleAdd = async (tourType: TourType, setTourTypes: any, tourTypes: TourType[]) => {
