@@ -8,6 +8,7 @@ import {
   Select,
 } from "antd";
 import { Promotion, TourType } from "Models";
+import UploadFileImage from "components/UploadFileImage";
 
 interface CollectionEditFormProps {
   open: boolean;
@@ -71,14 +72,14 @@ const CollectionCreateForm: React.FC<CollectionEditFormProps> = ({
           label="Giá người lớn"
           rules={[{ required: true, message: "Làm ơn nhập giá người lớn" }]}
         >
-          <Input />
+          <Input type="number"/>
         </Form.Item>
         <Form.Item
           name="PriceChildren"
           label="Giá trẻ em"
           rules={[{ required: true, message: "Làm ơn nhập giá trẻ em" }]}
         >
-          <Input/>
+          <Input type="number"/>
         </Form.Item>
         <Form.Item name="PromotionId" label="Ưu đãi" className="dk-w-full">
           <Select
@@ -93,8 +94,8 @@ const CollectionCreateForm: React.FC<CollectionEditFormProps> = ({
             }}
            />
         </Form.Item>
-        <Form.Item name="Img" label="Ảnh đại diện" className="dk-w-full">
-          <Input />
+        <Form.Item name="Img" label="Ảnh đại diện" className="dk-w-full dk-flex dk-justify-center" >
+          <UploadFileImage lengthMaxImage={1} form={form} keyField="Img"/>
         </Form.Item>
         <Form.Item name="IsLocal" label="Địa lý" className="dk-w-full">
         <Select
@@ -108,8 +109,12 @@ const CollectionCreateForm: React.FC<CollectionEditFormProps> = ({
             }}
           />
         </Form.Item>
-        <Form.Item name="RateTourType" label="Đánh giá" className="dk-w-full">
-          <Input />
+        <Form.Item 
+          name="RateTourType" 
+          label="Đánh giá" 
+          className="dk-w-full"
+        >
+          <Input type="number" max={10} min={0}/>
         </Form.Item>
       </Form>
     </Modal>

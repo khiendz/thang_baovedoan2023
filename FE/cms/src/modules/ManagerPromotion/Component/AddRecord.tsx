@@ -26,6 +26,7 @@ interface CollectionCreateFormProps {
   setPromotion: any;
   save: any;
   form: FormInstance;
+  setPopup: any;
 }
 
 interface Props {
@@ -34,6 +35,7 @@ interface Props {
   SetPromotion: any;
   Save: any;
   Form: FormInstance;
+  setPopup: any;
 }
 
 const CollectionCreateForm: React.FC<CollectionCreateFormProps> = ({
@@ -45,6 +47,7 @@ const CollectionCreateForm: React.FC<CollectionCreateFormProps> = ({
   setPromotion,
   save,
   form,
+  setPopup
 }) => {
   return (
     <Modal
@@ -55,12 +58,17 @@ const CollectionCreateForm: React.FC<CollectionCreateFormProps> = ({
       onCancel={onCancel}
       onOk={async (ob) => {
         const row = (await form.validateFields()) as Promotion;
-        save({
+        const result = await save({
           ...row,
           Discount: parseInt(
             row?.Discount ? row?.Discount?.toString() : "0"
           )
         },setPromotion,promotions);
+        setPopup({
+          title: result?.status == 200 ? "Thành công" : "Thất bại",
+          messagePopup: result?.message,
+          state: result?.status == 200
+        });
         onCreate();
       }}
     >
@@ -146,7 +154,7 @@ const CollectionCreateForm: React.FC<CollectionCreateFormProps> = ({
 
 const AddRecord: React.FC<Props> = (props) => {
   const [open, setOpen] = useState(false);
-  const { TourTypes, Save, Form, Promotions, SetPromotion } = props;
+  const { TourTypes, Save, Form, Promotions, SetPromotion, setPopup } = props;
 
   const onCreate = () => {
     setOpen(false);
@@ -169,6 +177,7 @@ const AddRecord: React.FC<Props> = (props) => {
         tourTypes={TourTypes}
         promotions={Promotions}
         setPromotion={SetPromotion}
+        setPopup={setPopup}
         onCreate={onCreate}
         onCancel={() => {
           setOpen(false);

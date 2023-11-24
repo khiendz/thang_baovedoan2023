@@ -1,9 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import {
-  Form,
-  InputRef,
-  Table,
-} from "antd";
+import { Form, InputRef, Table } from "antd";
 import AddRecord from "./Component/AddRecord";
 import { Promotion, TourType } from "Models";
 import { getAllTourType } from "services";
@@ -12,6 +8,7 @@ import { getAllPromotion } from "services/promotion-services";
 import Columns from "./Component/Column";
 import MergedColumns from "./Component/MergedColumns";
 import { changePromotion, handleAdd, handleDelete } from "./Services";
+import NotifYPopup from "components/NotifyPopup";
 
 const ManagerPromotion = () => {
   const [tourTypes, setTourTypes] = useState<TourType[]>([]);
@@ -21,7 +18,13 @@ const ManagerPromotion = () => {
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
   const searchInput = useRef<InputRef>(null);
-  const isEditing = (record: Promotion) => record?.PromotionID?.toString() === editingKey;
+  const [popup,setPopup] = useState({
+    title: "",
+    messagePopup: "",
+    state: true
+  });
+  const isEditing = (record: Promotion) =>
+    record?.PromotionID?.toString() === editingKey;
 
   const save = async (key: React.Key) => {
     try {
@@ -30,17 +33,20 @@ const ManagerPromotion = () => {
       const index = newData.findIndex((item) => key === item.PromotionID);
       if (index > -1) {
         const item = newData[index];
-        const newTourType = { 
-          ...item, 
-          ...row, 
-          Discount: parseInt(
-            row?.Discount ? row?.Discount?.toString() : "0"
-          )
+        const newTourType = {
+          ...item,
+          ...row,
+          Discount: parseInt(row?.Discount ? row?.Discount?.toString() : "0"),
         };
-        const result = changePromotion(newTourType);
+        const result = await changePromotion(newTourType);
+        setPopup({
+          title: result?.status == 200 ? "Thành công" : "Thất bại",
+          messagePopup: result?.message,
+          state: result?.status == 200
+        })
         newData.splice(index, 1, {
           ...item,
-          ...row
+          ...row,
         });
         setPromotions(newData);
         setEditingKey("");
@@ -88,26 +94,52 @@ const ManagerPromotion = () => {
     } catch (e) {}
   };
 
-  const columns = Columns(setSearchText,setSearchedColumn,searchInput,searchedColumn,searchText,promotions,tourTypes,setPromotions,isEditing,edit,save,cancel,form,handleDelete);
-  const mergedColumns = MergedColumns(columns,tourTypes,promotions,isEditing,form);
+  const columns = Columns(
+    setSearchText,
+    setSearchedColumn,
+    searchInput,
+    searchedColumn,
+    searchText,
+    promotions,
+    tourTypes,
+    setPromotions,
+    isEditing,
+    edit,
+    save,
+    cancel,
+    form,
+    handleDelete,
+    setPopup
+  );
+  const mergedColumns = MergedColumns(
+    columns,
+    tourTypes,
+    promotions,
+    isEditing,
+    form
+  );
 
   return promotions ? (
-    <Form form={form} component={false}>
-      <AddRecord
-        Save={handleAdd}
-        Form={form}
-        TourTypes={tourTypes}
-        Promotions={promotions}
-        SetPromotion={setPromotions}
-      />
-      <Table
-        columns={mergedColumns}
-        dataSource={promotions}
-        rowClassName="editable-row"
-        scroll={{ x: 1500, y: 700 }}
-        bordered
-      ></Table>
-    </Form>
+    <>
+      <Form form={form} component={false}>
+        <AddRecord
+          Save={handleAdd}
+          Form={form}
+          TourTypes={tourTypes}
+          Promotions={promotions}
+          SetPromotion={setPromotions}
+          setPopup={setPopup}
+        />
+        <Table
+          columns={mergedColumns}
+          dataSource={promotions}
+          rowClassName="editable-row"
+          scroll={{ x: 1500, y: 700 }}
+          bordered
+        ></Table>
+      </Form>
+      <NotifYPopup  messagePopup={popup.messagePopup || ""} setPopup={setPopup} state={popup.state} title={popup.title}/>
+    </>
   ) : null;
 };
 

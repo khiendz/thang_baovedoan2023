@@ -18,7 +18,8 @@ const Columns = (
   save: any,
   cancel: any,
   form: FormInstance,
-  handleDelete: any
+  handleDelete: any,
+  setPopup: any
 ) => [
   {
     title: "Tên ưu đãi",
@@ -165,7 +166,15 @@ const Columns = (
             />
           <Popconfirm
             title="Sure to delete?"
-            onConfirm={() => handleDelete(record.PromotionID,promotions,setPromotion)}
+            onConfirm={async () => {
+              const result = await handleDelete(record.PromotionID,promotions,setPromotion);
+              debugger
+              setPopup({
+                title: result?.status == 200 ? "Thành công" : "Thất bại",
+                messagePopup: result?.message,
+                state: result?.status == 200
+              })
+            }}
           >
             <a>Delete</a>
           </Popconfirm>

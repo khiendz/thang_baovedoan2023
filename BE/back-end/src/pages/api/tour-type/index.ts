@@ -125,7 +125,7 @@ const UpdateTourType = async (tourType: TourType) => {
             },
             data: {
                 Name: tourType.Name,
-                Description: tourType.Description,
+                Description: tourType.Description?.toString(),
                 PriceElder: tourType.PriceElder,
                 PriceChildren: tourType.PriceChildren,
                 PromotionId: tourType.PromotionId,

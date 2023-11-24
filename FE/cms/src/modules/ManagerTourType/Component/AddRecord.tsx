@@ -8,6 +8,7 @@ import {
   Select,
 } from "antd";
 import { Promotion, TourType } from "Models";
+import UploadFileImage from "components/UploadFileImage";
 interface CollectionCreateFormProps {
   open: boolean;
   onCreate: () => void;
@@ -120,8 +121,8 @@ const CollectionCreateForm: React.FC<CollectionCreateFormProps> = ({
             }}
            />
         </Form.Item>
-        <Form.Item name="Img" label="Ảnh đại diện" className="dk-w-full">
-          <Input />
+        <Form.Item name="Img" label="Ảnh đại diện" className="dk-w-full dk-flex dk-justify-center" >
+          <UploadFileImage lengthMaxImage={1} form={form} keyField="Img"/>
         </Form.Item>
         <Form.Item name="IsLocal" label="Địa lý" className="dk-w-full" rules={[{ required: true, message: "Làm ơn chọn địa lý" }]}>
         <Select
