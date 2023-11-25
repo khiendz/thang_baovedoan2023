@@ -4,6 +4,7 @@ import { SearchOutlined, NotificationOutlined } from "@ant-design/icons";
 import { getData } from "services/test.service";
 import { Roboto } from "next/font/google";
 import UserAccount from "modules/UserAccount";
+import Notification from "components/Notification";
 
 const roboto = Roboto({
   weight: "400",
@@ -27,9 +28,7 @@ export default function Header() {
         </button>
       </div>
       <div className="dk-relative dk-h-full dk-w-fit dk-flex dk-justify-center dk-items-center">
-        <span className="dk-z-2 dk-absolute dk-bg-red-600 dk-w-[25px] dk-h-[25px] 
-        dk-rounded-[50%] dk-text-center dk-align-middle dk-left-0 dk-top-2">9</span>
-        <NotificationOutlined className="dk-relative dk-z-1"/>
+        <Notification/>
       </div>
       <UserAccount />
     </header>
