@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import {
   Button,
+  DatePicker,
   Form,
   FormInstance,
   Input,
@@ -9,6 +10,7 @@ import {
 } from "antd";
 import { Promotion, Tour, TourType } from "Models";
 import UploadFileImage from "components/UploadFileImage";
+import dayjs from "dayjs";
 
 interface CollectionEditFormProps {
   open: boolean;
@@ -36,15 +38,20 @@ const CollectionCreateForm: React.FC<CollectionEditFormProps> = ({
   save,
   form,
 }) => {
+
+  form?.setFieldValue("StartDate", form?.getFieldValue("StartDate") ? dayjs(form?.getFieldValue("StartDate")) : dayjs(new Date()));
+  form?.setFieldValue("EndDate", form?.getFieldValue("EndDate") ? dayjs(form?.getFieldValue("EndDate")) : dayjs(new Date()));
+  form?.setFieldValue("RoomStartDate", form?.getFieldValue("RoomStartDate") ? dayjs(form?.getFieldValue("RoomStartDate")) : dayjs(new Date()));
+  form?.setFieldValue("RoomEndDate", form?.getFieldValue("RoomEndDate") ? dayjs(form?.getFieldValue("RoomEndDate")) : dayjs(new Date()));
   return (
     <Modal
       open={open}
       title="Tạo một loại tour mới"
-      okText="Cập nhật tour"
+      okText="Tạo loại tour"
       cancelText="Hủy"
       onCancel={onCancel}
-      onOk={() => {
-        save();
+      onOk={async (ob) => {
+        const row = (await form.validateFields()) as Tour;
         onCreate();
       }}
     >
@@ -55,50 +62,126 @@ const CollectionCreateForm: React.FC<CollectionEditFormProps> = ({
         initialValues={{ modifier: "public" }}
       >
         <Form.Item
-          name="Name"
+          name="TourName"
           label="Tên tour"
           rules={[{ required: true, message: "Làm ơn nhập tên tour" }]}
         >
           <Input />
         </Form.Item>
         <Form.Item name="Description" label="Mô tả tour">
-          <TextArea/>
+          <TextArea />
         </Form.Item>
         <Form.Item
-          name="PriceElder"
-          label="Giá người lớn"
-          rules={[{ required: true, message: "Làm ơn nhập giá người lớn" }]}
+          name="PriceTotal"
+          label="Tổng tiền"
+          rules={[{ required: true, message: "Làm ơn nhập tổng tiền" }]}
         >
-          <Input type="number"/>
+          <Input />
         </Form.Item>
         <Form.Item
-          name="PriceChildren"
-          label="Giá trẻ em"
-          rules={[{ required: true, message: "Làm ơn nhập giá trẻ em" }]}
+          name="StartDate"
+          label="Ngày bắt đầu"
+          rules={[{ required: true, message: "Làm ơn nhập ngày bắt đầu" }]}
         >
-          <Input type="number"/>
-        </Form.Item>
-        <Form.Item name="Img" label="Ảnh đại diện" className="dk-w-full dk-flex dk-justify-center" >
-          <UploadFileImage lengthMaxImage={1} form={form} keyField="Img"/>
-        </Form.Item>
-        <Form.Item name="IsLocal" label="Địa lý" className="dk-w-full">
-        <Select
+          <DatePicker
+            format={"DD-MM-YYYY"}
+            defaultValue={dayjs(new Date())}
             className="dk-w-full"
-            options={[
-              { value: 0, label: "Trong nước" },
-              { value: 1, label: "Ngoài nước" },
-            ]}
             onChange={(value) => {
-              form.setFieldValue("Description", value);
+              form.setFieldValue("StartDate", value);
             }}
           />
         </Form.Item>
-        <Form.Item 
-          name="RateTourType" 
-          label="Đánh giá" 
-          className="dk-w-full"
+        <Form.Item
+          name="EndDate"
+          label="Ngày kết thúc"
+          rules={[{ required: true, message: "Làm ơn nhập ngày kết thúc!" }]}
         >
-          <Input type="number" max={10} min={0}/>
+          <DatePicker
+            format={"DD-MM-YYYY"}
+            defaultValue={dayjs(new Date())}
+            className="dk-w-full"
+            onChange={(value) => {
+              form.setFieldValue("EndDate", value);
+            }}
+          />
+        </Form.Item>
+        <Form.Item
+          name="TotalMember"
+          label="Tổng thành viên"
+          rules={[{ required: true, message: "Làm ơn nhập tổng thành viên" }]}
+        >
+          <Input />
+        </Form.Item>
+        <Form.Item
+          name="TotalElder"
+          label="Tổng người lớn"
+          rules={[{ required: true, message: "Làm ơn nhập tổng người lớn" }]}
+        >
+          <Input />
+        </Form.Item>
+        <Form.Item
+          name="TotalChd"
+          label="Tổng trẻ em"
+          rules={[{ required: true, message: "Làm ơn nhập tổng trẻ em" }]}
+        >
+          <Input />
+        </Form.Item>
+        <Form.Item
+          name="TourTypeID"
+          label="Kiểu tour"
+          rules={[{ required: true, message: "Làm ơn nhập kiểu tour" }]}
+        >
+          <Input />
+        </Form.Item>
+        <Form.Item
+          name="TourTypeID"
+          label="Kiểu phòng"
+          rules={[{ required: true, message: "Làm ơn nhập kiểu phòng" }]}
+        >
+          <Input />
+        </Form.Item>
+        <Form.Item
+          name="RoomStartDate"
+          label="Ngày thuê phòng bắt đầu"
+          rules={[{ required: true, message: "Làm ơn nhập ngày thuê phòng bắt đầu" }]}
+        >
+          <DatePicker
+            format={"DD-MM-YYYY"}
+            defaultValue={dayjs(new Date())}
+            className="dk-w-full"
+            onChange={(value) => {
+              form.setFieldValue("RoomStartDate", value);
+            }}
+          />
+        </Form.Item>
+        <Form.Item
+          name="RoomEndDate"
+          label="Ngày thuê phòng kết thúc"
+          rules={[{ required: true, message: "Làm ơn nhập ngày thuê phòng kết thúc!" }]}
+        >
+          <DatePicker
+            format={"DD-MM-YYYY"}
+            defaultValue={dayjs(new Date())}
+            className="dk-w-full"
+            onChange={(value) => {
+              form.setFieldValue("RoomStartDate", value);
+            }}
+          />
+        </Form.Item>
+        <Form.Item
+          name="Img"
+          label="Ảnh đại diện"
+          className="dk-w-full dk-flex dk-justify-center"
+        >
+          <UploadFileImage lengthMaxImage={1} form={form} keyField="Img" />
+        </Form.Item>
+        <Form.Item
+          name="Location"
+          label="Địa điểm"
+          rules={[{ required: true, message: "Làm ơn nhập địa điểm!" }]}
+        >
+         <Input />
         </Form.Item>
       </Form>
     </Modal>

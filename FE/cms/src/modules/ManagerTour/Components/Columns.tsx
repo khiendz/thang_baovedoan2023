@@ -3,6 +3,7 @@ import GetColumnSearchProps
  from "components/GetColumnSearchProps";
 import EditRecord from "./EditRecord";
 import { FormInstance, Popconfirm } from "antd";
+import format from 'date-fns/format';
 
 const Columns = (
     setSearchText:any,
@@ -23,6 +24,7 @@ const Columns = (
     {
       title: "Tên Tour",
       dataIndex: "TourName",
+      width: "250px",
       ...GetColumnSearchProps("TourName",setSearchText,setSearchedColumn,searchInput,searchedColumn,searchText),
       render: (name: string) => (
         <a className="dk-font-Inter dk-text-sm dk-font-semibold">{name}</a>
@@ -33,7 +35,7 @@ const Columns = (
       title: "Mô tả",
       className: "column-money",
       dataIndex: "Description",
-      width: '27%',
+      width: "150px",
       ...GetColumnSearchProps("Description",setSearchText,setSearchedColumn,searchInput,searchedColumn,searchText),
       render: (description: string) => (
         <p className="dk-block dk-min-w-[350px] dk-text-sm dk-font-medium dk-font-Inter">
@@ -47,7 +49,123 @@ const Columns = (
       title: "Tổng tiền",
       className: "column-money",
       dataIndex: "PriceTotal",
+      width: "150px",
       ...GetColumnSearchProps("PriceElder",setSearchText,setSearchedColumn,searchInput,searchedColumn,searchText),
+      editable: true,
+      align: "left",
+    },
+    {
+      title: "Ngày bắt đầu",
+      className: "column-money",
+      dataIndex: "StartDate",
+      width: "150px",
+      ...GetColumnSearchProps(
+        "StartDate",
+        setSearchText,
+        setSearchedColumn,
+        searchInput,
+        searchedColumn,
+        searchText
+      ),
+      render: (date: Date) => (
+        <p className="dk-block dk-w-[150px] dk-text-sm dk-font-medium dk-font-Inter">
+          {format(date ? new Date(date) : new Date(), 'dd-MM-yyyy')}
+        </p>
+      ),
+      editable: true,
+      align: "left",
+    },
+    {
+      title: "Ngày kết thúc",
+      className: "column-money",
+      dataIndex: "EndDate",
+      width: "150px",
+      ...GetColumnSearchProps(
+        "EndDate",
+        setSearchText,
+        setSearchedColumn,
+        searchInput,
+        searchedColumn,
+        searchText
+      ),
+      render: (date: Date) => (
+        <p className="dk-block dk-w-[150px] dk-text-sm dk-font-medium dk-font-Inter">
+          {format(date ? new Date(date) : new Date(), 'dd-MM-yyyy')}
+        </p>
+      ),
+      editable: true,
+      align: "left",
+    },
+    {
+      title: "Tổng thành viên",
+      className: "column-money",
+      dataIndex: "TotalMember",
+      width: "150px",
+      ...GetColumnSearchProps("TotalMember",setSearchText,setSearchedColumn,searchInput,searchedColumn,searchText),
+      editable: true,
+      align: "left",
+    },
+    {
+      title: "Tổng người lớn",
+      className: "column-money",
+      dataIndex: "TotalElder",
+      width: "150px",
+      ...GetColumnSearchProps("TotalElder",setSearchText,setSearchedColumn,searchInput,searchedColumn,searchText),
+      editable: true,
+      align: "left",
+    },
+    {
+      title: "Tổng trẻ em",
+      className: "column-money",
+      dataIndex: "TotalChd",
+      width: "150px",
+      ...GetColumnSearchProps("TotalChd",setSearchText,setSearchedColumn,searchInput,searchedColumn,searchText),
+      editable: true,
+      align: "left",
+    },
+    {
+      title: "Tour Type",
+      className: "column-money",
+      dataIndex: "TourTypeID",
+      width: "150px",
+      ...GetColumnSearchProps("TourTypeID",setSearchText,setSearchedColumn,searchInput,searchedColumn,searchText),
+      editable: true,
+      align: "left",
+    },
+    {
+      title: "Kiểu phòng",
+      className: "column-money",
+      dataIndex: "RoomTypeId",
+      width: "150px",
+      ...GetColumnSearchProps("RoomTypeId",setSearchText,setSearchedColumn,searchInput,searchedColumn,searchText),
+      editable: true,
+      align: "left",
+    },
+    {
+      title: "Ngày thuê phòng bắt đầu",
+      className: "column-money",
+      dataIndex: "RoomStartDate",
+      width: "150px",
+      ...GetColumnSearchProps("RoomStartDate",setSearchText,setSearchedColumn,searchInput,searchedColumn,searchText),
+      render: (date: Date) => (
+        <p className="dk-block dk-w-[150px] dk-text-sm dk-font-medium dk-font-Inter">
+          {format(date ? new Date(date) : new Date(), 'dd-MM-yyyy')}
+        </p>
+      ),
+      editable: true,
+      align: "left",
+    },
+    {
+      title: "Ngày thuê phòng kết thúc",
+      className: "column-money",
+      dataIndex: "RoomEndDate",
+      width: "150px",
+      ...GetColumnSearchProps("RoomEndDate",setSearchText,setSearchedColumn,searchInput,searchedColumn,searchText),
+      render: (date: Date) => (
+        <p className="dk-block dk-w-[150px] dk-text-sm dk-font-medium dk-font-Inter">
+          {format(date ? new Date(date) : new Date(), 'dd-MM-yyyy')}
+        </p>
+      ),
       editable: true,
       align: "left",
     },
@@ -55,6 +173,7 @@ const Columns = (
       title: "Ảnh đại diện",
       className: "column-money",
       dataIndex: "Img",
+      width: "250px",
       render: (img: any) => (
         <img src={img} className="dk-w-[150px] dk-aspect-[3/4]" />
       ),
@@ -65,15 +184,8 @@ const Columns = (
       title: "Địa điểm",
       className: "column-money",
       dataIndex: "Location",
+      width: "150px",
       ...GetColumnSearchProps("IsLocal",setSearchText,setSearchedColumn,searchInput,searchedColumn,searchText),
-      editable: true,
-      align: "left",
-    },
-    {
-      title: "Đánh giá",
-      className: "column-money",
-      dataIndex: "RateTourType",
-      ...GetColumnSearchProps("RateTourType",setSearchText,setSearchedColumn,searchInput,searchedColumn,searchText),
       editable: true,
       align: "left",
     },
@@ -81,7 +193,7 @@ const Columns = (
       title: "Cập nhật",
       dataIndex: "operation",
       align: "center",
-      width: "13%",
+      width: "250px",
       fixed: 'right',
       render: (_: any, record: Tour) => {
         const editable = isEditing(record);
