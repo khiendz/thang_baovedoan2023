@@ -1,7 +1,6 @@
 "use client";
 import React, { useState } from "react";
 import { SearchOutlined, NotificationOutlined } from "@ant-design/icons";
-import { getData } from "services/test.service";
 import { Roboto } from "next/font/google";
 import UserAccount from "modules/UserAccount";
 
