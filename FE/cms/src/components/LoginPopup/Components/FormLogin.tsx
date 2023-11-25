@@ -29,22 +29,23 @@ const FormLogin: React.FC<any> = (props: any) => {
         autoComplete="off"
       >
         <Form.Item<FieldType>
-          label="Username"
+          label="Tên đăng nhập"
           name="username"
-          rules={[{ required: true, message: "Please input your username!" }]}
+          rules={[{ required: true, message: "Làm ơn nhập tên đăng nhập!" }]}
         >
           <Input />
         </Form.Item>
 
         <Form.Item<FieldType>
-          label="Password"
+          label="Mật khẩu"
           name="password"
-          rules={[{ required: true, message: "Please input your password!" }]}
+          rules={[{ required: true, message: "Làm ơn nhập mật khẩu!" }]}
         >
           <Input.Password />
         </Form.Item>
 
         <Form.Item<FieldType>
+          label="Lưu đăng nhập"
           name="remember"
           valuePropName="checked"
           wrapperCol={{ offset: 8, span: 16 }}
