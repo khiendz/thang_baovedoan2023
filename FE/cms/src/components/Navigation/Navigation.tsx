@@ -21,6 +21,26 @@ const items: MenuProps['items'] = [
     label: <Link href='/tour' className='dk-text-sm dk-text-[#222] dk-font-Inter dk-font-bold'>Quản lý tour</Link>,
     key: 'tour',
     icon: <BankOutlined />,
+  },
+  {
+    label: <Link href='/booking' className='dk-text-sm dk-text-[#222] dk-font-Inter dk-font-bold'>Quản lý booking</Link>,
+    key: 'booking',
+    icon: <BankOutlined />,
+  },
+  {
+    label: <Link href='/customer' className='dk-text-sm dk-text-[#222] dk-font-Inter dk-font-bold'>Quản lý khách hàng</Link>,
+    key: 'customer',
+    icon: <BankOutlined />,
+  },
+  {
+    label: <Link href='/report' className='dk-text-sm dk-text-[#222] dk-font-Inter dk-font-bold'>Quản lý báo cáo</Link>,
+    key: 'customer',
+    icon: <BankOutlined />,
+  },
+  {
+    label: <Link href='/payment' className='dk-text-sm dk-text-[#222] dk-font-Inter dk-font-bold'>Quản lý thanh toán</Link>,
+    key: 'customer',
+    icon: <BankOutlined />,
   }
 ];
 
