@@ -1,4 +1,4 @@
-import { Promotion, TourType } from "Models";
+import { Booking, Promotion, TourType } from "Models";
 import { FormInstance, Popconfirm } from "antd";
 import GetColumnSearchProps from "components/GetColumnSearchProps";
 import EditRecord from "./EditRecord";
@@ -10,9 +10,8 @@ const Columns = (
   searchInput: any,
   searchedColumn: any,
   searchText: any,
-  promotions: Promotion[],
-  tourTypes: TourType[],
-  setPromotion: any,
+  bookings: Booking[],
+  setBookings: any,
   isEditing: any,
   edit: any,
   save: any,
@@ -22,10 +21,10 @@ const Columns = (
   setPopup: any
 ) => [
   {
-    title: "Tên ưu đãi",
-    dataIndex: "Name",
+    title: "Booking Id",
+    dataIndex: "BookingID",
     ...GetColumnSearchProps(
-      "Name",
+      "BookingID",
       setSearchText,
       setSearchedColumn,
       searchInput,
@@ -38,11 +37,11 @@ const Columns = (
     editable: true,
   },
   {
-    title: "Mã ưu đãi",
+    title: "Khách hàng Id",
     className: "column-money",
-    dataIndex: "PromoCode",
+    dataIndex: "CustomerID",
     ...GetColumnSearchProps(
-      "PromoCode",
+      "CustomerID",
       setSearchText,
       setSearchedColumn,
       searchInput,
@@ -58,11 +57,11 @@ const Columns = (
     align: "left",
   },
   {
-    title: "Mô tả",
+    title: "Tour Id",
     className: "column-money",
-    dataIndex: "Description",
+    dataIndex: "TourID",
     ...GetColumnSearchProps(
-      "Description",
+      "TourID",
       setSearchText,
       setSearchedColumn,
       searchInput,
@@ -73,9 +72,9 @@ const Columns = (
     align: "left",
   },
   {
-    title: "Tỉ lệ ưu đãi",
+    title: "Ngày booking",
     className: "column-money",
-    dataIndex: "Discount",
+    dataIndex: "BookingDate",
     ...GetColumnSearchProps(
       "Discount",
       setSearchText,
@@ -84,63 +83,10 @@ const Columns = (
       searchedColumn,
       searchText
     ),
-    editable: true,
-    align: "left",
-  },
-  {
-    title: "Ngày bắt đầu",
-    className: "column-money",
-    dataIndex: "StartDate",
-    ...GetColumnSearchProps(
-      "StartDate",
-      setSearchText,
-      setSearchedColumn,
-      searchInput,
-      searchedColumn,
-      searchText
-    ),
     render: (date: Date) => (
       <p className="dk-block dk-w-[150px] dk-text-sm dk-font-medium dk-font-Inter">
         {format(date ? new Date(date) : new Date(), 'dd-MM-yyyy')}
       </p>
-    ),
-    editable: true,
-    align: "left",
-  },
-  {
-    title: "Ngày kết thúc",
-    className: "column-money",
-    dataIndex: "EndDate",
-    ...GetColumnSearchProps(
-      "EndDate",
-      setSearchText,
-      setSearchedColumn,
-      searchInput,
-      searchedColumn,
-      searchText
-    ),
-    render: (date: Date) => (
-      <p className="dk-block dk-w-[150px] dk-text-sm dk-font-medium dk-font-Inter">
-        {format(date ? new Date(date) : new Date(), 'dd-MM-yyyy')}
-      </p>
-    ),
-    editable: true,
-    align: "left",
-  },
-  {
-    title: "Kiểu Tour",
-    className: "column-money",
-    dataIndex: "TourTypeId",
-    ...GetColumnSearchProps(
-      "TourTypeId",
-      setSearchText,
-      setSearchedColumn,
-      searchInput,
-      searchedColumn,
-      searchText
-    ),
-    render: (tourType: number) => (
-      <p>{tourTypes.find((ob) => ob.TourTypeId === tourType)?.Name || "Không áp dụng kiểu tour"}</p>
     ),
     editable: true,
     align: "left",
@@ -161,13 +107,12 @@ const Columns = (
               Save={() => save(record?.PromotionID || "")}
               Cancel={cancel}
               Form={form}
-              TourTypes={tourTypes}
-              Promotions={promotions}
+              Bookings={bookings}
             />
           <Popconfirm
             title="Sure to delete?"
             onConfirm={async () => {
-              const result = await handleDelete(record.PromotionID,promotions,setPromotion);
+              const result = await handleDelete(record.PromotionID,bookings,setBookings);
               debugger
               setPopup({
                 title: result?.status == 200 ? "Thành công" : "Thất bại",

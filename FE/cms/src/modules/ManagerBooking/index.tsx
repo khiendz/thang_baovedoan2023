@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { Form, InputRef, Table } from "antd";
 import AddRecord from "./Components/AddRecord";
 import { Booking, TourType } from "Models";
-import { getAllTourType } from "services";
+import { getAllBooking, getAllTourType } from "services";
 import "./style.scss";
 import { getAllPromotion } from "services/promotion-services";
 import Columns from "./Components/Column";
@@ -75,7 +75,7 @@ const ManagerBooking = () => {
 
   const initData = async () => {
     try {
-      const result = await getAllTourType();
+      const result = await getAllBooking();
       if (result && result?.data) {
         setBookings(result?.data?.reverse());
       }
