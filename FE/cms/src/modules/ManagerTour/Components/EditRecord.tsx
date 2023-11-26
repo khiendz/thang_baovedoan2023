@@ -135,7 +135,7 @@ const CollectionCreateForm: React.FC<CollectionEditFormProps> = ({
           <Input />
         </Form.Item>
         <Form.Item
-          name="TourTypeID"
+          name="RoomTypeID"
           label="Kiểu phòng"
           rules={[{ required: true, message: "Làm ơn nhập kiểu phòng" }]}
         >
