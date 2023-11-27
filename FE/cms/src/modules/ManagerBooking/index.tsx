@@ -1,27 +1,32 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Form, InputRef, Table } from "antd";
 import AddRecord from "./Components/AddRecord";
-import { Booking, TourType } from "Models";
-import { getAllBooking, getAllTourType } from "services";
+import { Booking } from "Models";
+import { getAllBooking } from "services";
 import "./style.scss";
-import { getAllPromotion } from "services/promotion-services";
 import Columns from "./Components/Column";
 import MergedColumns from "./Components/MergedColumns";
 import { changeBooking, handleAdd, handleDelete } from "./Services";
 import NotifYPopup from "components/NotifyPopup";
+import { useAppContext } from "hook/use-app-context";
 
 const ManagerBooking = () => {
+  const { setData: setPopup } = useAppContext("popup-message");
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [form] = Form.useForm();
   const [editingKey, setEditingKey] = useState("");
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
   const searchInput = useRef<InputRef>(null);
-  const [popup,setPopup] = useState({
-    title: "",
-    messagePopup: "",
-    state: true
-  });
+
+  useEffect(() => {
+    setPopup({
+      title: "",
+      messagePopup: "",
+      state: true,
+    });
+  }, []);
+
   const isEditing = (record: Booking) =>
     record?.BookingID?.toString() === editingKey;
 
@@ -40,8 +45,8 @@ const ManagerBooking = () => {
         setPopup({
           title: result?.status == 200 ? "Thành công" : "Thất bại",
           messagePopup: result?.message,
-          state: result?.status == 200
-        })
+          state: result?.status == 200,
+        });
         newData.splice(index, 1, {
           ...item,
           ...row,
@@ -98,13 +103,8 @@ const ManagerBooking = () => {
     handleDelete,
     setPopup
   );
-  
-  const mergedColumns = MergedColumns(
-    columns,
-    bookings,
-    isEditing,
-    form
-  );
+
+  const mergedColumns = MergedColumns(columns, bookings, isEditing, form);
 
   return bookings ? (
     <>
@@ -124,7 +124,6 @@ const ManagerBooking = () => {
           bordered
         ></Table>
       </Form>
-      <NotifYPopup  messagePopup={popup.messagePopup || ""} setPopup={setPopup} state={popup.state} title={popup.title}/>
     </>
   ) : null;
 };

@@ -9,8 +9,11 @@ import Columns from "./Component/Columns";
 import MergedColumns from "./Component/MergedColumns";
 import { changeTourType, handleDelete, handleAdd } from "./Services";
 import NotifYPopup from "components/NotifyPopup";
+import { useAppContext } from "hook/use-app-context";
+import { userService } from "services";
 
 const ManagerTourType = () => {
+  const { setData: setPopup } = useAppContext("popup-message");
   const [tourTypes, setTourTypes] = useState<TourType[]>([]);
   const [promotions, setPromotions] = useState<Promotion[]>([]);
   const [form] = Form.useForm();
@@ -18,13 +21,17 @@ const ManagerTourType = () => {
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
   const searchInput = useRef<InputRef>(null);
-  const [popup,setPopup] = useState({
-    title: "",
-    messagePopup: "",
-    state: true
-  });
-  const [titlePopup,setTitlePopup] = useState("Thành công");
-  const [statePopup,setStatePopup] = useState(true);
+  const [titlePopup, setTitlePopup] = useState("Thành công");
+  const [statePopup, setStatePopup] = useState(true);
+
+  useEffect(() => {
+    setPopup({
+      title: "",
+      messagePopup: "",
+      state: true,
+    });
+  }, []);
+
   const isEditing = (record: TourType) =>
     record?.TourTypeId?.toString() === editingKey;
 
@@ -40,8 +47,8 @@ const ManagerTourType = () => {
         setPopup({
           title: result?.status == 200 ? "Thành công" : "Thất bại",
           messagePopup: result?.message,
-          state: result?.status == 200
-        })
+          state: result?.status == 200,
+        });
         newData.splice(index, 1, {
           ...item,
           ...row,
@@ -138,7 +145,6 @@ const ManagerTourType = () => {
           bordered
         ></Table>
       </Form>
-      <NotifYPopup  messagePopup={popup.messagePopup || ""} setPopup={setPopup} state={popup.state} title={popup.title}/>
     </>
   ) : null;
 };

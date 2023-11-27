@@ -21,7 +21,8 @@ export const userService = {
     get userValue() { return userSubject.value },
     login,
     logout,
-    getAll
+    getAll,
+    ReturnUnauthorize
 };
 
 export async function login(username: string, password: string) {
@@ -45,7 +46,11 @@ function logout() {
     // remove user from local storage, publish null to user subscribers and redirect to login page
     localStorage.removeItem('user');
     userSubject.next(null);
-    Router.push('/login');
+    Router.push('/unauthorize');
+}
+
+function ReturnUnauthorize () {
+    Router.push('/unauthorize');
 }
 
 function getAll() {

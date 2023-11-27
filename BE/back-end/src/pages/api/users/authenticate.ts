@@ -17,7 +17,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     if (req.method === 'POST') {
         const { username, password } = req.body;
 
-        const result = await authenticate(username,password);
+        const result = await authenticate(username, password);
 
         if (!result) {
             return res.status(500).json({ error: 'Failed to create a new book' });
@@ -25,42 +25,40 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
         return res.json({ ...result });
     }
-   
+
 }
 
 async function authenticate(username: string, password: string) {
-    const account = await prisma.account.findFirst({
+    if (!username && !password) {
+        return {
+            data: null,
+            message: 'Tài khoản hoặc mật khẩu không đúng',
+            status: "403"
+        };
+    }
+
+    const user = await prisma.account.findFirst({
         where: {
-          UserName: username,
-          Password: password
-        },include: {
-            RoleAccount: true
+            UserName: username,
+            Password: password
+        }, include: {
+            RoleAccount: true,
+            User: true
         }
-      });;
+    });
 
-      const user = await prisma.user.findFirst({
-        where: {
-          AccountId: account?.AccountId,
-        },
-        include: {
-          Account: {
-            select: {
-                AccountId: true,
-                UserName: true,
-                RoleId: true,
-                Password: false,
-                RoleAccount: true
-            }
-          },
-        }
-      });
+    if (!user) {
+        return {
+            data: null,
+            message: 'Tài khoản hoặc mật khẩu không đúng',
+            status: "403"
+        };
+    }
 
-    if (!user) throw 'Username or password is incorrect';
-
-    const token = jwt.sign({ sub: user.UserId }, serverRuntimeConfig.secret, { expiresIn: '7d' });
+    const token = jwt.sign({ sub: user.AccountId }, serverRuntimeConfig.secret, { expiresIn: '7d' });
 
     return {
-        data: {user,token},
+        data: { user, token },
         message: "Success",
         status: "200"
     };

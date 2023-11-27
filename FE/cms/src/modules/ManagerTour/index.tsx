@@ -1,30 +1,34 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Form, InputRef, Table } from "antd";
 import AddRecord from "./Components/AddRecord";
-import { Promotion, Tour, TourType } from "Models";
-import { getAllTour, getAllTourType } from "services";
+import { Tour, TourType } from "Models";
+import { getAllTour } from "services";
 import "./style.scss";
-import { getAllPromotion } from "services/promotion-services";
 import Columns from "./Components/Columns";
 import MergedColumns from "./Components/MergedColumns";
 import { changeTour, handleDelete, handleAdd } from "./Services";
 import NotifYPopup from "components/NotifyPopup";
-import tour from "pages/khach-san";
+import { useAppContext } from "hook/use-app-context";
 
 const ManagerTour = () => {
+  const { setData: setPopup } = useAppContext("popup-message");
   const [tours, setTour] = useState<Tour[]>([]);
   const [form] = Form.useForm();
   const [editingKey, setEditingKey] = useState("");
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
   const searchInput = useRef<InputRef>(null);
-  const [popup,setPopup] = useState({
-    title: "",
-    messagePopup: "",
-    state: true
-  });
-  const [titlePopup,setTitlePopup] = useState("Thành công");
-  const [statePopup,setStatePopup] = useState(true);
+
+  useEffect(() => {
+    setPopup({
+      title: "",
+      messagePopup: "",
+      state: true,
+    });
+  }, []);
+
+  const [titlePopup, setTitlePopup] = useState("Thành công");
+  const [statePopup, setStatePopup] = useState(true);
   const isEditing = (record: TourType) =>
     record?.TourTypeId?.toString() === editingKey;
 
@@ -40,8 +44,8 @@ const ManagerTour = () => {
         setPopup({
           title: result?.status == 200 ? "Thành công" : "Thất bại",
           messagePopup: result?.message,
-          state: result?.status == 200
-        })
+          state: result?.status == 200,
+        });
         newData.splice(index, 1, {
           ...item,
           ...row,
@@ -98,12 +102,7 @@ const ManagerTour = () => {
     setTour,
     setPopup
   );
-  const mergedColumns = MergedColumns(
-    columns,
-    isEditing,
-    tours,
-    form
-  );
+  const mergedColumns = MergedColumns(columns, isEditing, tours, form);
 
   return tours ? (
     <>
@@ -125,7 +124,6 @@ const ManagerTour = () => {
           bordered
         ></Table>
       </Form>
-      <NotifYPopup  messagePopup={popup.messagePopup || ""} setPopup={setPopup} state={popup.state} title={popup.title}/>
     </>
   ) : null;
 };

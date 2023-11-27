@@ -5,6 +5,7 @@ import { TourType } from "Models";
 import { getTourByRegion, typeRegion } from "services";
 import { removeAccents } from "utils/charactor-util";
 import ManagerTourType from "modules/ManagerTourType";
+import { userService } from "services";
 
 export default function Home() {
   const [tourTypesList, setTourTypeList] = useState<TourType[]>([]);

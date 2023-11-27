@@ -27,7 +27,6 @@ export const clearTheBooking = async (bookingId: number) => {
 
     try {
         const result = await DeleteBookingById(bookingId);
-        debugger
         if (result) return result;
     } catch (e) {
         console.log(e);

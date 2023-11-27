@@ -168,7 +168,6 @@ const Columns = (
             title="Sure to delete?"
             onConfirm={async () => {
               const result = await handleDelete(record.PromotionID,promotions,setPromotion);
-              debugger
               setPopup({
                 title: result?.status == 200 ? "Thành công" : "Thất bại",
                 messagePopup: result?.message,

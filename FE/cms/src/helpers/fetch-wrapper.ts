@@ -27,7 +27,6 @@ async function post(url: any, body: any) {
         data: JSON.stringify(body) // Change 'body' to 'data' for Axios
     };
     const result = handleResponse(await axios(url, requestOptions));
-    debugger
     return result;
 }
 
@@ -66,7 +65,6 @@ function authHeader(url: any) {
 }
 
 function handleResponse(response: any) {
-    debugger
     if (response && response?.data) 
         return response.data;
 

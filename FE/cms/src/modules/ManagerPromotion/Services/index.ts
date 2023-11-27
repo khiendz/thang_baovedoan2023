@@ -4,7 +4,6 @@ import { AddPromotion, DeletePromotionById, UpdatePromotion } from "services/pro
 export const changePromotion = async (promotion: Promotion) => {
     try {
         const result = await UpdatePromotion(promotion);
-        debugger
         if (result) return result;
         else return null;
     } catch (e) {
@@ -29,7 +28,6 @@ export const clearThePromotion = async (promotionId: number) => {
 
     try {
         const result = await DeletePromotionById(promotionId);
-        debugger
         if (result) return result;
     } catch (e) {
         console.log(e);

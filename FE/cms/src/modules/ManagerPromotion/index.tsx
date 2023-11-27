@@ -9,8 +9,10 @@ import Columns from "./Component/Column";
 import MergedColumns from "./Component/MergedColumns";
 import { changePromotion, handleAdd, handleDelete } from "./Services";
 import NotifYPopup from "components/NotifyPopup";
+import { useAppContext } from "hook/use-app-context";
 
 const ManagerPromotion = () => {
+  const { setData: setPopup } = useAppContext("popup-message");
   const [tourTypes, setTourTypes] = useState<TourType[]>([]);
   const [promotions, setPromotions] = useState<Promotion[]>([]);
   const [form] = Form.useForm();
@@ -18,11 +20,15 @@ const ManagerPromotion = () => {
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
   const searchInput = useRef<InputRef>(null);
-  const [popup,setPopup] = useState({
-    title: "",
-    messagePopup: "",
-    state: true
-  });
+
+  useEffect(() => {
+    setPopup({
+      title: "",
+      messagePopup: "",
+      state: true
+    })
+  }, []);
+
   const isEditing = (record: Promotion) =>
     record?.PromotionID?.toString() === editingKey;
 
@@ -138,7 +144,7 @@ const ManagerPromotion = () => {
           bordered
         ></Table>
       </Form>
-      <NotifYPopup  messagePopup={popup.messagePopup || ""} setPopup={setPopup} state={popup.state} title={popup.title}/>
+      <NotifYPopup/>
     </>
   ) : null;
 };
