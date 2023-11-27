@@ -26,11 +26,9 @@ export const userService = {
 
 export async function login(username: string, password: string) {
     try {
-        debugger
         const url = `${domainBE}/api/users/authenticate`;
         const params = { username, password };
         const res: any = await fetchWrapper.post(url,params);
-        debugger
         if (res.status == 200) {
             userSubject.next(res.data);
             localStorage.setItem('user', JSON.stringify(res.data));

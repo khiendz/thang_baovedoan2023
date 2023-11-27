@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { SearchOutlined, NotificationOutlined } from "@ant-design/icons";
 import { Roboto } from "next/font/google";
 import UserAccount from "modules/UserAccount";

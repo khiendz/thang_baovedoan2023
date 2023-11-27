@@ -2,6 +2,7 @@ import React from "react";
 import { Button, Checkbox, Form, Input, Modal } from "antd";
 import { login, userService } from 'services';
 import { useRouter } from 'next/router';
+import { useAppContext } from "hook/use-app-context";
 
 type FieldType = {
   username?: string;
@@ -11,6 +12,8 @@ type FieldType = {
 
 const FormLogin: React.FC<any> = (props: any) => {
 
+  const { data: user, setData: setUser } = useAppContext("user");
+
   const router = useRouter();
 
   const onFinish = async (values: any) => {
@@ -19,6 +22,8 @@ const FormLogin: React.FC<any> = (props: any) => {
       const result = await login(values.username, values.password);
       if (result && result.status == 200) 
       {
+        debugger
+        setUser(result.data);
         props.onCancel()
       }
 
