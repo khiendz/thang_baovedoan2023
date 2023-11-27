@@ -1,24 +1,31 @@
 import { apiHandler } from '../../../helpers/api';
 import { PrismaClient } from '@prisma/client';
+import { NextApiRequest, NextApiResponse } from 'next';
 
 const prisma = new PrismaClient();
 
-export default apiHandler(handler);
+function handler(req: NextApiRequest, res: NextApiResponse) {
 
-function handler(req: any, res: any) {
+    if (req.method == "OPTIONS") {
+        res.setHeader("Allow", "POST");
+        return res.status(202).json({});
+    }
+    
     switch (req.method) {
         case 'GET':
-            return getUsers();
+            return getUsers(res);
         default:
-            return res.status(405).end(`Method ${req.method} Not Allowed`)
-    }
-
-    async function getUsers() {
-        // return users without passwords in the response
-        const response = (await prisma.account.findMany()).map(user => {
-            const { Password, ...userWithoutPassword } = user;
-            return userWithoutPassword;
-        });
-        return res.status(200).json(response);
+            return getUsers(res);
     }
 }
+
+async function getUsers(res: NextApiResponse) {
+    // return users without passwords in the response
+    const response = (await prisma.account.findMany()).map(user => {
+        const { Password, ...userWithoutPassword } = user;
+        return userWithoutPassword;
+    });
+    return res.status(200).json(response);
+}
+
+export default apiHandler(handler);

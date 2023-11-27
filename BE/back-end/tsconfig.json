@@ -13,6 +13,7 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
+    "baseUrl": "./src", // Đặt baseUrl vào thư mục 'src'
     "plugins": [
       {
         "name": "next"

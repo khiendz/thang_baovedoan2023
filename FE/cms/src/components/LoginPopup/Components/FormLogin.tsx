@@ -1,13 +1,7 @@
 import React from "react";
 import { Button, Checkbox, Form, Input, Modal } from "antd";
-
-const onFinish = (values: any) => {
-  console.log("Success:", values);
-};
-
-const onFinishFailed = (errorInfo: any) => {
-  console.log("Failed:", errorInfo);
-};
+import { login, userService } from 'services';
+import { useRouter } from 'next/router';
 
 type FieldType = {
   username?: string;
@@ -16,8 +10,33 @@ type FieldType = {
 };
 
 const FormLogin: React.FC<any> = (props: any) => {
+
+  const router = useRouter();
+
+  const onFinish = async (values: any) => {
+
+    try {
+      const result = await login(values.username, values.password);
+      if (result && result.status == 200) 
+      {
+        props.onCancel()
+      }
+
+    } catch {
+
+    }
+  };
+  
+  const onFinishFailed = (errorInfo: any) => {
+    console.log("Failed:", errorInfo);
+  };
   return (
-    <Modal open={props?.open} onCancel={props.onCancel}>
+    <Modal 
+      open={props?.open} 
+      onCancel={props.onCancel}
+      okButtonProps={{ hidden: true }}
+      cancelButtonProps={{ hidden: true }}
+    >
       <Form
         name="basic"
         labelCol={{ span: 8 }}
