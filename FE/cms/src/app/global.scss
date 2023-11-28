@@ -133,3 +133,7 @@ a {
           }
     }
 }
+
+:where(.css-dev-only-do-not-override-pr0fja).ant-btn-primary {
+    background-color: #1677ff;
+  }

@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Form, InputRef, Table } from "antd";
 import AddRecord from "./Component/AddRecord";
-import { Promotion, TourType } from "Models";
+import { TourType } from "Models";
 import { getAllTourType } from "services";
 import "./style.scss";
 import { getAllPromotion } from "services/promotion-services";
