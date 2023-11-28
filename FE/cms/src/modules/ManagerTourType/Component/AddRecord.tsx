@@ -9,29 +9,20 @@ import {
 } from "antd";
 import { Promotion, TourType } from "Models";
 import UploadFileImage from "components/UploadFileImage";
+import { useAppContext } from "hook/use-app-context";
 interface CollectionCreateFormProps {
   open: boolean;
   onCreate: () => void;
   onCancel: () => void;
-  tourTypes: TourType[],
-  promotions: Promotion[],
   save: any;
   form: FormInstance;
-  setTourTypes: any;
   setPopup: any;
-  setTitlePopup: any;
-  setStatePopup: any;
 }
 
 interface Props {
-  TourTypes: TourType[];
-  Promotions: Promotion[];
   Save: any;
   Form: FormInstance;
-  setTourTypes: any;
   setPopup: any;
-  setTitlePopup: any;
-  setStatePopup: any;
 }
 
 const { TextArea } = Input;
@@ -40,13 +31,12 @@ const CollectionCreateForm: React.FC<CollectionCreateFormProps> = ({
   open,
   onCreate,
   onCancel,
-  promotions,
   save,
   form,
-  setTourTypes,
   setPopup,
-  tourTypes
 }) => {
+  const { data: tourTypes, setData: setTourTypes } = useAppContext("tour-types");
+  const { data: promotions } = useAppContext("promotions");
   return (
     <Modal
       open={open}
@@ -146,7 +136,7 @@ const CollectionCreateForm: React.FC<CollectionCreateFormProps> = ({
 
 const AddRecord: React.FC<Props> = (props) => {
   const [open, setOpen] = useState(false);
-  const { TourTypes, Save, Form, Promotions, setTourTypes, setPopup, setTitlePopup, setStatePopup } = props;
+  const { Save, Form, setPopup } = props;
 
   const onCreate = () => {
     setOpen(false);
@@ -166,12 +156,7 @@ const AddRecord: React.FC<Props> = (props) => {
         open={open}
         save={Save}
         form={Form}
-        tourTypes={TourTypes}
-        promotions={Promotions}
-        setTourTypes={setTourTypes}
         setPopup={setPopup}
-        setTitlePopup={setTitlePopup}
-        setStatePopup={setStatePopup}
         onCreate={onCreate}
         onCancel={() => {
           setOpen(false);

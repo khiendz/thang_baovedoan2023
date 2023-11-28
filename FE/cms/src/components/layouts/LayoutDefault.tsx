@@ -7,7 +7,6 @@ import Footer from "components/Footer/Footer";
 import { AppProvider } from "contexts";
 import { useState, useEffect } from "react";
 import { userService } from "services";
-import NotifYPopup from "components/NotifyPopup";
 
 const LayoutDefault = ({ children }: { children: React.ReactNode }) => {
   const [store, updateStore] = useState({});
@@ -23,7 +22,7 @@ const LayoutDefault = ({ children }: { children: React.ReactNode }) => {
       <AppProvider initialValues={{ store: store, updateStore: updateStore }}>
         {userService.userValue ? (
           <>
-            <Header />
+            <Header></Header>
             <Navigation />
             <RootStyleRegistry>
               <div
@@ -41,7 +40,7 @@ const LayoutDefault = ({ children }: { children: React.ReactNode }) => {
           </>
         ) : (
           <>
-            <Header />
+            <Header></Header>
             <RootStyleRegistry>
               <div
                 className="main-container dk-h-fit dk-w-full dk-flex dk-justify-center dk-items"

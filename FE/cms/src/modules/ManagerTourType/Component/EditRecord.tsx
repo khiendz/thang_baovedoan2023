@@ -7,22 +7,19 @@ import {
   Modal,
   Select,
 } from "antd";
-import { Promotion, TourType } from "Models";
+import { Promotion } from "Models";
 import UploadFileImage from "components/UploadFileImage";
+import { useAppContext } from "hook/use-app-context";
 
 interface CollectionEditFormProps {
   open: boolean;
   onCreate: () => void;
   onCancel: () => void;
-  tourTypes: TourType[],
-  promotions: Promotion[],
   save: any;
   form: FormInstance;
 }
 
 interface Props {
-  TourTypes: TourType[];
-  Promotions: Promotion[];
   onInit: any;
   Cancel: any;
   Save: any;
@@ -35,10 +32,10 @@ const CollectionCreateForm: React.FC<CollectionEditFormProps> = ({
   open,
   onCreate,
   onCancel,
-  promotions,
   save,
   form,
 }) => {
+  const { data: promotions } = useAppContext("promotions");
   return (
     <Modal
       open={open}
@@ -123,7 +120,7 @@ const CollectionCreateForm: React.FC<CollectionEditFormProps> = ({
 
 const EditRecord: React.FC<Props> = (props) => {
   const [open, setOpen] = useState(false);
-  const { TourTypes, Save, Form, Promotions, onInit, Cancel } = props;
+  const { Save, Form, onInit, Cancel } = props;
 
   useEffect(() => {
     if (open)
@@ -148,8 +145,6 @@ const EditRecord: React.FC<Props> = (props) => {
         open={open}
         save={Save}
         form={Form}
-        tourTypes={TourTypes}
-        promotions={Promotions}
         onCreate={onCreate}
         onCancel={() => {
           setOpen(false);

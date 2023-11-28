@@ -8,23 +8,21 @@ import { getAllPromotion } from "services/promotion-services";
 import Columns from "./Component/Columns";
 import MergedColumns from "./Component/MergedColumns";
 import { changeTourType, handleDelete, handleAdd } from "./Services";
-import NotifYPopup from "components/NotifyPopup";
 import { useAppContext } from "hook/use-app-context";
-import { userService } from "services";
 
 const ManagerTourType = () => {
+  const { data: tourTypes, setData: setTourTypes } = useAppContext("tour-types");
+  const { data: promotions, setData: setPromotions } = useAppContext("promotions");
   const { setData: setPopup } = useAppContext("popup-message");
-  const [tourTypes, setTourTypes] = useState<TourType[]>([]);
-  const [promotions, setPromotions] = useState<Promotion[]>([]);
   const [form] = Form.useForm();
   const [editingKey, setEditingKey] = useState("");
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
   const searchInput = useRef<InputRef>(null);
-  const [titlePopup, setTitlePopup] = useState("Thành công");
-  const [statePopup, setStatePopup] = useState(true);
 
   useEffect(() => {
+    setTourTypes([]);
+    setPromotions([]);
     setPopup({
       title: "",
       messagePopup: "",
@@ -105,8 +103,6 @@ const ManagerTourType = () => {
     searchInput,
     searchedColumn,
     searchText,
-    promotions,
-    tourTypes,
     isEditing,
     edit,
     save,
@@ -114,13 +110,14 @@ const ManagerTourType = () => {
     form,
     handleDelete,
     setTourTypes,
-    setPopup
+    setPopup,
+    promotions,
+    tourTypes,
   );
+  
   const mergedColumns = MergedColumns(
     columns,
     isEditing,
-    tourTypes,
-    promotions,
     form
   );
 
@@ -130,12 +127,7 @@ const ManagerTourType = () => {
         <AddRecord
           Save={handleAdd}
           Form={form}
-          TourTypes={tourTypes}
-          Promotions={promotions}
-          setTourTypes={setTourTypes}
           setPopup={setPopup}
-          setTitlePopup={setTitlePopup}
-          setStatePopup={setStatePopup}
         />
         <Table
           columns={mergedColumns}

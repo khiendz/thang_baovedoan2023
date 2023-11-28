@@ -6,12 +6,10 @@ import { FormInstance, Popconfirm } from "antd";
 
 const Columns = (
     setSearchText:any,
-    setSearchedColumn: any
-    ,searchInput: any,
+    setSearchedColumn: any,
+    searchInput: any,
     searchedColumn: any,
     searchText: any,
-    promotions: Promotion[],
-    tourTypes: TourType[],
     isEditing: any,
     edit: any,
     save: any,
@@ -19,7 +17,9 @@ const Columns = (
     form: FormInstance,
     handleDelete: any,
     setTourType: any,
-    setPopup: any
+    setPopup: any,
+    promotions: Promotion[],
+    tourTypes: TourType[],
     ) => [
     {
       title: "Tên Tour",
@@ -120,8 +120,6 @@ const Columns = (
               Save={() => save(record?.TourTypeId || "")}
               Cancel={cancel}
               Form={form}
-              TourTypes={tourTypes}
-              Promotions={promotions}
             />
             <Popconfirm
               title="Sure to delete?"

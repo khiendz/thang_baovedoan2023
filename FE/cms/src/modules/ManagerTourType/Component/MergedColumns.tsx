@@ -1,7 +1,11 @@
-import { Promotion, TourType } from "Models";
+import { TourType } from "Models";
 import { FormInstance } from "antd";
+import { useAppContext } from "hook/use-app-context";
 
-const MergedColumns = (columns: any, isEditing: any, tourTypes: TourType[], promotions: Promotion[], form: FormInstance) => columns.map((col: any) => {
+const MergedColumns = (columns: any, isEditing: any, form: FormInstance) => {
+  const { data: tourTypes } = useAppContext("tour-types");
+  const { data: promotions } = useAppContext("promotions");
+  return columns.map((col: any) => {
     if (!col.editable) {
       return col;
     }
@@ -22,5 +26,7 @@ const MergedColumns = (columns: any, isEditing: any, tourTypes: TourType[], prom
       }),
     };
   });
+}
+
 
 export default MergedColumns;
