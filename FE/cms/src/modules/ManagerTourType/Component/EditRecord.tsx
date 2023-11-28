@@ -10,6 +10,7 @@ import {
 import { Promotion } from "Models";
 import UploadFileImage from "components/UploadFileImage";
 import { useAppContext } from "hook/use-app-context";
+import TextEditor from "components/TextEditor";
 
 interface CollectionEditFormProps {
   open: boolean;
@@ -61,8 +62,14 @@ const CollectionCreateForm: React.FC<CollectionEditFormProps> = ({
         >
           <Input />
         </Form.Item>
-        <Form.Item name="Description" label="Mô tả tour">
-          <TextArea/>
+        <Form.Item name="Description" label="Mô tả tour" className="dk-h-[600px]">
+          <TextEditor 
+            initialValues={form.getFieldValue("Description")}
+            onChange={
+            (value: any) => {
+              form.setFieldValue("Description", value);
+            }
+          }/>
         </Form.Item>
         <Form.Item
           name="PriceElder"

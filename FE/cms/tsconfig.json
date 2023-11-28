@@ -14,7 +14,7 @@
     "jsx": "preserve",
     "incremental": true,
     "strictPropertyInitialization": false,
-    "baseUrl": "./src", // Đặt baseUrl vào thư mục 'src'
+    "baseUrl": "./src", // Đặt baseUrl vào thư mục 'src',
     "plugins": [
       {
         "name": "next"

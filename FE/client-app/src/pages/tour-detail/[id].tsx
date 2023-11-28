@@ -36,7 +36,7 @@ export default function LocalTour() {
   const initTourType = async () => {
     if (id === null || id === undefined) return;
     try {
-      const idParam = parseInt(id[0]);
+      const idParam = parseInt(id.toString());
       const rest = await getTourTypeById(idParam);
       if (rest) {
         let data: TourType = rest;
@@ -166,47 +166,10 @@ export default function LocalTour() {
               </button>
             </div>
           </div>
-          <div className="schedule dk-flex dk-flex-col dk-gap-4 dk-bg-white dk-p-4 dk-rounded-lg">
-            <h2 className="dk-font-bold dk-text-2xl dk-font-Roboto dk-text-blue-400">
-              Trải nghiệm xứ sở chuột túi
-            </h2>
-            <p>
-              Nước Úc – Australia là một trong những quốc gia có mức độ đô thị
-              hóa cao nhất thế giới. Tuy nhiên không vì thế mà nơi đây thiếu đi
-              sức hút của thiên nhiên. Du lịch Úc không chỉ hấp dẫn bởi những
-              điểm đến hiện đại với các công trình hoành tráng như Sydney,
-              Melbourne, và Perth, mà còn thu hút những người yêu kì quan thiên
-              nhiên, những vùng sa mạc trải dài, những bãi biển hoang sơ và
-              những hòn đảo tuyệt đẹp. Cùng iVIVU khám phá điểm đến tuyệt vời
-              này!
-            </p>
-            <h2 className="dk-font-bold dk-text-2xl dk-font-Roboto dk-text-blue-400">
-              Những trải nghiệm tuyệt vời trong chương trình
-            </h2>
-            <ul className="dk-flex dk-flex-col dk-font-Merriweather dk-gap-2">
-              <li>
-                Nhà hát Con Sò: biểu tượng nước Úc, cũng là biểu tượng cho tính
-                sáng tạo và nghệ thuật xây dựng của Úc. Được UNESCO công nhận là
-                di sản văn hóa thế giới năm 2007.
-              </li>
-              <li>
-                Wildlife Park (Vườn thú hoang dã ) – nơi bảo tồn những loại động
-                vật quý hiếm của Australia. Quý khách có thể ngắm nhìn cận cảnh,
-                vui đùa với những chú Kangaroos, đà điểu sa mạc úc, gấu Túi
-                Koala… và chụp hình lưu niệm.
-              </li>
-              <li>
-                Du Thuyền Ngắm Cá Voi Kèm Bữa Trưa: Nghe về các kiểu di cư và
-                hành vi của cá voi trên một con tàu thoải mái với nhiều khu vực
-                quan sát cả trong và ngoài. ( Chi phí khách tự túc)
-              </li>
-              <li>
-                Botanical Gardens: là Vườn Bách thảo Hoàng gia rực rỡ sắc màu
-                Với những vườn hoa đủ màu tươi thắm, những tác phẩm nghệ thuật
-                hấp dẫn rải rác khắp các khu vườn và giao thông thuận lợi, công
-                viên này là một điểm dừng chân thú vị cho mọi hành trình
-              </li>
-            </ul>
+          <div 
+            className="schedule dk-flex dk-flex-col dk-gap-4 dk-bg-white dk-p-4 dk-rounded-lg"
+            dangerouslySetInnerHTML={{ __html: tourTypes.Description ? tourTypes.Description : "" }}
+          >
           </div>
         </div>
       </LayoutDefault>

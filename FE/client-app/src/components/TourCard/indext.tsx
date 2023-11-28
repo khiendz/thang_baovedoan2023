@@ -23,7 +23,14 @@ const TourCard: React.FC<Props> = (props: Props) => {
         className="dk-min-h-[400px]"
         cover={<img alt="example" src={data?.Img || ""} />}
       >
-        <Meta className="dk-font-Inter dk-font-bold" title={data?.Name} description={data?.Description} />
+        <Meta 
+          className="dk-font-Inter dk-font-bold" 
+          title={data?.Name} 
+          description={<div
+            className="dk-line-clamp-5"
+            dangerouslySetInnerHTML={{ __html: data.Description ? data.Description : "" }}
+          ></div>} 
+          />
         <div className="dk-font-Inter dk-text-sm dk-font-semibold dk-text-[#222] dk-mt-5">
           <p>
             Giá tiền người lớn: <strong>{data?.PriceElder} VND</strong>

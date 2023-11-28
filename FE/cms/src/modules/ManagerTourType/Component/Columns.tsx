@@ -50,9 +50,11 @@ const Columns = (
       searchText
     ),
     render: (description: string) => (
-      <p className="dk-block dk-min-w-[350px] dk-text-sm dk-font-medium dk-font-Inter">
-        {description}
-      </p>
+      <div
+        className="dk-min-w-[350px] dk-text-sm dk-font-medium dk-font-Inter dk-line-clamp-5"
+        dangerouslySetInnerHTML={{ __html: description }}
+      >
+      </div>
     ),
     editable: true,
     align: "left",
