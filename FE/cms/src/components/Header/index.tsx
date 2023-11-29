@@ -1,11 +1,12 @@
 "use client";
-import React from "react";
+import React, {useEffect} from "react";
 import { SearchOutlined } from "@ant-design/icons";
 import { Roboto } from "next/font/google";
 import UserAccount from "modules/UserAccount";
 import Notification from "components/Notification";
 import { userService } from "services";
 import NotifYPopup from "components/NotifyPopup";
+import { useAppContext } from "hook/use-app-context";
 
 const roboto = Roboto({
   weight: "400",
@@ -13,9 +14,15 @@ const roboto = Roboto({
 });
 
 export default function Header() {
+  const { data: user, setData: setUser } = useAppContext("user");
+
+  useEffect(() => {
+    setUser(userService.userValue);
+  }, []);
+
   return (
     <header className={`dk-flex dk-flex-row dk-bg-[#003C71] dk-h-16 dk-text-[#FFF] dk-gap-14 dk-justify-between dk-items-center dk-font-Inter
-    ${userService.userValue ? "" : "dk-hidden"}`} >
+    ${user ? "" : "dk-hidden"}`} >
       <span className="dk-pl-8 dk-whitespace-nowrap">Thắng tour</span>
       <div className="search dk-flex dk-flex-row dk-gap-6 dk-pr-[600px]">
         <input

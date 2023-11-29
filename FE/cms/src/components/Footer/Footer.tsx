@@ -1,7 +1,9 @@
+import { useAppContext } from "hook/use-app-context";
 import { userService } from "services";
 
 export default function Footer() {
-    return <div className={`dk-flex dk-min-h-14 dk-bg-[#003C71] dk-border-t-[5px] dk-border-[#ffffff] dk-p-5 ${userService.userValue ? "" : "dk-hidden"}`}>
+    const { data: user } = useAppContext("user");
+    return <div className={`dk-flex dk-min-h-14 dk-bg-[#003C71] dk-border-t-[5px] dk-border-[#ffffff] dk-p-5 ${user ? "" : "dk-hidden"}`}>
         <ul className="info dk-flex dk-flex-col dk-font-Inter dk-text-sm dk-font-medium dk-list-none dk-text-[#FFF]">
             <li>Website đặt tour du lịch của Thắng cao cường</li>
             <li>Tổng phụ trách: Thắng</li>

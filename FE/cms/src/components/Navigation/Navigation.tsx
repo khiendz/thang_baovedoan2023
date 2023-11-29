@@ -5,7 +5,7 @@ import { HomeOutlined, BankOutlined } from "@ant-design/icons";
 import type { MenuProps } from "antd";
 import { Menu } from "antd";
 import Link from "next/link";
-import { userService } from "services";
+import { useAppContext } from "hook/use-app-context";
 
 const items: MenuProps["items"] = [
   {
@@ -95,6 +95,7 @@ const items: MenuProps["items"] = [
 ];
 
 const Navigation: React.FC = () => {
+  const { data: user } = useAppContext("user");
   const [current, setCurrent] = useState("mail");
   const onClick: MenuProps["onClick"] = (e) => {
     console.log("click ", e);
@@ -104,7 +105,7 @@ const Navigation: React.FC = () => {
   return (
     <nav>
       <Menu
-        className={`dk-text-[#222] dk-text-lg dk-font-bold dk-py-3 dk-border-none dk-shadow-md dk-font-Inter ${userService.userValue ? "" : "dk-hidden"}`}
+        className={`dk-text-[#222] dk-text-lg dk-font-bold dk-py-3 dk-border-none dk-shadow-md dk-font-Inter ${user ? "" : "dk-hidden"}`}
         onClick={onClick}
         selectedKeys={[current]}
         mode="horizontal"
