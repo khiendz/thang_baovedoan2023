@@ -7,7 +7,6 @@ import "./style.scss";
 import Columns from "./Components/Columns";
 import MergedColumns from "./Components/MergedColumns";
 import { changeTour, handleDelete, handleAdd } from "./Services";
-import NotifYPopup from "components/NotifyPopup";
 import { useAppContext } from "hook/use-app-context";
 
 const ManagerTour = () => {

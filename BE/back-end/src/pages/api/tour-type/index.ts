@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { PrismaClient, TourType } from '@prisma/client';
+import { apiHandler } from 'helpers/api';
 
 const prisma = new PrismaClient();
 
@@ -185,4 +186,4 @@ const DeleteBorrowedBook = async (tourTypeId: number) => {
     }
 }
 
-export default handler;
+export default apiHandler(handler);

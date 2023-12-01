@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { PrismaClient, Promotion, Tour } from '@prisma/client';
+import { apiHandler } from 'helpers/api';
 
 const prisma = new PrismaClient();
 
@@ -172,4 +173,4 @@ const DeletePromotion = async (promotionId: number) => {
     }
 }
 
-export default handler;
+export default apiHandler(handler);

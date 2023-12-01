@@ -1,11 +1,6 @@
 "use client";
-import { LoadingOutlined } from "@ant-design/icons";
-import Link from "next/link";
-import { useState } from "react";
-import { UserOutlined } from "@ant-design/icons";
 import styles from "./styles.module.scss";
-import { Formik, Form, Field, ErrorMessage } from "formik";
-import { useAppContext } from "hook/use-app-context";
+import { Formik, Field, ErrorMessage } from "formik";
 import { Tour } from "Models";
 import classNames from "classnames";
 

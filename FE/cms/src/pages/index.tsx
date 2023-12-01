@@ -1,80 +1,9 @@
 "use client";
 import LayoutDefault from "components/layouts/LayoutDefault";
-import React, { useState, useEffect, useRef } from "react";
-import { TourType } from "Models";
-import { getTourByRegion, typeRegion } from "services";
-import { removeAccents } from "utils/charactor-util";
+import React from "react";
 import ManagerTourType from "modules/ManagerTourType";
-import { userService } from "services";
 
 export default function Home() {
-  const [tourTypesList, setTourTypeList] = useState<TourType[]>([]);
-  const [searchInput, setSearchInput] = useState<string>("");
-  const [timeoutId,setTimeoutId] = useState<string>("");
-  const timeoutIdRef = useRef(timeoutId);
-  timeoutIdRef.current = timeoutId;
-  const [searchingData,setSeachingData] = useState<TourType[]>([]);
-  const searchInputRef = useRef(searchInput);
-  searchInputRef.current = searchInput;
-  
-  useEffect(() => {
-    const initData = async () => {
-      try {
-        const rest = await getTourByRegion(typeRegion.global);
-        if (rest) {
-          const data: TourType[] = rest;
-          setTourTypeList(data);
-        }
-      } catch (e) {
-        // Xử lý lỗi nếu cần
-      }
-    };
-
-    initData();
-  }, []); 
-
-  useEffect(() => {
-   if (tourTypesList) {
-   }
-  }, [tourTypesList]);
-
-  useEffect(() => {
-      clearTimeout(timeoutIdRef.current);
-
-    if (searchInput != "") {
-      clearTimeout(timeoutIdRef.current);
-      const timeoutIdOb = setTimeout(() => { 
-        searching();
-      },1000);
-      setTimeoutId(String(timeoutIdOb));
-      timeoutIdRef.current = String(timeoutIdOb);
-    }
-
-    return () => {
-      clearTimeout(timeoutIdRef.current || "");
-    }
-  }, [searchInput]);
-
-  const searching = () => {
-    if (searchInputRef.current) {
-        const dataSearch = tourTypesList.filter(e => {
-            const removeAccentOb = removeAccents(e.Name.toUpperCase());
-            const removeAccentParam = removeAccents(searchInputRef.current.toUpperCase());
-            const result = removeAccentOb.includes(removeAccentParam);
-            return result;
-          }
-        );
-        setSeachingData(dataSearch);
-        console.log(dataSearch);
-    }
-  }
-  
-  const handleInput = (value:string) => {
-    setSeachingData([]);
-    clearTimeout(timeoutIdRef.current);
-    setSearchInput(value);
-  }
-
   return (
     <LayoutDefault>
       <div className="content-container content-miss dk-flex dk-flex-col dk-font-Roboto dk-gap-4 dk-relative dk-z-10">

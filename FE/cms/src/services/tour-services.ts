@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import { Tour } from 'Models';
+import { fetchWrapper } from 'helpers';
 
 const domainBE = process?.env?.DOMAIN_BACK_END ?? "http://localhost:3000"; 
 
@@ -10,7 +11,7 @@ export async function getTourById(id: string) {
         return null;
     
     try {
-        const res: any = await axios.get(`${domainBE}/api/tour/${id}`)
+        const res: any = await fetchWrapper.get(`${domainBE}/api/tour/${id}`)
         .then(respones => {
             console.log(respones)
             return respones?.data;
@@ -29,7 +30,7 @@ export async function getTourById(id: string) {
 
 export async function getAllTour () {
     try {
-        const res: any = await axios.get(`${domainBE}/api/tour`);
+        const res: any = await fetchWrapper.get(`${domainBE}/api/tour`);
         if (res.status == 200) 
             return res.data;
         
@@ -40,11 +41,7 @@ export async function getAllTour () {
 
 export async function UpdateTour(tour: Tour) {
     try {
-        const res: any = await axios.put(`${domainBE}/api/tour`, JSON.stringify(tour), {
-            headers: {
-                'Content-Type': 'application/json', 
-            },
-        });
+        const res: any = await fetchWrapper.put(`${domainBE}/api/tour`, tour);
 
         if (res.status === 200) {
             return res.data;
@@ -58,11 +55,7 @@ export async function UpdateTour(tour: Tour) {
 
 export async function AddTour(tour: Tour) {
     try {
-        const res: any = await axios.post(`${domainBE}/api/tour`, JSON.stringify(tour), {
-            headers: {
-                'Content-Type': 'application/json', 
-            },
-        });
+        const res: any = await axios.post(`${domainBE}/api/tour`,tour);
 
         if (res.status === 200) {
             return res.data;

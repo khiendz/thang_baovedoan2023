@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import { Promotion, Tour } from 'Models';
+import { fetchWrapper } from 'helpers';
 
 const domainBE = process?.env?.DOMAIN_BACK_END ?? "http://localhost:3000"; 
 
@@ -10,7 +11,7 @@ export async function getPromotionById(id: string) {
         return null;
     
     try {
-        const res: any = await axios.get(`${domainBE}/api/promotion/${id}`)
+        const res: any = await fetchWrapper.get(`${domainBE}/api/promotion/${id}`)
         .then(respones => {
             console.log(respones)
             return respones?.data;
@@ -29,7 +30,7 @@ export async function getPromotionById(id: string) {
 
 export async function getAllPromotion () {
     try {
-        const res: any = await axios.get(`${domainBE}/api/promotion`);
+        const res: any = await fetchWrapper.get(`${domainBE}/api/promotion`);
         if (res.status == 200) 
             return res.data;
         
@@ -40,11 +41,7 @@ export async function getAllPromotion () {
 
 export async function UpdatePromotion(promotion: Promotion) {
     try {
-        const res: any = await axios.put(`${domainBE}/api/promotion`, JSON.stringify(promotion), {
-            headers: {
-                'Content-Type': 'application/json', 
-            },
-        });
+        const res: any = await fetchWrapper.put(`${domainBE}/api/promotion`, promotion);
 
         if (res.status === 200) {
             return res.data;
@@ -58,11 +55,7 @@ export async function UpdatePromotion(promotion: Promotion) {
 
 export async function AddPromotion(promotion: Promotion) {
     try {
-        const res: any = await axios.post(`${domainBE}/api/promotion`, JSON.stringify(promotion), {
-            headers: {
-                'Content-Type': 'application/json', 
-            },
-        });
+        const res: any = await fetchWrapper.post(`${domainBE}/api/promotion`, promotion);
 
         if (res.status === 200) {
             return res.data;
@@ -76,7 +69,7 @@ export async function AddPromotion(promotion: Promotion) {
 
 export async function DeletePromotionById(promotionId: number) {
     try {
-        const res: any = await axios.delete(`${domainBE}/api/promotion?promotionId=${promotionId}`);
+        const res: any = await fetchWrapper.delete(`${domainBE}/api/promotion?promotionId=${promotionId}`);
 
         if (res.status === 200) {
             return res.data;

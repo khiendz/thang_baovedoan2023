@@ -98,7 +98,6 @@ const Navigation: React.FC = () => {
   const { data: user } = useAppContext("user");
   const [current, setCurrent] = useState("mail");
   const onClick: MenuProps["onClick"] = (e) => {
-    console.log("click ", e);
     setCurrent(e.key);
   };
 

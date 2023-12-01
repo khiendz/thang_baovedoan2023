@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { PrismaClient } from '@prisma/client';
+import { apiHandler } from 'helpers/api';
 
 const prisma = new PrismaClient();
 
@@ -35,4 +36,4 @@ const handler =  async (req: NextApiRequest, res: NextApiResponse) => {
   }
 };
 
-export default handler;
+export default apiHandler(handler);

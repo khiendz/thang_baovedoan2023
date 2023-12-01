@@ -6,7 +6,6 @@ import {
   FormInstance,
   Input,
   Modal,
-  Select,
 } from "antd";
 import { Promotion, Tour, TourType } from "Models";
 import UploadFileImage from "components/UploadFileImage";

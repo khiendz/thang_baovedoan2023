@@ -7,7 +7,6 @@ import "./style.scss";
 import Columns from "./Components/Column";
 import MergedColumns from "./Components/MergedColumns";
 import { changeBooking, handleAdd, handleDelete } from "./Services";
-import NotifYPopup from "components/NotifyPopup";
 import { useAppContext } from "hook/use-app-context";
 
 const ManagerBooking = () => {

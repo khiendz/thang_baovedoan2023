@@ -163,7 +163,7 @@ const Columns = (
 
       const titleDelete = () => {
         return (
-          <div className="dk-flex dk-flex-col dk-gap-2">
+          <div className="dk-flex dk-flex-col dk-gap-2 dk-max-w-[450px]">
             <span className="dk-font-medium dk-font-Inter dk-text-sm dk-text-[#222]">
               Việc xóa tour này sẽ bao gồm xóa cả những ưu đãi liên quan:
             </span>

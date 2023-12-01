@@ -1,7 +1,9 @@
 import { TourType } from 'Models';
 import axios from 'axios';
+import { fetchWrapper } from 'helpers';
 
 const domainBE = process?.env?.DOMAIN_BACK_END ?? "http://localhost:3000"; 
+
 export const typeRegion = {
     local: 0,
     global: 1
@@ -12,7 +14,7 @@ export async function getTourTypeById(id: number) {
         return null;
     
     try {
-        const res: any = await axios.get(`${domainBE}/api/tour-type/${id}`);
+        const res: any = await fetchWrapper.get(`${domainBE}/api/tour-type/${id}`);
         if (res.status == 200) 
             return res.data;
         
@@ -23,7 +25,7 @@ export async function getTourTypeById(id: number) {
 
 export async function getAllTourType () {
     try {
-        const res: any = await axios.get(`${domainBE}/api/tour-type`);
+        const res: any = await fetchWrapper.get(`${domainBE}/api/tour-type`);
         if (res.status == 200) 
             return res.data;
         
@@ -34,7 +36,7 @@ export async function getAllTourType () {
 
 export async function getTourByRegion (region: number = typeRegion.local) {
     try {
-        const res: any = await axios.get(`${domainBE}/api/tour-type/region/${region}`);
+        const res: any = await fetchWrapper.get(`${domainBE}/api/tour-type/region/${region}`);
         if (res.status == 200) 
             return res.data;
     }catch {
@@ -44,11 +46,7 @@ export async function getTourByRegion (region: number = typeRegion.local) {
 
 export async function UpdateTourType(tourType: TourType) {
     try {
-        const res: any = await axios.put(`${domainBE}/api/tour-type`, JSON.stringify(tourType), {
-            headers: {
-                'Content-Type': 'application/json', 
-            },
-        });
+        const res: any = await fetchWrapper.put(`${domainBE}/api/tour-type`, tourType);
 
         if (res.status === 200) {
             return res.data;
@@ -62,11 +60,7 @@ export async function UpdateTourType(tourType: TourType) {
 
 export async function AddTourType(book: TourType) {
     try {
-        const res: any = await axios.post(`${domainBE}/api/tour-type`, JSON.stringify(book), {
-            headers: {
-                'Content-Type': 'application/json', 
-            },
-        });
+        const res: any = await fetchWrapper.post(`${domainBE}/api/tour-type`, book);
 
         if (res.status === 200) {
             return res.data;
@@ -80,13 +74,13 @@ export async function AddTourType(book: TourType) {
 
 export async function DeleteTourTypeById(tourTypeId: number) {
     try {
-        const res: any = await axios.delete(`${domainBE}/api/tour-type?tourTypeId=${tourTypeId}`);
+        const res: any = await fetchWrapper.delete(`${domainBE}/api/tour-type?tourTypeId=${tourTypeId}`);
 
         if (res.status === 200) {
             return res.data;
         }
     } catch (e) {
-        console.error('Error updating book:', e);
+        console.error('Error delete tour type:', e);
     }
 
     return null;
