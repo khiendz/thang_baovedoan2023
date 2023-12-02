@@ -64,7 +64,7 @@ const CollectionCreateForm: React.FC<CollectionEditFormProps> = ({
         </Form.Item>
         <Form.Item name="Description" label="Mô tả tour" className="dk-h-[600px]">
           <TextEditor 
-            initialValues={form.getFieldValue("Description")}
+            initialValues={form?.getFieldValue("Description")}
             onChange={
             (value: any) => {
               form.setFieldValue("Description", value);

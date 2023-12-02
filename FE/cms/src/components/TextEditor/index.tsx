@@ -24,7 +24,7 @@ const TextEditor: React.FC<any> = (props: any) => {
   return (
     <Quill
       theme="snow"
-      value={value}
+      value={value ?? initialValues}
       modules={{
         toolbar: [...toolbarOptions],
       }}

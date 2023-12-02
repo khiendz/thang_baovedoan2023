@@ -19,8 +19,6 @@ interface CollectionCreateFormProps {
   form: FormInstance;
   setTour: any;
   setPopup: any;
-  setTitlePopup: any;
-  setStatePopup: any;
 }
 
 interface Props {
@@ -29,8 +27,6 @@ interface Props {
   Form: FormInstance;
   setTour: any;
   setPopup: any;
-  setTitlePopup: any;
-  setStatePopup: any;
 }
 
 const { TextArea } = Input;
@@ -192,7 +188,7 @@ const CollectionCreateForm: React.FC<CollectionCreateFormProps> = ({
 
 const AddRecord: React.FC<Props> = (props) => {
   const [open, setOpen] = useState(false);
-  const { Tours, Save, Form, setTour, setPopup, setTitlePopup, setStatePopup } =
+  const { Tours, Save, Form, setTour, setPopup } =
     props;
 
   const onCreate = () => {
@@ -216,8 +212,6 @@ const AddRecord: React.FC<Props> = (props) => {
         tours={Tours}
         setTour={setTour}
         setPopup={setPopup}
-        setTitlePopup={setTitlePopup}
-        setStatePopup={setStatePopup}
         onCreate={onCreate}
         onCancel={() => {
           setOpen(false);

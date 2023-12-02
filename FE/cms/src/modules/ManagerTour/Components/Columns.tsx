@@ -175,7 +175,7 @@ const Columns = (
       dataIndex: "Img",
       width: "250px",
       render: (img: any) => (
-        <img src={img} className="dk-w-[150px] dk-aspect-[3/4]" />
+        <img src={img} className="dk-w-[150px] dk-aspect-[3/2]" />
       ),
       editable: true,
       align: "left",

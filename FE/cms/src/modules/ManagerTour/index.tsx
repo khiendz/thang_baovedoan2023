@@ -26,8 +26,6 @@ const ManagerTour = () => {
     });
   }, []);
 
-  const [titlePopup, setTitlePopup] = useState("Thành công");
-  const [statePopup, setStatePopup] = useState(true);
   const isEditing = (record: TourType) =>
     record?.TourTypeId?.toString() === editingKey;
 
@@ -112,8 +110,6 @@ const ManagerTour = () => {
           Tours={tours}
           setTour={setTour}
           setPopup={setPopup}
-          setTitlePopup={setTitlePopup}
-          setStatePopup={setStatePopup}
         />
         <Table
           columns={mergedColumns}
