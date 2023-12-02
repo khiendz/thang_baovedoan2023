@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { PrismaClient, TourType } from '@prisma/client';
 import { apiHandler } from 'helpers/api';
-import { saveFile } from 'services/file';
+import { isBase64, saveFile } from 'services/file';
 const fs = require('fs');
 const path = require('path');
 
@@ -123,21 +123,25 @@ const AddTourType = async (tourTypeData: TourType) => {
 
 const UpdateTourType = async (tourType: TourType) => {
     try {
-        const filename = await saveFile(tourType.Img,tourType.TourTypeId);
+        let updateData: any = {
+            Name: tourType.Name,
+            Description: tourType.Description?.toString(),
+            PriceElder: tourType.PriceElder,
+            PriceChildren: tourType.PriceChildren,
+            PromotionId: tourType.PromotionId,
+            RateTourType: tourType.RateTourType
+        };
+
+        if (tourType.Img && isBase64(tourType.Img)) {
+            const filename = await saveFile(tourType.Img, tourType.TourTypeId);
+            updateData.Img = filename;
+        }
 
         const updatedTourType = await prisma.tourType.update({
             where: {
                 TourTypeId: tourType?.TourTypeId
             },
-            data: {
-                Name: tourType.Name,
-                Description: tourType.Description?.toString(),
-                PriceElder: tourType.PriceElder,
-                PriceChildren: tourType.PriceChildren,
-                PromotionId: tourType.PromotionId,
-                Img: filename,
-                RateTourType: tourType.RateTourType
-            }
+            data: updateData
         });
 
         return {

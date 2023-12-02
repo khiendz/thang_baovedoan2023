@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { CollectImg, PrismaClient, TourType } from '@prisma/client';
 import { apiHandler } from 'helpers/api';
-import { saveFile } from 'services/file';
+import { isBase64, saveFile } from 'services/file';
 const fs = require('fs');
 const path = require('path');
 
@@ -120,17 +120,21 @@ const AddCollection = async (collection: CollectImg) => {
 
 const UpdateCollection = async (collectImg: CollectImg) => {
     try {
-        const filename = await saveFile(collectImg.Src, collectImg.CollectImgId);
+        let updateData: any = {
+            Name: collectImg.Name,
+            TourTypeId: collectImg.TourTypeId
+        };
+
+        if (collectImg.Src && isBase64(collectImg.Src)) {
+            const filename = await saveFile(collectImg.Src, collectImg.CollectImgId);
+            updateData.Src = filename;
+        }
 
         const updateCollection = await prisma.collectImg.update({
             where: {
                 CollectImgId: collectImg?.CollectImgId
             },
-            data: {
-                Name: collectImg.Name,
-                Src: filename,
-                TourTypeId: collectImg.TourTypeId
-            },
+            data: updateData,
         });
 
         return {
@@ -147,7 +151,6 @@ const UpdateCollection = async (collectImg: CollectImg) => {
         };
     }
 }
-
 const DeleteCollection = async (collectionId: number) => {
     try {
 

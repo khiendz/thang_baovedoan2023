@@ -1,12 +1,8 @@
 import React from "react";
-import {
-  EditOutlined,
-  EllipsisOutlined,
-  SettingOutlined,
-} from "@ant-design/icons";
-import { Avatar, Card } from "antd";
+import { Card } from "antd";
 import { TourType } from "Models";
 import { JoinFileCDN } from "services";
+import "./style.scss";
 
 const { Meta } = Card;
 
@@ -18,7 +14,7 @@ const TourCard: React.FC<Props> = (props: Props) => {
   const data = props.data;
   return props.data ? (
     <a href={`/tour-detail/${data?.TourTypeId}`} className="hover:dk-cursor-pointer hover:dk-scale-[1.2]
-     hover:dk-transition-[transform_0.3s_ease] dk-shadow-xl dk-h-fit">
+     hover:dk-transition-[transform_0.3s_ease] dk-shadow-xl dk-h-fit dk-h-[465px]">
       <Card
         style={{ width: 300 }}
         className="dk-min-h-[400px]"
