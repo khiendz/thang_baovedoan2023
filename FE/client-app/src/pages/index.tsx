@@ -10,7 +10,7 @@ import {
 } from "@ant-design/icons";
 import { TourType } from "Models";
 import TourCard from "components/TourCard/indext";
-import { getTourByRegion, typeRegion } from "services";
+import { JoinFileCDN, getTourByRegion, typeRegion } from "services";
 import { removeAccents } from "utils/charactor-util";
 
 export default function Home() {
@@ -106,8 +106,11 @@ export default function Home() {
                     searchingData?.map((ele,index) => (
                       <li key={index} className="dk-h-100% dk-p-4 hover:dk-bg-blue-100">
                         <a href={`/tour-detail/${ele.TourTypeId}`} className="dk-flex dk-justify-between dk-gap-8">
-                          <span className="dk-line-clamp-5">{ele.Name}</span>
-                           <img src={ele.Img || ""} className="dk-w-[150px] dk-h-[100px]"/>
+                          <div className="dk-line-clamp-5">
+                            <p>{ele.Name}</p>
+                            <div dangerouslySetInnerHTML={{ __html: ele.Description ? ele.Description: "" }}></div>
+                            </div>
+                           <img src={JoinFileCDN(ele.Img || "")} className="dk-w-[150px] dk-h-[100px]"/>
                         </a>
                       </li>
                     ))
