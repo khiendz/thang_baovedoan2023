@@ -10,4 +10,5 @@ export * from "./TourType.model";
 export * from "./Hotel.model";
 export * from "./RoomType.model";
 export * from "./Availability.model";
+export * from "./CollectionImage";
 

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Carousel } from 'antd';
 import { CollectionImage } from 'Models/CollectionImage';
 import "./styles.scss";
+import { JoinFileCDN } from 'services';
 
 const contentStyle: React.CSSProperties = {
   width: '100%',
@@ -18,7 +19,6 @@ type Props = {
 };
 
 const Slides: React.FC<Props> = (props: Props) => {
-  const [data,setData] = useState(props.data); 
   const onChange = (currentSlide: number) => {
     console.log(currentSlide);
   };
@@ -26,9 +26,9 @@ const Slides: React.FC<Props> = (props: Props) => {
   return (
     <Carousel afterChange={onChange} autoplay>
       {
-        data.map((e,index) => (
+        props.data.map((e,index) => (
           <div key={index}>
-            <img src={e.Src}/>
+            <img className='dk-w-[95%] dk-aspect-[3/2]' src={JoinFileCDN(e.Src)}/>
           </div>
         ))
       }

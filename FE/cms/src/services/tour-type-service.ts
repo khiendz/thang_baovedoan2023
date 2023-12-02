@@ -1,5 +1,4 @@
 import { TourType } from 'Models';
-import axios from 'axios';
 import { fetchWrapper } from 'helpers';
 
 const domainBE = process?.env?.DOMAIN_BACK_END ?? "http://localhost:3000"; 

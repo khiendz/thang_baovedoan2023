@@ -92,6 +92,18 @@ const items: MenuProps["items"] = [
     key: "payment",
     icon: <BankOutlined />,
   },
+  {
+    label: (
+      <Link
+        href="/collection-images"
+        className="dk-text-sm dk-text-[#222] dk-font-Inter dk-font-bold"
+      >
+        Quản lý bộ sưu tập ảnh
+      </Link>
+    ),
+    key: "collections",
+    icon: <BankOutlined />,
+  },
 ];
 
 const Navigation: React.FC = () => {

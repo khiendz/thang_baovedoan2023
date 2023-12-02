@@ -56,7 +56,7 @@ export default function LocalTour() {
   const initCollectionImage = async () => {
     if (id === null || id === undefined) return;
     try {
-      const idParam = parseInt(id[0]);
+      const idParam = parseInt(id.toString());
       const rest = await getCollectionImageByTourTypeId(idParam);
       if (rest) {
         const data: CollectionImage[] = rest;

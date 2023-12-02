@@ -6,6 +6,7 @@ import {
 } from "@ant-design/icons";
 import { Avatar, Card } from "antd";
 import { TourType } from "Models";
+import { JoinFileCDN } from "services";
 
 const { Meta } = Card;
 
@@ -21,7 +22,7 @@ const TourCard: React.FC<Props> = (props: Props) => {
       <Card
         style={{ width: 300 }}
         className="dk-min-h-[400px]"
-        cover={<img alt="example" src={data?.Img || ""} />}
+        cover={<img alt="example" src={JoinFileCDN(data?.Img || "")} />}
       >
         <Meta 
           className="dk-font-Inter dk-font-bold" 

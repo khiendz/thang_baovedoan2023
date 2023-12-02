@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { fetchWrapper } from 'helpers';
 
 const domainBE = process?.env?.DOMAIN_BACK_END ?? "http://localhost:3000"; 
 
@@ -7,7 +8,7 @@ export async function getCollectionImageByTourTypeId(id: number) {
         return null;
     
     try {
-        const res: any = await axios.get(`${domainBE}/api/collection-image/${id}`);
+        const res: any = await fetchWrapper.get(`${domainBE}/api/collection-image/${id}`);
         if (res.status == 200) 
             return res.data;
         
@@ -18,7 +19,7 @@ export async function getCollectionImageByTourTypeId(id: number) {
 
 export async function getAllCollectionImage () {
     try {
-        const res: any = await axios.get(`${domainBE}/api/collection-image`);
+        const res: any = await fetchWrapper.get(`${domainBE}/api/collection-image`);
         if (res.status == 200) 
             return res.data;
         

@@ -1,4 +1,4 @@
-import axios from 'axios';
+import { fetchWrapper } from 'helpers';
 
 const domainBE = process?.env?.DOMAIN_BACK_END ?? "http://localhost:3000"; 
 export const typeRegion = {
@@ -11,7 +11,7 @@ export async function getTourTypeById(id: number) {
         return null;
     
     try {
-        const res: any = await axios.get(`${domainBE}/api/tour-type/${id}`);
+        const res: any = await fetchWrapper.get(`${domainBE}/api/tour-type/${id}`);
         if (res.status == 200) 
             return res.data;
         
@@ -22,7 +22,7 @@ export async function getTourTypeById(id: number) {
 
 export async function getAllTour () {
     try {
-        const res: any = await axios.get(`${domainBE}/api/tour-type`);
+        const res: any = await fetchWrapper.get(`${domainBE}/api/tour-type`);
         if (res.status == 200) 
             return res.data;
         
@@ -33,10 +33,10 @@ export async function getAllTour () {
 
 export async function getTourByRegion (region: number = typeRegion.local) {
     try {
-        const res: any = await axios.get(`${domainBE}/api/tour-type/region/${region}`);
+        const res: any = await fetchWrapper.get(`${domainBE}/api/tour-type/region/${region}`);
         if (res.status == 200) 
             return res.data;
-    }catch {
+    } catch {
         return null;
     }
 }

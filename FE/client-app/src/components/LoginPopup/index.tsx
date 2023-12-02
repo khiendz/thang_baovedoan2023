@@ -1,15 +1,16 @@
-import React, { useState } from "react";
+import React from "react";
 import {
     Button,
   Form,
-  FormInstance,
-  Input,
-  Modal,
 } from "antd";
 import FormLogin from "./Components/FormLogin";
+import { useAppContext } from "hook/use-app-context";
+import "./style.scss";
 
 const LoginComponent: React.FC<any> = (props) => {
-    const [open, setOpen] = useState(false);
+
+    const { data: open, setData: setOpen } = useAppContext("open-login-form");
+
     return <>
       <Button
         type="primary"
