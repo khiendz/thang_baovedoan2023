@@ -2,6 +2,8 @@ import { Promotion, TourType } from "Models";
 import GetColumnSearchProps from "components/GetColumnSearchProps";
 import EditRecord from "./EditRecord";
 import { FormInstance, Popconfirm } from "antd";
+import { JoinFileCDN } from "services/file-service";
+import { currencyFormat } from "utils/money";
 
 const Columns = (
   setSearchText: any,
@@ -71,6 +73,13 @@ const Columns = (
       searchedColumn,
       searchText
     ),
+    render: (price: string) => (
+      <p
+        className="dk-min-w-[350px] dk-text-sm dk-font-medium dk-font-Inter dk-line-clamp-5"
+      >
+        {`${currencyFormat(price)}`}
+      </p>
+    ),
     editable: true,
     align: "left",
   },
@@ -85,6 +94,13 @@ const Columns = (
       searchInput,
       searchedColumn,
       searchText
+    ),
+    render: (price: string) => (
+      <p
+        className="dk-min-w-[350px] dk-text-sm dk-font-medium dk-font-Inter dk-line-clamp-5"
+      >
+        {`${currencyFormat(price)}`}
+      </p>
     ),
     editable: true,
     align: "left",
@@ -104,7 +120,7 @@ const Columns = (
     className: "column-money",
     dataIndex: "Img",
     render: (img: any) => (
-      <img src={img} className="dk-w-[150px] dk-aspect-[3/4]" />
+      <img src={JoinFileCDN(img)} className="dk-w-[150px] dk-aspect-[3/4]" />
     ),
     editable: true,
     align: "left",

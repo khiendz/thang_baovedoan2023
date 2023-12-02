@@ -8,7 +8,7 @@ import { getBase64 } from 'utils/img';
 interface Props {
   lengthMaxImage: number,
   form: FormInstance,
-  keyField: string
+  keyField: string,
 }
 
 const UploadFileImage: React.FC<any> = (props: any) => {

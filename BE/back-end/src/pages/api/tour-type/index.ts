@@ -1,6 +1,9 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { PrismaClient, TourType } from '@prisma/client';
 import { apiHandler } from 'helpers/api';
+import { saveFile } from 'services/file';
+const fs = require('fs');
+const path = require('path');
 
 const prisma = new PrismaClient();
 
@@ -120,6 +123,8 @@ const AddTourType = async (tourTypeData: TourType) => {
 
 const UpdateTourType = async (tourType: TourType) => {
     try {
+        const filename = await saveFile(tourType.Img,tourType.TourTypeId);
+
         const updatedTourType = await prisma.tourType.update({
             where: {
                 TourTypeId: tourType?.TourTypeId
@@ -130,7 +135,7 @@ const UpdateTourType = async (tourType: TourType) => {
                 PriceElder: tourType.PriceElder,
                 PriceChildren: tourType.PriceChildren,
                 PromotionId: tourType.PromotionId,
-                Img: tourType.Img,
+                Img: filename,
                 RateTourType: tourType.RateTourType
             }
         });

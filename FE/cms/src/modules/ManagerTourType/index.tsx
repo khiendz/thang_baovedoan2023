@@ -11,8 +11,10 @@ import { changeTourType, handleDelete, handleAdd } from "./Services";
 import { useAppContext } from "hook/use-app-context";
 
 const ManagerTourType = () => {
-  const { data: tourTypes, setData: setTourTypes } = useAppContext("tour-types");
-  const { data: promotions, setData: setPromotions } = useAppContext("promotions");
+  const { data: tourTypes, setData: setTourTypes } =
+    useAppContext("tour-types");
+  const { data: promotions, setData: setPromotions } =
+    useAppContext("promotions");
   const { setData: setPopup } = useAppContext("popup-message");
   const [form] = Form.useForm();
   const [editingKey, setEditingKey] = useState("");
@@ -42,6 +44,7 @@ const ManagerTourType = () => {
         const item = newData[index];
         const newTourType = { ...item, ...row };
         const result = await changeTourType(newTourType);
+        const updateItem = result.data;
         setPopup({
           title: result?.status == 200 ? "Thành công" : "Thất bại",
           messagePopup: result?.message,
@@ -49,7 +52,7 @@ const ManagerTourType = () => {
         });
         newData.splice(index, 1, {
           ...item,
-          ...row,
+          ...updateItem,
         });
         setTourTypes(newData);
         setEditingKey("");
@@ -112,23 +115,15 @@ const ManagerTourType = () => {
     setTourTypes,
     setPopup,
     promotions,
-    tourTypes,
+    tourTypes
   );
-  
-  const mergedColumns = MergedColumns(
-    columns,
-    isEditing,
-    form
-  );
+
+  const mergedColumns = MergedColumns(columns, isEditing, form);
 
   return tourTypes ? (
     <>
       <Form form={form} component={false}>
-        <AddRecord
-          Save={handleAdd}
-          Form={form}
-          setPopup={setPopup}
-        />
+        <AddRecord Save={handleAdd} Form={form} setPopup={setPopup} />
         <Table
           columns={mergedColumns}
           dataSource={tourTypes}

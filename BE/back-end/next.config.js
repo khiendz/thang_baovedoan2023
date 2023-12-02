@@ -22,6 +22,9 @@ const nextConfig = {
             ? 'http://localhost:3000/api' // development api
             : 'http://localhost:3000/api' // production api
     },
+    images: {
+        domains: ['http://localhost:3000'],
+    },
 }
 
 module.exports = nextConfig
