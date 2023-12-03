@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import {
   Button,
+  DatePicker,
   Form,
   FormInstance,
   Input,
@@ -11,6 +12,7 @@ import { Promotion } from "Models";
 import UploadFileImage from "components/UploadFileImage";
 import { useAppContext } from "hook/use-app-context";
 import TextEditor from "components/TextEditor";
+import dayjs from "dayjs";
 
 interface CollectionEditFormProps {
   open: boolean;
@@ -27,8 +29,6 @@ interface Props {
   Form: FormInstance;
 }
 
-const { TextArea } = Input;
-
 const CollectionCreateForm: React.FC<CollectionEditFormProps> = ({
   open,
   onCreate,
@@ -36,6 +36,10 @@ const CollectionCreateForm: React.FC<CollectionEditFormProps> = ({
   save,
   form,
 }) => {
+
+  form?.setFieldValue("StartDate", form?.getFieldValue("StartDate") ? dayjs(form?.getFieldValue("StartDate")) : dayjs(new Date()));
+  form?.setFieldValue("EndDate", form?.getFieldValue("EndDate") ? dayjs(form?.getFieldValue("EndDate")) : dayjs(new Date()));
+
   const { data: promotions } = useAppContext("promotions");
   return (
     <Modal
@@ -120,6 +124,48 @@ const CollectionCreateForm: React.FC<CollectionEditFormProps> = ({
         >
           <Input type="number" max={10} min={0}/>
         </Form.Item>
+        <Form.Item
+          name="StartDate"
+          label="Ngày khởi hành"
+          rules={[{ required: true, message: "Làm ơn nhập ngày bắt đầu" }]}
+        >
+          <DatePicker
+            format={"DD-MM-YYYY"}
+            defaultValue={dayjs(new Date())}
+            className="dk-w-full"
+            onChange={(value) => {
+              form.setFieldValue("StartDate", value);
+            }}
+          />
+        </Form.Item>
+        <Form.Item
+          name="EndDate"
+          label="Ngày về"
+          rules={[{ required: true, message: "Làm ơn nhập ngày kết thúc!" }]}
+        >
+          <DatePicker
+            format={"DD-MM-YYYY"}
+            defaultValue={dayjs(new Date())}
+            className="dk-w-full"
+            onChange={(value) => {
+              form.setFieldValue("EndDate", value);
+            }}
+          />
+        </Form.Item>
+        <Form.Item
+          name="MaxSlot"
+          label="Số lượng người tối đa"
+          rules={[{ required: true, message: "Làm ơn nhập số lượng người tối đa" }]}
+        >
+          <Input type="number"/>
+        </Form.Item>
+        <Form.Item
+          name="OrderSlot"
+          label="Số lượng người đã đặt"
+          rules={[{ required: true, message: "Làm ơn nhập số lượng người đã đặt" }]}
+        >
+          <Input type="number"/>
+        </Form.Item>
       </Form>
     </Modal>
   );
@@ -132,6 +178,8 @@ const EditRecord: React.FC<Props> = (props) => {
   useEffect(() => {
     if (open)
     onInit();
+    Form?.setFieldValue("StartDate", Form?.getFieldValue("StartDate") ? dayjs(Form?.getFieldValue("StartDate")) : dayjs(new Date()));
+    Form?.setFieldValue("EndDate", Form?.getFieldValue("EndDate") ? dayjs(Form?.getFieldValue("EndDate")) : dayjs(new Date()));
   }, [open]);
 
   const onCreate = () => {

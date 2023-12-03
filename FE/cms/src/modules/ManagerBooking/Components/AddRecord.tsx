@@ -53,7 +53,7 @@ const CollectionCreateForm: React.FC<CollectionCreateFormProps> = ({
           ...row,
           Discount: parseInt(
             row?.Discount ? row?.Discount?.toString() : "0"
-          )
+          ),
         },setBookings,bookings);
         setPopup({
           title: result?.status == 200 ? "Thành công" : "Thất bại",

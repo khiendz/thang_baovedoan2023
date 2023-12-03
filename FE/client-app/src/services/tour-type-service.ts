@@ -20,7 +20,7 @@ export async function getTourTypeById(id: number) {
     }
 }
 
-export async function getAllTour () {
+export async function getAllTouType () {
     try {
         const res: any = await fetchWrapper.get(`${domainBE}/api/tour-type`);
         if (res.status == 200) 

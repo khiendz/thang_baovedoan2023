@@ -1,14 +1,21 @@
-import Image from "next/image";
 import Navigation from "components/Navigation/Navigation";
 import Header from "components/Header";
 import "app/global.scss";
 import { RootStyleRegistry } from "modules/shared/components/Root-style-registry";
 import Footer from "components/Footer/Footer";
 import { AppProvider } from "contexts";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { userService } from "services";
 
 const LayoutDefault = ({ children }: { children: React.ReactNode }) => {
   const [store,updateStore] = useState({});
+
+  useEffect(() => {
+    if (!userService.userValue) {
+      userService.ReturnUnauthorize();
+    }
+  }, []);
+
   return (
     <>
       <AppProvider initialValues={{store: store, updateStore: updateStore}}>

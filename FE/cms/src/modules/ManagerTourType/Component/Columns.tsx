@@ -4,6 +4,7 @@ import EditRecord from "./EditRecord";
 import { FormInstance, Popconfirm } from "antd";
 import { JoinFileCDN } from "services/file-service";
 import { currencyFormat } from "utils/money";
+import format from 'date-fns/format';
 
 const Columns = (
   setSearchText: any,
@@ -25,6 +26,7 @@ const Columns = (
   {
     title: "Tên Tour",
     dataIndex: "Name",
+    width: "200px",
     ...GetColumnSearchProps(
       "Name",
       setSearchText,
@@ -42,7 +44,7 @@ const Columns = (
     title: "Mô tả",
     className: "column-money",
     dataIndex: "Description",
-    width: "27%",
+    width: "450px",
     ...GetColumnSearchProps(
       "Description",
       setSearchText,
@@ -53,7 +55,7 @@ const Columns = (
     ),
     render: (description: string) => (
       <div
-        className="dk-min-w-[350px] dk-text-sm dk-font-medium dk-font-Inter dk-line-clamp-5"
+        className="dk-max-w-full dk-text-sm dk-font-medium dk-font-Inter dk-line-clamp-5"
         dangerouslySetInnerHTML={{ __html: description }}
       >
       </div>
@@ -65,6 +67,7 @@ const Columns = (
     title: "Giá tour người lớn",
     className: "column-money",
     dataIndex: "PriceElder",
+    width: "200px",
     ...GetColumnSearchProps(
       "PriceElder",
       setSearchText,
@@ -87,6 +90,7 @@ const Columns = (
     title: "Giá tour trẻ nhỏ",
     className: "column-money",
     dataIndex: "PriceChildren",
+    width: "200px",
     ...GetColumnSearchProps(
       "PriceChildren",
       setSearchText,
@@ -109,6 +113,7 @@ const Columns = (
     title: "Ưu đãi",
     className: "column-money",
     dataIndex: "PromotionId",
+    width: "200px",
     render: (PromotionId: number) => (
       <p>{promotions.filter((ob) => ob.PromotionID == PromotionId)[0]?.Name}</p>
     ),
@@ -119,8 +124,9 @@ const Columns = (
     title: "Ảnh đại diện",
     className: "column-money",
     dataIndex: "Img",
+    width: "250px",
     render: (img: any) => (
-      <img src={JoinFileCDN(img)} className="dk-w-[150px] dk-aspect-[3/2]" />
+      <img src={JoinFileCDN(img)} className="dk-w-[250px] dk-aspect-[3/2]" />
     ),
     editable: true,
     align: "left",
@@ -129,6 +135,7 @@ const Columns = (
     title: "Địa lý",
     className: "column-money",
     dataIndex: "IsLocal",
+    width: "150px",
     ...GetColumnSearchProps(
       "IsLocal",
       setSearchText,
@@ -149,8 +156,69 @@ const Columns = (
     title: "Đánh giá",
     className: "column-money",
     dataIndex: "RateTourType",
+    width: "100px",
     ...GetColumnSearchProps(
       "RateTourType",
+      setSearchText,
+      setSearchedColumn,
+      searchInput,
+      searchedColumn,
+      searchText
+    ),
+    editable: true,
+    align: "left",
+  },
+  {
+    title: "Ngày khởi hành",
+    className: "column-money",
+    dataIndex: "StartDate",
+    width: "150px",
+    ...GetColumnSearchProps("StartDate",setSearchText,setSearchedColumn,searchInput,searchedColumn,searchText),
+    render: (date: Date) => (
+      <p className="dk-block dk-w-[150px] dk-text-sm dk-font-medium dk-font-Inter">
+        {format(date ? new Date(date) : new Date(), 'dd-MM-yyyy')}
+      </p>
+    ),
+    editable: true,
+    align: "left",
+  },
+  {
+    title: "Ngày về",
+    className: "column-money",
+    dataIndex: "EndDate",
+    width: "150px",
+    ...GetColumnSearchProps("EndDate",setSearchText,setSearchedColumn,searchInput,searchedColumn,searchText),
+    render: (date: Date) => (
+      <p className="dk-block dk-w-[150px] dk-text-sm dk-font-medium dk-font-Inter">
+        {format(date ? new Date(date) : new Date(), 'dd-MM-yyyy')}
+      </p>
+    ),
+    editable: true,
+    align: "left",
+  },
+  {
+    title: "Số lượng tối đa",
+    className: "column-money",
+    dataIndex: "MaxSlot",
+    width: "100px",
+    ...GetColumnSearchProps(
+      "MaxSlot",
+      setSearchText,
+      setSearchedColumn,
+      searchInput,
+      searchedColumn,
+      searchText
+    ),
+    editable: true,
+    align: "left",
+  },
+  {
+    title: "Số lượng người đã đặt",
+    className: "column-money",
+    dataIndex: "OrderSlot",
+    width: "100px",
+    ...GetColumnSearchProps(
+      "OrderSlot",
       setSearchText,
       setSearchedColumn,
       searchInput,
@@ -164,7 +232,7 @@ const Columns = (
     title: "Cập nhật",
     dataIndex: "operation",
     align: "center",
-    width: "13%",
+    width: "250px",
     fixed: "right",
     render: (_: any, record: TourType) => {
       const missPromotion = promotions

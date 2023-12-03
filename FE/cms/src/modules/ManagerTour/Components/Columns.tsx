@@ -4,6 +4,7 @@ import GetColumnSearchProps
 import EditRecord from "./EditRecord";
 import { FormInstance, Popconfirm } from "antd";
 import format from 'date-fns/format';
+import { JoinFileCDN } from "services/file-service";
 
 const Columns = (
     setSearchText:any,
@@ -175,7 +176,7 @@ const Columns = (
       dataIndex: "Img",
       width: "250px",
       render: (img: any) => (
-        <img src={img} className="dk-w-[150px] dk-aspect-[3/2]" />
+        <img src={JoinFileCDN(img)} className="dk-w-[250px] dk-aspect-[3/2]" />
       ),
       editable: true,
       align: "left",
@@ -184,8 +185,22 @@ const Columns = (
       title: "Địa điểm",
       className: "column-money",
       dataIndex: "Location",
-      width: "150px",
-      ...GetColumnSearchProps("IsLocal",setSearchText,setSearchedColumn,searchInput,searchedColumn,searchText),
+      width: "450px",
+      ...GetColumnSearchProps(
+        "Location",
+        setSearchText,
+        setSearchedColumn,
+        searchInput,
+        searchedColumn,
+        searchText
+      ),
+      render: (description: string) => (
+        <div
+          className="dk-max-w-full dk-text-sm dk-font-medium dk-font-Inter dk-line-clamp-5"
+          dangerouslySetInnerHTML={{ __html: description }}
+        >
+        </div>
+      ),
       editable: true,
       align: "left",
     },

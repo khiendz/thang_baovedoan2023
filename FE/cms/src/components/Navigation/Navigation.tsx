@@ -71,18 +71,6 @@ const items: MenuProps["items"] = [
   {
     label: (
       <Link
-        href="/report"
-        className="dk-text-sm dk-text-[#222] dk-font-Inter dk-font-bold"
-      >
-        Quản lý báo cáo
-      </Link>
-    ),
-    key: "report",
-    icon: <BankOutlined />,
-  },
-  {
-    label: (
-      <Link
         href="/payment"
         className="dk-text-sm dk-text-[#222] dk-font-Inter dk-font-bold"
       >

@@ -7,7 +7,7 @@ import {
   Input,
   Modal,
 } from "antd";
-import { Promotion, Tour, TourType } from "Models";
+import { Tour } from "Models";
 import UploadFileImage from "components/UploadFileImage";
 import dayjs from "dayjs";
 

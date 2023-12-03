@@ -61,6 +61,7 @@ const Columns = (
     title: "Mô tả",
     className: "column-money",
     dataIndex: "Description",
+    width: "450px",
     ...GetColumnSearchProps(
       "Description",
       setSearchText,
@@ -68,6 +69,13 @@ const Columns = (
       searchInput,
       searchedColumn,
       searchText
+    ),
+    render: (description: string) => (
+      <div
+        className="dk-max-w-full dk-text-sm dk-font-medium dk-font-Inter dk-line-clamp-5"
+        dangerouslySetInnerHTML={{ __html: description }}
+      >
+      </div>
     ),
     editable: true,
     align: "left",

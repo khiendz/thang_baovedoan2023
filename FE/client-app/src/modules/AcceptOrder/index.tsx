@@ -1,21 +1,23 @@
 "use client";
-import { LoadingOutlined } from "@ant-design/icons";
-import Link from "next/link";
-import { useState } from "react";
-import { UserOutlined } from "@ant-design/icons";
 import styles from "./styles.module.scss";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useAppContext } from "hook/use-app-context";
 import { Tour } from "Models";
 import classNames from "classnames";
+import { AddCustomer } from "services/customer";
 
-type Props = {
+type PropsTour = {
   tour: Tour;
   setTour: any;
   setOrder: any;
 };
 
-export default function AcceptOrder(props: Props) {
+export default function AcceptOrder(props: any) {
+  const { keyData, save } = props;
+  const { data, setData } = useAppContext(keyData);
+  const { data: tourType } = useAppContext("tour-type");
+  const { data: tour, setData: setTour } = useAppContext(keyData);
+
   return (
     <div className={styles.container}>
       <div
@@ -30,28 +32,53 @@ export default function AcceptOrder(props: Props) {
           </p>
           <Formik
             initialValues={{
-              fullName: "",
+              firstName: "",
+              lastName: "",
               phone: "",
               email: "",
+              address: "",
               different: "",
             }}
             enableReinitialize={true}
             validate={(values) => {
               const errors: any = {};
               if (!values.email) {
-                errors.email = "Required";
-              } else if (
-                !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
-              ) {
-                errors.email = "Invalid email address";
+                errors.email = "Vui lòng nhập email";
+              } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
+                errors.email = "Email không hợp lệ";
+              }
+              
+              if (!values.firstName) {
+                errors.firstName = "Vui lòng nhập tên";
+              }
+
+              if (!values.lastName) {
+                errors.lastName = "Vui lòng nhập tên";
+              }
+
+              if (!values.address) {
+                errors.address = "Vui lòng nhập địa chỉ";
+              }
+              
+              if (!values.phone) {
+                errors.phone = "Vui lòng nhập số điện thoại";
+              } else if (!/^(84|0[3|5|7|8|9])+([0-9]{8})$/g.test(values.phone)) {
+                errors.phone = "Số điện thoại không hợp lệ";
               }
               return errors;
             }}
             onSubmit={(values, { setSubmitting }) => {
-              setTimeout(() => {
-                alert(JSON.stringify(values, null, 2));
-                setSubmitting(false);
-              }, 400);
+              let  tourParam = {...tour} as Tour;
+              const customer = { FirstName: values.firstName, LastName: values.lastName, Email: values.email, Phone: values.phone, Address: values.address, CustomerTypeId: 1 };
+              tourParam = {
+                ...tourParam, 
+                Description: values.different, 
+                PriceTotal: tourParam.TotalElder*(tourType.PriceElder || 1) +  tourParam.TotalChd*(tourType.PriceChildren || 1),
+                TotalMember: tourParam.TotalElder + tourParam.TotalChd
+              };
+              setTour(tourParam);
+              AddCustomer(customer);
+              save(tourParam);
             }}
           >
             {({
@@ -69,19 +96,57 @@ export default function AcceptOrder(props: Props) {
                 <div className={classNames(styles.fieldContainer)}>
                   <Field
                     className={classNames(styles.field, {
-                      [styles.success]: !errors.fullName && touched.fullName,
+                      [styles.success]: !errors.firstName && touched.firstName,
                     })}
                     type="text"
-                    id="fullName"
-                    name="fullName"
-                    placeholder="Họ tên đầy đủ"
+                    id="firstName"
+                    name="firstName"
+                    placeholder="Nhập first name"
                     onChange={(e: any) => {
-                      setFieldValue("fullName", e.target.value);
+                      setFieldValue("firstName", e.target.value);
                     }}
                   />
                   <ErrorMessage
                     className={styles.error}
-                    name="userName"
+                    name="firstName"
+                    component="div"
+                  />
+                </div>
+                <div className={classNames(styles.fieldContainer)}>
+                  <Field
+                    className={classNames(styles.field, {
+                      [styles.success]: !errors.lastName && touched.lastName,
+                    })}
+                    type="text"
+                    id="lastName"
+                    name="lastName"
+                    placeholder="Nhập last name"
+                    onChange={(e: any) => {
+                      setFieldValue("lastName", e.target.value);
+                    }}
+                  />
+                  <ErrorMessage
+                    className={styles.error}
+                    name="lastName"
+                    component="div"
+                  />
+                </div>
+                <div className={classNames(styles.fieldContainer)}>
+                  <Field
+                    className={classNames(styles.field, {
+                      [styles.success]: !errors.address && touched.address,
+                    })}
+                    type="text"
+                    id="address"
+                    name="address"
+                    placeholder="Nhập đại chỉ"
+                    onChange={(e: any) => {
+                      setFieldValue("address", e.target.value);
+                    }}
+                  />
+                  <ErrorMessage
+                    className={styles.error}
+                    name="address"
                     component="div"
                   />
                 </div>
@@ -142,7 +207,6 @@ export default function AcceptOrder(props: Props) {
                     component="div"
                   />
                 </div>
-                {errors.email && touched.email && errors.email}
                 <div className={styles.buttonContainer}>
                   <button
                     className={styles.cancel}

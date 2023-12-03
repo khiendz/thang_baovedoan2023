@@ -99,19 +99,36 @@ const AddTour = async (tour: Tour) => {
                 Img: tour.Img,
                 RoomStartDate: tour.RoomStartDate,
                 RoomEndDate: tour.RoomEndDate
-            },
+            }
         });
 
         if (tourResult) {
+            const tourType = await prisma.tourType.findUnique({
+                where: {
+                    TourTypeId: tour.TourTypeId
+                }
+            });
+
+            if (tourType) {
+                const updateTourType = await prisma.tourType.update({
+                    where: {
+                        TourTypeId: tour.TourTypeId
+                    },
+                    data: {
+                        OrderSlot: tourType.OrderSlot + tour.TotalMember
+                    }
+                });
+            }
+            
             return {
                 tour: tourResult,
-                message: "Success",
+                message: "Vui lòng chờ nhân viên liên hệ",
                 status: "200"
             };
         } else {
             return {
                 tour: null,
-                message: "No Success",
+                message: "Đặt tour thất bại",
                 status: "500"
             };
         }

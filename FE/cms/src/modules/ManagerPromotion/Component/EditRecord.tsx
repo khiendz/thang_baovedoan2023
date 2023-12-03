@@ -10,6 +10,7 @@ import {
 } from "antd";
 import dayjs from "dayjs";
 import { Promotion, TourType } from "Models";
+import TextEditor from "components/TextEditor";
 
 interface CollectionCreateFormProps {
   open: boolean;
@@ -39,10 +40,19 @@ const CollectionCreateForm: React.FC<CollectionCreateFormProps> = ({
   save,
   form,
 }) => {
-  
-  form?.setFieldValue("StartDate", form?.getFieldValue("StartDate") ? dayjs(form?.getFieldValue("StartDate")) : dayjs(new Date()));
-  form?.setFieldValue("EndDate", form?.getFieldValue("EndDate") ? dayjs(form?.getFieldValue("EndDate")) : dayjs(new Date()));
-  
+  form?.setFieldValue(
+    "StartDate",
+    form?.getFieldValue("StartDate")
+      ? dayjs(form?.getFieldValue("StartDate"))
+      : dayjs(new Date())
+  );
+  form?.setFieldValue(
+    "EndDate",
+    form?.getFieldValue("EndDate")
+      ? dayjs(form?.getFieldValue("EndDate"))
+      : dayjs(new Date())
+  );
+
   return (
     <Modal
       open={open}
@@ -69,7 +79,12 @@ const CollectionCreateForm: React.FC<CollectionCreateFormProps> = ({
           <Input />
         </Form.Item>
         <Form.Item name="Description" label="Mô tả ưu đãi">
-          <Input />
+          <TextEditor
+            initialValues={form?.getFieldValue("Description")}
+            onChange={(value: any) => {
+              form.setFieldValue("Description", value);
+            }}
+          />
         </Form.Item>
         <Form.Item
           name="PromoCode"
@@ -83,7 +98,7 @@ const CollectionCreateForm: React.FC<CollectionCreateFormProps> = ({
           label="Tỷ lệ ưu đãi"
           rules={[{ required: true, message: "Làm ơn nhập tỷ lệ ưu đãi" }]}
         >
-          <Input type="number"/>
+          <Input type="number" />
         </Form.Item>
         <Form.Item
           name="StartDate"
@@ -140,8 +155,18 @@ const EditRecord: React.FC<Props> = (props) => {
   useEffect(() => {
     if (open) {
       onInit();
-      Form?.setFieldValue("StartDate", Form?.getFieldValue("StartDate") ? dayjs(Form?.getFieldValue("StartDate")) : dayjs(new Date()));
-      Form?.setFieldValue("EndDate", Form?.getFieldValue("EndDate") ? dayjs(Form?.getFieldValue("EndDate")) : dayjs(new Date()));
+      Form?.setFieldValue(
+        "StartDate",
+        Form?.getFieldValue("StartDate")
+          ? dayjs(Form?.getFieldValue("StartDate"))
+          : dayjs(new Date())
+      );
+      Form?.setFieldValue(
+        "EndDate",
+        Form?.getFieldValue("EndDate")
+          ? dayjs(Form?.getFieldValue("EndDate"))
+          : dayjs(new Date())
+      );
     }
   }, [open]);
 

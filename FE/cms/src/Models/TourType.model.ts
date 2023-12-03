@@ -13,6 +13,10 @@ export class TourType {
     RateTourType: number | null;
     CollectionImamge: CollectionImage[];
     IsLocal: number;
+    StartDate: Date;
+    EndDate: Date;
+    MaxSlot: number | null; 
+    OrderSlot: number | null;
     Tours: Tour[];
     Promotion: Promotion[];
   }

@@ -92,10 +92,26 @@ const AddTourType = async (tourTypeData: TourType) => {
                 PriceElder: tourTypeData.PriceElder,
                 PriceChildren: tourTypeData.PriceChildren,
                 PromotionId: tourTypeData?.PromotionId || 0,
-                Img: tourTypeData.Img,
+                Img: "",
                 IsLocal: tourTypeData.IsLocal,
-                RateTourType: tourTypeData.RateTourType
+                RateTourType: tourTypeData.RateTourType,
+                StartDate: tourTypeData.StartDate,
+                EndDate: tourTypeData.EndDate,
+                MaxSlot: tourTypeData.MaxSlot,
+                OrderSlot: tourTypeData.OrderSlot
             },
+        });
+
+        if (tourTypeData.Img) {
+            const filename = await saveFile(tourTypeData.Img, tour.TourTypeId);
+            tour.Img = filename;
+        }
+
+        const updatedTourType = await prisma.tourType.update({
+            where: {
+                TourTypeId: tour?.TourTypeId
+            },
+            data: tour
         });
 
         if (tour) {
@@ -129,10 +145,14 @@ const UpdateTourType = async (tourType: TourType) => {
             PriceElder: tourType.PriceElder,
             PriceChildren: tourType.PriceChildren,
             PromotionId: tourType.PromotionId,
-            RateTourType: tourType.RateTourType
+            RateTourType: tourType.RateTourType,
+            StartDate: tourType.StartDate,
+            EndDate: tourType.EndDate,
+            MaxSlot: tourType.MaxSlot,
+            OrderSlot: tourType.OrderSlot
         };
 
-        if (tourType.Img && isBase64(tourType.Img)) {
+        if (tourType.Img && !tourType.Img.startsWith("file")) {
             const filename = await saveFile(tourType.Img, tourType.TourTypeId);
             updateData.Img = filename;
         }

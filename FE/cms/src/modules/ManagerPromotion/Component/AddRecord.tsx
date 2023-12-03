@@ -10,6 +10,7 @@ import {
 } from "antd";
 import dayjs from "dayjs";
 import { Promotion, TourType } from "Models";
+import TextEditor from "components/TextEditor";
 
 interface Values {
   title: string;
@@ -86,7 +87,13 @@ const CollectionCreateForm: React.FC<CollectionCreateFormProps> = ({
           <Input />
         </Form.Item>
         <Form.Item name="Description" label="Mô tả ưu đãi">
-          <Input />
+        <TextEditor 
+            initialValues={form?.getFieldValue("Description")}
+            onChange={
+            (value: any) => {
+              form.setFieldValue("Description", value);
+            }
+          }/>
         </Form.Item>
         <Form.Item
           name="PromoCode"

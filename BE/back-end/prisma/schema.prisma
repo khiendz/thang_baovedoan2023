@@ -44,6 +44,10 @@ model TourType {
   Img           String
   IsLocal       Int
   RateTourType  Int
+  StartDate     DateTime?
+  EndDate       DateTime?
+  MaxSlot       Int          @default(0)
+  OrderSlot     Int          @default(0)
   Tours         Tour[]
   Promotion     Promotion[]
   CollectImg    CollectImg[]

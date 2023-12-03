@@ -42,7 +42,12 @@ const ManagerTourType = () => {
       const index = newData.findIndex((item) => key === item.TourTypeId);
       if (index > -1) {
         const item = newData[index];
-        const newTourType = { ...item, ...row };
+        const newTourType = { ...item, ...row, 
+          PriceChildren: parseInt(row?.PriceChildren?.toString() || "0"), 
+          PriceElder: parseInt(row?.PriceElder?.toString() || "0"),
+          MaxSlot:  parseInt(row?.MaxSlot?.toString() || "0"),
+          OrderSlot: parseInt(row?.OrderSlot?.toString() || "0"),
+        };
         const result = await changeTourType(newTourType);
         const updateItem = result.data;
         setPopup({

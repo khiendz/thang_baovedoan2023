@@ -19,7 +19,7 @@ export default function Header() {
     <header className={`dk-flex dk-flex-row dk-bg-[#003C71] dk-h-16 dk-text-[#FFF] dk-gap-14 dk-justify-between dk-items-center dk-font-Inter
     ${user ? "" : "dk-hidden"}`} >
       <span className="dk-pl-8 dk-whitespace-nowrap">Thắng tour</span>
-      <div className="search dk-flex dk-flex-row dk-gap-6 dk-pr-[600px]">
+      <div className="search dk-flex dk-flex-row dk-gap-6">
         <input
           type="text"
           id="site-search"

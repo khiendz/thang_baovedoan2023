@@ -35,11 +35,7 @@ const CollectionCreateForm: React.FC<CollectionCreateFormProps> = ({
   open,
   onCreate,
   onCancel,
-  save,
   form,
-  setTour,
-  setPopup,
-  tours,
 }) => {
   return (
     <Modal
