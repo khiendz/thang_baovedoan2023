@@ -216,3 +216,11 @@ const DeleteBorrowedBook = async (tourTypeId: number) => {
 }
 
 export default apiHandler(handler);
+
+export const config = {
+    api: {
+      bodyParser: {
+        sizeLimit: '10mb',
+      },
+    },
+  }

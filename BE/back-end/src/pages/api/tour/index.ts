@@ -205,3 +205,11 @@ const DeleteTour = async (tourId: number) => {
 }
 
 export default apiHandler(handler);
+
+export const config = {
+    api: {
+      bodyParser: {
+        sizeLimit: '10mb',
+      },
+    },
+  }
