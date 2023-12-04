@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { Feedback, Hotel, Payment, PrismaClient } from '@prisma/client';
+import { Payment, PrismaClient } from '@prisma/client';
 import { apiHandler } from 'helpers/api';
 
 const prisma = new PrismaClient();
@@ -55,7 +55,16 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
 const GetPayment = async () => {
     try {
-        const paymentResult = await prisma.payment.findMany();
+        const paymentResult = await prisma.payment.findMany({
+            include: {
+                Booking: {
+                    include: {
+                        Customer: true,
+                        Tour: true
+                    }
+                }
+            }
+        });
 
         if (paymentResult) {
             return {
@@ -88,6 +97,14 @@ const AddPayment = async (payment: Payment) => {
                PaymentDate: payment.PaymentDate,
                Amount: payment.Amount
             },
+            include: {
+                Booking: {
+                    include: {
+                        Customer: true,
+                        Tour: true
+                    }
+                }
+            }
         });
 
         return {
@@ -116,6 +133,14 @@ const UpdatePayment = async (payment: Payment) => {
                 BookingID: payment.BookingID,
                 PaymentDate: payment.PaymentDate,
                 Amount: payment.Amount
+            },
+            include: {
+                Booking: {
+                    include: {
+                        Customer: true,
+                        Tour: true
+                    }
+                }
             }
         });
 

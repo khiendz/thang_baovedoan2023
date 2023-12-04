@@ -55,7 +55,11 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
 const GetBookings = async () => {
     try {
-        const bookings = await prisma.booking.findMany();
+        const bookings = await prisma.booking.findMany({
+            include: {
+                Customer: true
+            }
+        });
 
         if (bookings) {
             return {
@@ -93,13 +97,13 @@ const AddBooking = async (booking: Booking) => {
 
         if (bookingResult) {
             return {
-                booking: bookingResult,
+                data: bookingResult,
                 message: "Success",
                 status: "200"
             };
         } else {
             return {
-                booking: null,
+                data: null,
                 message: "No Success",
                 status: "500"
             };
@@ -107,7 +111,7 @@ const AddBooking = async (booking: Booking) => {
     } catch (error) {
         console.error(error);
         return {
-            booking: null,
+            data: null,
             message: "Internal Server Error",
             status: "500"
         };

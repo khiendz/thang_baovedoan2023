@@ -43,6 +43,6 @@ export const handleDelete = async (key: number, booking: Booking[], setBookings:
 
 export const handleAdd = async (booking: Booking, setBookings: any, bookings: Booking[]) => {
     const result = await handleAddBooking(booking);
-    setBookings([{ ...booking, PromotionID: bookings.length + 1 }, ...bookings]);
+    setBookings([{ ...result.data }, ...bookings]);
     return result;
 };
