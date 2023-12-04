@@ -1,9 +1,9 @@
-import { Customer } from "Models";
+import { Account, TourType } from "Models";
 import { FormInstance } from "antd";
 import { useAppContext } from "hook/use-app-context";
 
 const MergedColumns = (columns: any, isEditing: any, form: FormInstance) => {
-  const { data: customers } = useAppContext("customers");
+  const { data: accounts } = useAppContext("accounts");
   return columns.map((col: any) => {
     if (!col.editable) {
       return col;
@@ -13,12 +13,12 @@ const MergedColumns = (columns: any, isEditing: any, form: FormInstance) => {
 
     return {
       ...col,
-      onCell: (record: Customer) => ({
+      onCell: (record: Account) => ({
         record,
         inputType: inputType,
         dataIndex: col.dataIndex,
         title: col.title,
-        customers: customers,
+        accounts: accounts,
         editing: record ? isEditing(record).toString() : "true",
         form: form,
       }),

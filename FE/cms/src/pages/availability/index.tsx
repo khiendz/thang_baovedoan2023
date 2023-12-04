@@ -1,7 +1,7 @@
 "use client";
 import LayoutDefault from "components/layouts/LayoutDefault";
 import React from "react";
-import ManagerBooking from "modules/ManagerBooking";
+import ManageAvailability from "modules/ManageAvailability";
 
 export default function Home() {
   return (
@@ -13,7 +13,7 @@ export default function Home() {
         <h2 className="dk-font-medium dk-text-xs dk-text-[#FFF]">
           Combo khách sạn - vé máy bay - đưa đón sân bay giá tốt nhất
         </h2>
-        <ManagerBooking/>
+        <ManageAvailability />
       </div>
     </LayoutDefault>
   );

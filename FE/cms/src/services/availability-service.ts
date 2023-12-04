@@ -56,7 +56,7 @@ export async function AddAvailability(availability: Availability) {
     return null;
 }
 
-export async function DeleteAvailabilityById(availabilityId: Availability) {
+export async function DeleteAvailabilityById(availabilityId: number) {
     try {
         const res: any = await fetchWrapper.delete(`${domainBE}/api/customer?availability=${availabilityId}`);
 

@@ -92,6 +92,42 @@ const items: MenuProps["items"] = [
     key: "collections",
     icon: <BankOutlined />,
   },
+  {
+    label: (
+      <Link
+        href="/availability"
+        className="dk-text-sm dk-text-[#222] dk-font-Inter dk-font-bold"
+      >
+        Quản lý tình trạng phòng trống
+      </Link>
+    ),
+    key: "availability",
+    icon: <BankOutlined />,
+  },
+  {
+    label: (
+      <Link
+        href="/account"
+        className="dk-text-sm dk-text-[#222] dk-font-Inter dk-font-bold"
+      >
+        Quản lý tài khoản
+      </Link>
+    ),
+    key: "account",
+    icon: <BankOutlined />,
+  },
+  {
+    label: (
+      <Link
+        href="/customer-support"
+        className="dk-text-sm dk-text-[#222] dk-font-Inter dk-font-bold"
+      >
+        Quản lý hỗ trợ khách hàng
+      </Link>
+    ),
+    key: "customer-support",
+    icon: <BankOutlined />,
+  },
 ];
 
 const Navigation: React.FC = () => {
