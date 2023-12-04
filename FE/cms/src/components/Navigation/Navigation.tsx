@@ -59,13 +59,13 @@ const items: MenuProps["items"] = [
   {
     label: (
       <Link
-        href="/customer"
+        href="/customers"
         className="dk-text-sm dk-text-[#222] dk-font-Inter dk-font-bold"
       >
         Quản lý khách hàng
       </Link>
     ),
-    key: "customer",
+    key: "customers",
     icon: <BankOutlined />,
   },
   {
