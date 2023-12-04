@@ -166,6 +166,7 @@ const AddRecord: React.FC<Props> = (props) => {
         onCreate={onCreate}
         onCancel={() => {
           setOpen(false);
+         Form.resetFields();
         }}
       />
     </div>

@@ -128,6 +128,7 @@ const CollectionCreateForm: React.FC<CollectionEditFormProps> = ({
           name="StartDate"
           label="Ngày khởi hành"
           rules={[{ required: true, message: "Làm ơn nhập ngày bắt đầu" }]}
+          valuePropName={'date'}
         >
           <DatePicker
             format={"DD-MM-YYYY"}
@@ -142,6 +143,7 @@ const CollectionCreateForm: React.FC<CollectionEditFormProps> = ({
           name="EndDate"
           label="Ngày về"
           rules={[{ required: true, message: "Làm ơn nhập ngày kết thúc!" }]}
+          valuePropName={'date'}
         >
           <DatePicker
             format={"DD-MM-YYYY"}

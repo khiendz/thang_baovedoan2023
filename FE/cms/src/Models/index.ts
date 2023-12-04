@@ -11,4 +11,7 @@ export * from "./Hotel.model";
 export * from "./RoomType.model";
 export * from "./Availability.model";
 export * from "./CollectionImage";
+export * from "./Account.model";
+export * from "./User.model";
+export * from "./RoleAccount.model";
 

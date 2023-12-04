@@ -76,6 +76,7 @@ const CollectionCreateForm: React.FC<CollectionCreateFormProps> = ({
           name="StartDate"
           label="Ngày bắt đầu"
           rules={[{ required: true, message: "Làm ơn nhập ngày bắt đầu" }]}
+          valuePropName={'date'}
         >
           <DatePicker
             format={"DD-MM-YYYY"}
@@ -90,6 +91,7 @@ const CollectionCreateForm: React.FC<CollectionCreateFormProps> = ({
           name="EndDate"
           label="Ngày kết thúc"
           rules={[{ required: true, message: "Làm ơn nhập ngày kết thúc!" }]}
+          valuePropName={'date'}
         >
           <DatePicker
             format={"DD-MM-YYYY"}
@@ -139,6 +141,7 @@ const CollectionCreateForm: React.FC<CollectionCreateFormProps> = ({
           name="RoomStartDate"
           label="Ngày thuê phòng bắt đầu"
           rules={[{ required: true, message: "Làm ơn nhập ngày thuê phòng bắt đầu" }]}
+          valuePropName={'date'}
         >
           <DatePicker
             format={"DD-MM-YYYY"}
@@ -153,6 +156,7 @@ const CollectionCreateForm: React.FC<CollectionCreateFormProps> = ({
           name="RoomEndDate"
           label="Ngày thuê phòng kết thúc"
           rules={[{ required: true, message: "Làm ơn nhập ngày thuê phòng kết thúc!" }]}
+          valuePropName={'date'}
         >
           <DatePicker
             format={"DD-MM-YYYY"}
@@ -211,6 +215,7 @@ const AddRecord: React.FC<Props> = (props) => {
         onCreate={onCreate}
         onCancel={() => {
           setOpen(false);
+         Form.resetFields();
         }}
       />
     </div>

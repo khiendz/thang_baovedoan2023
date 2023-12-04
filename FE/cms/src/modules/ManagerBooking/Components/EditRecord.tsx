@@ -1,15 +1,8 @@
 import React, { useState, useEffect } from "react";
-import {
-  Button,
-  DatePicker,
-  Form,
-  FormInstance,
-  Input,
-  Modal,
-  Select,
-} from "antd";
+import { Button, DatePicker, Form, FormInstance, Modal, Select } from "antd";
 import dayjs from "dayjs";
-import { Booking, Promotion, TourType } from "Models";
+import { Booking, Customer, Tour } from "Models";
+import { useAppContext } from "hook/use-app-context";
 
 interface CollectionCreateFormProps {
   open: boolean;
@@ -32,14 +25,19 @@ const CollectionCreateForm: React.FC<CollectionCreateFormProps> = ({
   open,
   onCreate,
   onCancel,
-  bookings,
   save,
   form,
 }) => {
-  
-  form?.setFieldValue("StartDate", form?.getFieldValue("StartDate") ? dayjs(form?.getFieldValue("StartDate")) : dayjs(new Date()));
-  form?.setFieldValue("EndDate", form?.getFieldValue("EndDate") ? dayjs(form?.getFieldValue("EndDate")) : dayjs(new Date()));
-  
+  const { data: customers } = useAppContext("customers");
+  const { data: tours } = useAppContext("tours");
+
+  form?.setFieldValue(
+    "BookingDate",
+    form?.getFieldValue("BookingDate")
+      ? dayjs(form?.getFieldValue("BookingDate"))
+      : dayjs(new Date())
+  );
+
   return (
     <Modal
       open={open}
@@ -59,52 +57,54 @@ const CollectionCreateForm: React.FC<CollectionCreateFormProps> = ({
         initialValues={{ modifier: "public" }}
       >
         <Form.Item
-          name="Name"
-          label="Tên ưu đãi"
-          rules={[{ required: true, message: "Làm ơn nhập tên ưu đãi" }]}
+          name="CustomerID"
+          label="Khách hàng"
+          rules={[{ required: true, message: "Làm ơn chọn khách hàng" }]}
         >
-          <Input />
-        </Form.Item>
-        <Form.Item name="Description" label="Mô tả ưu đãi">
-          <Input />
-        </Form.Item>
-        <Form.Item
-          name="PromoCode"
-          label="Mã ưu đãi"
-          rules={[{ required: true, message: "Làm ơn nhập mã ưu đãi" }]}
-        >
-          <Input />
-        </Form.Item>
-        <Form.Item
-          name="Discount"
-          label="Tỷ lệ ưu đãi"
-          rules={[{ required: true, message: "Làm ơn nhập tỷ lệ ưu đãi" }]}
-        >
-          <Input type="number"/>
-        </Form.Item>
-        <Form.Item
-          name="StartDate"
-          label="Ngày bắt đầu"
-          rules={[{ required: true, message: "Làm ơn nhập ngày bắt đầu!" }]}
-        >
-          <DatePicker
-            format={"DD-MM-YYYY"}
+          <Select
             className="dk-w-full"
+            options={[
+              ...customers?.map((ob: Customer) => {
+                return {
+                  value: ob.CustomerID,
+                  label: `${ob.FirstName + " " + ob.LastName}`,
+                  ob: ob,
+                };
+              }),
+            ]}
             onChange={(value) => {
-              form.setFieldValue("StartDate", value);
+              form.setFieldValue("CustomerID", value);
             }}
           />
         </Form.Item>
         <Form.Item
-          name="EndDate"
-          label="Ngày kết thúc"
-          rules={[{ required: true, message: "Làm ơn nhập ngày kết thúc!" }]}
+          name="TourID"
+          label=""
+          rules={[{ required: true, message: "Làm ơn chọn tour" }]}
+        >
+          <Select
+            className="dk-w-full"
+            options={[
+              ...tours?.map((ob: Tour) => {
+                return { value: ob.TourID, label: ob.TourName, ob: ob };
+              }),
+            ]}
+            onChange={(value) => {
+              form.setFieldValue("TourID", value);
+            }}
+          />
+        </Form.Item>
+        <Form.Item
+          name="BookingDate"
+          label="Ngày booking"
+          rules={[{ required: true, message: "Làm ơn nhập ngày booking!" }]}
+          valuePropName={'date'}
         >
           <DatePicker
             format={"DD-MM-YYYY"}
             className="dk-w-full"
             onChange={(value) => {
-              form.setFieldValue("EndDate", value);
+              form.setFieldValue("BookingDate", value);
             }}
           />
         </Form.Item>
@@ -135,7 +135,7 @@ const EditRecord: React.FC<Props> = (props) => {
           setOpen(true);
         }}
       >
-        Sửa ưu đãi
+        Sửa booking
       </Button>
       <CollectionCreateForm
         open={open}

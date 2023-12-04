@@ -1,12 +1,16 @@
-import { Booking, Promotion, TourType } from "Models";
+import { Promotion } from "Models";
+import { useAppContext } from "hook/use-app-context";
 
-const MergedColumns = (columns: any, bookings: Booking[], isEditing: any, form: any) => columns.map((col: any) => {
+const MergedColumns = (columns: any, isEditing: any, form: any) => {
+  const { data: bookings, setData: setBookings } = useAppContext("booking");
+
+  return columns.map((col: any) => {
     if (!col.editable) {
       return col;
     }
 
     let inputType = "text";
-   
+
     return {
       ...col,
       onCell: (record: Promotion) => ({
@@ -20,5 +24,6 @@ const MergedColumns = (columns: any, bookings: Booking[], isEditing: any, form: 
       }),
     };
   });
+};
 
 export default MergedColumns;

@@ -1,4 +1,4 @@
-import { Booking, Promotion, TourType } from "Models";
+import { Booking, Customer, Promotion, Tour, TourType } from "Models";
 import { FormInstance, Popconfirm } from "antd";
 import GetColumnSearchProps from "components/GetColumnSearchProps";
 import EditRecord from "./EditRecord";
@@ -18,7 +18,9 @@ const Columns = (
   cancel: any,
   form: FormInstance,
   handleDelete: any,
-  setPopup: any
+  setPopup: any,
+  customers: Customer[],
+  tours: Tour[],
 ) => [
   {
     title: "Booking Id",
@@ -37,7 +39,7 @@ const Columns = (
     editable: true,
   },
   {
-    title: "Khách hàng Id",
+    title: "Khách hàng",
     className: "column-money",
     dataIndex: "CustomerID",
     ...GetColumnSearchProps(
@@ -48,18 +50,29 @@ const Columns = (
       searchedColumn,
       searchText
     ),
-    render: (code: string) => (
+    render: (id: number) => (
       <p className="dk-block dk-w-[150px] dk-text-sm dk-font-medium dk-font-Inter">
-        {code}
+        {
+          customers.find((customer: Customer) => customer.CustomerID === id)?.FirstName + 
+          " " + 
+          customers.find((customer: Customer) => customer.CustomerID === id)?.LastName
+        }
       </p>
     ),
     editable: true,
     align: "left",
   },
   {
-    title: "Tour Id",
+    title: "Tour",
     className: "column-money",
     dataIndex: "TourID",
+    render: (id: number) => (
+      <p className="dk-block dk-w-[150px] dk-text-sm dk-font-medium dk-font-Inter">
+        {
+          tours.find((tour: Tour) => tour.TourID === id)?.TourName
+        }
+      </p>
+    ),
     ...GetColumnSearchProps(
       "TourID",
       setSearchText,
@@ -92,7 +105,7 @@ const Columns = (
     align: "left",
   },
   {
-    title: "operation",
+    title: "Cập nhật",
     dataIndex: "operation",
     align: "center",
     width: "13%",

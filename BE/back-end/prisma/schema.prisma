@@ -68,7 +68,7 @@ model Customer {
   FirstName      String
   LastName       String
   Email          String            @unique
-  Phone          String?           @unique
+  Phone          String           @unique
   Address        String?
   CustomerTypeId Int
   Bookings       Booking[]

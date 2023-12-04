@@ -44,17 +44,19 @@ const ManageCustomer = () => {
         const item = newData[index];
         const newTourType = { ...item, ...row};
         const result = await changeCustomer(newTourType);
-        const updateItem = result.data;
+        if (result && result.data == 200) {
+          const updateItem = result.data;
+          newData.splice(index, 1, {
+            ...item,
+            ...updateItem,
+          });
+          setCustomers(newData);
+        }
         setPopup({
           title: result?.status == 200 ? "Thành công" : "Thất bại",
           messagePopup: result?.message,
           state: result?.status == 200,
         });
-        newData.splice(index, 1, {
-          ...item,
-          ...updateItem,
-        });
-        setCustomers(newData);
         setEditingKey("");
       } else {
         newData.push(row);

@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { Form, InputRef, Table } from "antd";
 import AddRecord from "./Components/AddRecord";
 import { Booking } from "Models";
-import { getAllBooking } from "services";
+import { getAllBooking, getAllCustomer, getAllTour } from "services";
 import "./style.scss";
 import Columns from "./Components/Column";
 import MergedColumns from "./Components/MergedColumns";
@@ -11,7 +11,9 @@ import { useAppContext } from "hook/use-app-context";
 
 const ManagerBooking = () => {
   const { setData: setPopup } = useAppContext("popup-message");
-  const [bookings, setBookings] = useState<Booking[]>([]);
+  const { data: bookings, setData: setBookings } = useAppContext("booking");
+  const { data: customers, setData: setCustomers } = useAppContext("customers");
+  const { data: tours, setData: setTours } = useAppContext("tours");
   const [form] = Form.useForm();
   const [editingKey, setEditingKey] = useState("");
   const [searchText, setSearchText] = useState("");
@@ -19,6 +21,9 @@ const ManagerBooking = () => {
   const searchInput = useRef<InputRef>(null);
 
   useEffect(() => {
+    setBookings([]);
+    setCustomers([]);
+    setTours([]);
     setPopup({
       title: "",
       messagePopup: "",
@@ -75,6 +80,8 @@ const ManagerBooking = () => {
 
   useEffect(() => {
     initData();
+    initCustomers();
+    initTours();
   }, []);
 
   const initData = async () => {
@@ -82,6 +89,23 @@ const ManagerBooking = () => {
       const result = await getAllBooking();
       if (result && result?.data) {
         setBookings(result?.data?.reverse());
+      }
+    } catch (e) {}
+  };
+
+  const initCustomers = async () => {
+    try {
+      const result = await getAllCustomer();
+      if (result && result?.data) {
+        setCustomers(result?.data?.reverse());
+      }
+    } catch (e) {}
+  };
+  const initTours = async () => {
+    try {
+      const result = await getAllTour();
+      if (result && result?.data) {
+        setTours(result?.data?.reverse());
       }
     } catch (e) {}
   };
@@ -100,21 +124,17 @@ const ManagerBooking = () => {
     cancel,
     form,
     handleDelete,
-    setPopup
+    setPopup,
+    customers,
+    tours
   );
 
-  const mergedColumns = MergedColumns(columns, bookings, isEditing, form);
+  const mergedColumns = MergedColumns(columns, isEditing, form);
 
   return bookings ? (
     <>
       <Form form={form} component={false}>
-        <AddRecord
-          Save={handleAdd}
-          Form={form}
-          Bookings={bookings}
-          SetBookings={setBookings}
-          setPopup={setPopup}
-        />
+        <AddRecord Save={handleAdd} Form={form} setPopup={setPopup} />
         <Table
           columns={mergedColumns}
           dataSource={bookings}

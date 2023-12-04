@@ -1,5 +1,4 @@
-import { Customer, TourType } from "Models";
-import { AddTourType, DeleteTourTypeById, UpdateTourType } from "services";
+import { Customer } from "Models";
 import { AddCustomer, DeleteCustomerById, UpdateCustomer } from "services/customer-service";
 
 export const changeCustomer = async (customer: Customer) => {
@@ -47,6 +46,7 @@ export const handleDelete = async (key: number, customers: Customer[], setCustom
 
 export const handleAdd = async (customer: Customer, setCustomers: any, customers: Customer[]) => {
     const result = await handleAddCustomer(customer);
+    if (result.data && result.status == 200)
     setCustomers([
         { ...result.data },
         ...customers,

@@ -10,4 +10,7 @@ export * from "./TourType.model";
 export * from "./Hotel.model";
 export * from "./RoomType.model";
 export * from "./Availability.model";
+export * from "./Account.model";
+export * from "./RoleAccount.model";
+export * from "./User.model";
 

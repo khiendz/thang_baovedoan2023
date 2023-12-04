@@ -4,27 +4,23 @@ import {
   DatePicker,
   Form,
   FormInstance,
-  Input,
   Modal,
   Select,
 } from "antd";
 import dayjs from "dayjs";
-import { Booking, Promotion, TourType } from "Models";
+import { Booking, Customer, Tour } from "Models";
+import { useAppContext } from "hook/use-app-context";
 
 interface CollectionCreateFormProps {
   open: boolean;
   onCreate: () => void;
   onCancel: () => void;
-  bookings: Booking[];
-  setBookings: any;
   save: any;
   form: FormInstance;
   setPopup: any;
 }
 
 interface Props {
-  Bookings: Booking[];
-  SetBookings: any;
   Save: any;
   Form: FormInstance;
   setPopup: any;
@@ -34,26 +30,24 @@ const CollectionCreateForm: React.FC<CollectionCreateFormProps> = ({
   open,
   onCreate,
   onCancel,
-  bookings,
-  setBookings,
   save,
   form,
   setPopup
 }) => {
+  const { data: bookings, setData: setBookings } = useAppContext("booking");
+  const { data: customers } = useAppContext("customers");
+  const { data: tours } = useAppContext("tours");
   return (
     <Modal
       open={open}
-      title="Tạo một ưu đãi mới"
-      okText="Tạo ưu đãi"
+      title="Tạo một booking"
+      okText="Tạo booking"
       cancelText="Hủy"
       onCancel={onCancel}
       onOk={async (ob) => {
-        const row = (await form.validateFields()) as Promotion;
+        const row = (await form.validateFields()) as Booking;
         const result = await save({
-          ...row,
-          Discount: parseInt(
-            row?.Discount ? row?.Discount?.toString() : "0"
-          ),
+          ...row
         },setBookings,bookings);
         setPopup({
           title: result?.status == 200 ? "Thành công" : "Thất bại",
@@ -70,54 +64,51 @@ const CollectionCreateForm: React.FC<CollectionCreateFormProps> = ({
         initialValues={{ modifier: "public" }}
       >
         <Form.Item
-          name="Name"
-          label="Tên ưu đãi"
-          rules={[{ required: true, message: "Làm ơn nhập tên ưu đãi" }]}
+          name="CustomerID"
+          label="Khách hàng"
+          rules={[{ required: true, message: "Làm ơn chọn khách hàng" }]}
         >
-          <Input />
-        </Form.Item>
-        <Form.Item name="Description" label="Mô tả ưu đãi">
-          <Input />
-        </Form.Item>
-        <Form.Item
-          name="PromoCode"
-          label="Mã ưu đãi"
-          rules={[{ required: true, message: "Làm ơn nhập mã ưu đãi" }]}
-        >
-          <Input />
-        </Form.Item>
-        <Form.Item
-          name="Discount"
-          label="Tỷ lệ ưu đãi"
-          rules={[{ required: true, message: "Làm ơn nhập tỷ lệ ưu đãi" }]}
-        >
-          <Input />
-        </Form.Item>
-        <Form.Item
-          name="StartDate"
-          label="Ngày bắt đầu"
-          rules={[{ required: true, message: "Làm ơn nhập ngày bắt đầu!" }]}
-        >
-          <DatePicker
-            format={"DD-MM-YYYY"}
-            defaultValue={dayjs(new Date())}
+           <Select
             className="dk-w-full"
+            options={[
+              ...customers?.map((ob: Customer) => {
+                return { value: ob.CustomerID, label: `${ob.FirstName + " " + ob.LastName}`, ob: ob };
+              }),
+            ]}
             onChange={(value) => {
-              form.setFieldValue("StartDate", value);
+              form.setFieldValue("CustomerID", value);
             }}
           />
         </Form.Item>
         <Form.Item
-          name="EndDate"
-          label="Ngày kết thúc"
-          rules={[{ required: true, message: "Làm ơn nhập ngày kết thúc!" }]}
+          name="TourID"
+          label=""
+          rules={[{ required: true, message: "Làm ơn chọn tour" }]}
+        >
+           <Select
+            className="dk-w-full"
+            options={[
+              ...tours?.map((ob: Tour) => {
+                return { value: ob.TourID, label: ob.TourName, ob: ob };
+              }),
+            ]}
+            onChange={(value) => {
+              form.setFieldValue("TourID", value);
+            }}
+          />
+        </Form.Item>
+        <Form.Item
+          name="BookingDate"
+          label="Ngày booking"
+          rules={[{ required: true, message: "Làm ơn nhập ngày booking!" }]}
+          valuePropName={'date'}
         >
           <DatePicker
             format={"DD-MM-YYYY"}
             defaultValue={dayjs(new Date())}
             className="dk-w-full"
             onChange={(value) => {
-              form.setFieldValue("EndDate", value);
+              form.setFieldValue("BookingDate", value);
             }}
           />
         </Form.Item>
@@ -128,7 +119,7 @@ const CollectionCreateForm: React.FC<CollectionCreateFormProps> = ({
 
 const AddRecord: React.FC<Props> = (props) => {
   const [open, setOpen] = useState(false);
-  const { Bookings, Save, Form, SetBookings, setPopup } = props;
+  const { Save, Form, setPopup } = props;
 
   const onCreate = () => {
     setOpen(false);
@@ -142,18 +133,17 @@ const AddRecord: React.FC<Props> = (props) => {
           setOpen(true);
         }}
       >
-        Thêm ưu đãi
+        Thêm booking
       </Button>
       <CollectionCreateForm
         open={open}
         save={Save}
         form={Form}
-        bookings={Bookings}
-        setBookings={SetBookings}
         setPopup={setPopup}
         onCreate={onCreate}
         onCancel={() => {
           setOpen(false);
+          Form.resetFields();
         }}
       />
     </div>

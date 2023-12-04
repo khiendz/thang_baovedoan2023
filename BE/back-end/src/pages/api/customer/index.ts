@@ -82,40 +82,44 @@ const GetCustomers = async () => {
 
 const AddCustomer = async (customer: Customer) => {
     try {
-        const existingCustomer = await prisma.customer.findMany({
+        let existingCustomer = await prisma.customer.findUnique({
             where: {
-                Phone: customer?.Phone,
+                Email: customer.Email,
             },
         });
 
-        let customerResult = null;
-
-        if (existingCustomer.length > 0) {
-            customerResult = await prisma.customer.updateMany({
-                where: {
-                    Phone: customer.Phone,
-                },
-                data: {
-                    FirstName: customer.FirstName,
-                    LastName: customer.LastName,
-                    Phone: customer?.Phone,
-                    Email: customer.Email,
-                    Address: customer.Address,
-                    CustomerTypeId: customer.CustomerTypeId,
-                }
-            });
-        } else {
-            customerResult = await prisma.customer.create({
-                data: {
-                    FirstName: customer.FirstName,
-                    LastName: customer.LastName,
-                    Phone: customer?.Phone,
-                    Email: customer.Email,
-                    Address: customer.Address,
-                    CustomerTypeId: customer.CustomerTypeId,
-                },
-            });
+        if (existingCustomer) {
+            return {
+                data: null,
+                message: "Đã tồn tại khách hàng trùng email",
+                status: "400",
+            };
         }
+
+        existingCustomer = await prisma.customer.findUnique({
+            where: {
+                Phone: customer.Phone,
+            },
+        });
+
+        if (existingCustomer) {
+            return {
+                data: null,
+                message: "Đã tồn tại khách hàng trùng số điện thoại",
+                status: "400",
+            };
+        }
+
+        const customerResult = await prisma.customer.create({
+            data: {
+                FirstName: customer.FirstName,
+                LastName: customer.LastName,
+                Phone: customer?.Phone,
+                Email: customer.Email,
+                Address: customer.Address,
+                CustomerTypeId: customer.CustomerTypeId,
+            },
+        });
 
         return {
             data: customerResult,
@@ -131,10 +135,40 @@ const AddCustomer = async (customer: Customer) => {
             status: "500",
         };
     }
-}
+};
+
 
 const UpdateCustomer = async (customer: Customer) => {
     try {
+        
+        let existingCustomer = await prisma.customer.findUnique({
+            where: {
+                Email: customer.Email,
+            },
+        });
+
+        if (existingCustomer && existingCustomer.CustomerID !== customer.CustomerID) {
+            return {
+                data: null,
+                message: "Đã tồn tại khách hàng trùng email",
+                status: "400",
+            };
+        }
+
+        existingCustomer = await prisma.customer.findUnique({
+            where: {
+                Phone: customer.Phone,
+            },
+        });
+
+        if (existingCustomer && existingCustomer.CustomerID !== customer.CustomerID) {
+            return {
+                data: null,
+                message: "Đã tồn tại khách hàng trùng số điện thoại",
+                status: "400",
+            };
+        }
+
         const updatedCustomer = await prisma.customer.update({
             where: {
                 CustomerID: customer?.CustomerID
