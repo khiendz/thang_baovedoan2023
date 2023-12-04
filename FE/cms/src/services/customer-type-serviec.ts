@@ -1,14 +1,15 @@
 import { Customer, TourType } from 'Models';
+import { CustomerType } from 'Models/CustomerType.model';
 import { fetchWrapper } from 'helpers';
 
 const domainBE = process?.env?.DOMAIN_BACK_END ?? "http://localhost:3000"; 
 
-export async function getCustomerById(id: number) {
+export async function getCustomerTypeById(id: number) {
     if (!id)
         return null;
     
     try {
-        const res: any = await fetchWrapper.get(`${domainBE}/api/customer/${id}`);
+        const res: any = await fetchWrapper.get(`${domainBE}/api/customer-type/${id}`);
         if (res.status == 200) 
             return res.data;
         
@@ -17,9 +18,9 @@ export async function getCustomerById(id: number) {
     }
 }
 
-export async function getAllCustomer () {
+export async function getAllCustomerType () {
     try {
-        const res: any = await fetchWrapper.get(`${domainBE}/api/customer`);
+        const res: any = await fetchWrapper.get(`${domainBE}/api/customer-type`);
         if (res.status == 200) 
             return res.data;
         
@@ -28,9 +29,9 @@ export async function getAllCustomer () {
     }
 }
 
-export async function UpdateCustomer(customer: Customer) {
+export async function UpdateCustomerType(customerType: CustomerType) {
     try {
-        const res: any = await fetchWrapper.put(`${domainBE}/api/customer`, customer);
+        const res: any = await fetchWrapper.put(`${domainBE}/api/customer-type`, customerType);
 
         if (res.status === 200) {
             return res.data;
@@ -42,9 +43,9 @@ export async function UpdateCustomer(customer: Customer) {
     return null;
 }
 
-export async function AddCustomer(customer: Customer) {
+export async function AddCustomerType(customerType: CustomerType) {
     try {
-        const res: any = await fetchWrapper.post(`${domainBE}/api/customer`, customer);
+        const res: any = await fetchWrapper.post(`${domainBE}/api/customer`, customerType);
 
         if (res.status === 200) {
             return res.data;
@@ -56,9 +57,9 @@ export async function AddCustomer(customer: Customer) {
     return null;
 }
 
-export async function DeleteCustomerById(customerId: number) {
+export async function DeleteCustomerTypeById(customerTypeId: number) {
     try {
-        const res: any = await fetchWrapper.delete(`${domainBE}/api/customer?customerId=${customerId}`);
+        const res: any = await fetchWrapper.delete(`${domainBE}/api/customer-type?customerTypeId=${customerTypeId}`);
 
         if (res.status === 200) {
             return res.data;

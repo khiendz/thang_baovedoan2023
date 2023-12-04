@@ -2,6 +2,7 @@ import { Customer, Promotion, TourType } from "Models";
 import GetColumnSearchProps from "components/GetColumnSearchProps";
 import EditRecord from "./EditRecord";
 import { FormInstance, Popconfirm } from "antd";
+import { CustomerType } from "Models/CustomerType.model";
 
 const Columns = (
   setSearchText: any,
@@ -17,7 +18,8 @@ const Columns = (
   handleDelete: any,
   setCustomers: any,
   setPopup: any,
-  customers: Customer[]
+  customers: Customer[],
+  customerTypes: CustomerType[]
 ) => [
   {
     title: "Họ",
@@ -108,6 +110,19 @@ const Columns = (
     width: "200px",
     render: (address: string) => (
       <p>{address}</p>
+    ),
+    editable: true,
+    align: "left",
+  },
+  {
+    title: "Kiểu khách hàng",
+    className: "column-money",
+    dataIndex: "CustomerTypeId",
+    width: "200px",
+    render: (customerTypeId: number) => (
+      <p>{
+        customerTypes.find((customerType: CustomerType) => customerType.CustomerTypeId == customerTypeId)?.Name
+      }</p>
     ),
     editable: true,
     align: "left",

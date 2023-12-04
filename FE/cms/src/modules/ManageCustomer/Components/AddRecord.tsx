@@ -1,13 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Button,
   Form,
   FormInstance,
   Input,
   Modal,
+  Select,
 } from "antd";
 import { Customer } from "Models";
 import { useAppContext } from "hook/use-app-context";
+import { CustomerType } from "Models/CustomerType.model";
 interface CollectionCreateFormProps {
   open: boolean;
   onCreate: () => void;
@@ -32,7 +34,14 @@ const CollectionCreateForm: React.FC<CollectionCreateFormProps> = ({
   setPopup,
 }) => {
   const { data: customers, setData: setCustomers } =
-    useAppContext("tour-types");
+    useAppContext("customers");
+  const { data: customerTypes } =
+    useAppContext("customer-types");
+
+  useEffect(() => {
+    form.setFieldValue("CustomerTypeId",1);
+  }, []);
+
   return (
     <Modal
       open={open}
@@ -109,6 +118,22 @@ const CollectionCreateForm: React.FC<CollectionCreateFormProps> = ({
           rules={[{ required: true, message: "Làm ơn nhập địa chỉ" }]}
         >
           <Input />
+        </Form.Item>
+        <Form.Item name="CustomerTypeId" label="Ưu đãi" className="dk-w-full">
+          <Select
+            className="dk-w-full"
+            defaultValue={
+              { value: "1", label: "Khách đặt tour"}
+            }
+            options={[
+              ...customerTypes?.map((ob: CustomerType) => {
+                return { value: ob.CustomerTypeId, label: ob.Name, ob: ob };
+              }),
+            ]}
+            onChange={(value) => {
+              form.setFieldValue("CustomerTypeId", value);
+            }}
+          />
         </Form.Item>
       </Form>
     </Modal>

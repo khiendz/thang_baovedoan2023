@@ -9,10 +9,12 @@ import { handleDelete, handleAdd } from "./services";
 import { useAppContext } from "hook/use-app-context";
 import { changeCustomer } from "./services";
 import { getAllCustomer } from "services/customer-service";
+import { getAllCustomerType } from "services";
 
 const ManageCustomer = () => {
   const { data: customers, setData: setCustomers } =
     useAppContext("customers");
+  const { data: customerTypes, setData: setCustomerTypes } = useAppContext("customer-types");
   const { setData: setPopup } = useAppContext("popup-message");
   const [form] = Form.useForm();
   const [editingKey, setEditingKey] = useState("");
@@ -22,6 +24,7 @@ const ManageCustomer = () => {
 
   useEffect(() => {
     setCustomers([]);
+    setCustomerTypes([]);
     setPopup({
       title: "",
       messagePopup: "",
@@ -76,6 +79,7 @@ const ManageCustomer = () => {
 
   useEffect(() => {
     initData();
+    initCustomerType();
   }, []);
 
   const initData = async () => {
@@ -86,6 +90,15 @@ const ManageCustomer = () => {
       }
     } catch (e) {}
   };
+
+  const initCustomerType = async () => {
+    try {
+      const result = await getAllCustomerType();
+      if (result && result?.data) {
+        setCustomerTypes(result?.data?.reverse());
+      }
+    } catch (e) {}
+  }
 
   const columns = Columns(
     setSearchText,
@@ -101,7 +114,8 @@ const ManageCustomer = () => {
     handleDelete,
     setCustomers,
     setPopup,
-    customers
+    customers,
+    customerTypes
   );
 
   const mergedColumns = MergedColumns(columns, isEditing, form);

@@ -73,7 +73,7 @@ const GetCustomers = async () => {
     } catch (error) {
         console.error(error);
         return {
-            tour: null,
+            data: null,
             message: "Internal Server Error",
             status: "500"
         };
@@ -90,7 +90,7 @@ const AddCustomer = async (customer: Customer) => {
 
         let customerResult = null;
 
-        if (existingCustomer) {
+        if (existingCustomer.length > 0) {
             customerResult = await prisma.customer.updateMany({
                 where: {
                     Phone: customer.Phone,
@@ -118,7 +118,7 @@ const AddCustomer = async (customer: Customer) => {
         }
 
         return {
-            tour: customerResult,
+            data: customerResult,
             message: "Success",
             status: "200",
         };
