@@ -149,7 +149,7 @@ export default function TourDetail() {
     }
   };
 
-  return (
+  return tour && tourType ? (
     <>
       <div className="dk-text-[#222] dk-font-Inter content-container content-miss dk-flex dk-flex-col dk-gap-2 dk-relative dk-z-10 dk-mb-5">
         <h1 className="dk-text-[#222] dk-font-semibold dk-text-4xl">
@@ -193,7 +193,7 @@ export default function TourDetail() {
                 min={0}
                 max={99}
                 value={tour.TotalElder}
-                defaultValue={(tour as Tour).TotalElder || 0}
+                defaultValue={(tour as Tour)?.TotalElder || 0}
                 onChange={(e) => onChangeTotalElder(e)}
               />
             </div>
@@ -205,8 +205,8 @@ export default function TourDetail() {
               <InputNumber
                 min={0}
                 max={99}
-                value={tour.TotalChd}
-                defaultValue={(tour as Tour).TotalChd || 0}
+                value={tour?.TotalChd}
+                defaultValue={(tour as Tour)?.TotalChd || 0}
                 onChange={(e) => onChangeTotalChildren(e)}
               />
             </div>
@@ -302,5 +302,5 @@ export default function TourDetail() {
         />
       ) : null}
     </>
-  );
+  ) : null;
 }
