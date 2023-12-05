@@ -14,7 +14,7 @@ const items: MenuProps["items"] = [
         href="/"
         className="dk-text-sm dk-text-[#222] dk-font-Inter dk-font-bold"
       >
-        Quản lý các loại Tour
+        Kiểu Tour
       </Link>
     ),
     key: "home",
@@ -26,7 +26,7 @@ const items: MenuProps["items"] = [
         href="/uu-dai"
         className="dk-text-sm dk-text-[#222] dk-font-Inter dk-font-bold"
       >
-        Quản lý ưu đãi
+        Ưu đãi
       </Link>
     ),
     key: "discount",
@@ -38,7 +38,7 @@ const items: MenuProps["items"] = [
         href="/tour"
         className="dk-text-sm dk-text-[#222] dk-font-Inter dk-font-bold"
       >
-        Quản lý tour
+        Tour
       </Link>
     ),
     key: "tour",
@@ -50,7 +50,7 @@ const items: MenuProps["items"] = [
         href="/booking"
         className="dk-text-sm dk-text-[#222] dk-font-Inter dk-font-bold"
       >
-        Quản lý booking
+        Booking
       </Link>
     ),
     key: "booking",
@@ -62,7 +62,7 @@ const items: MenuProps["items"] = [
         href="/customers"
         className="dk-text-sm dk-text-[#222] dk-font-Inter dk-font-bold"
       >
-        Quản lý khách hàng
+        Khách hàng
       </Link>
     ),
     key: "customers",
@@ -74,7 +74,7 @@ const items: MenuProps["items"] = [
         href="/payment"
         className="dk-text-sm dk-text-[#222] dk-font-Inter dk-font-bold"
       >
-        Quản lý thanh toán
+        Thanh toán
       </Link>
     ),
     key: "payment",
@@ -86,7 +86,7 @@ const items: MenuProps["items"] = [
         href="/collection-images"
         className="dk-text-sm dk-text-[#222] dk-font-Inter dk-font-bold"
       >
-        Quản lý bộ sưu tập ảnh
+        Bộ sưu tập ảnh
       </Link>
     ),
     key: "collections",
@@ -98,7 +98,7 @@ const items: MenuProps["items"] = [
         href="/availability"
         className="dk-text-sm dk-text-[#222] dk-font-Inter dk-font-bold"
       >
-        Quản lý tình trạng phòng trống
+        Tình trạng phòng trống
       </Link>
     ),
     key: "availability",
@@ -110,7 +110,7 @@ const items: MenuProps["items"] = [
         href="/account"
         className="dk-text-sm dk-text-[#222] dk-font-Inter dk-font-bold"
       >
-        Quản lý tài khoản
+        Tài khoản
       </Link>
     ),
     key: "account",
@@ -122,10 +122,82 @@ const items: MenuProps["items"] = [
         href="/customer-support"
         className="dk-text-sm dk-text-[#222] dk-font-Inter dk-font-bold"
       >
-        Quản lý hỗ trợ khách hàng
+        Hỗ trợ khách hàng
       </Link>
     ),
     key: "customer-support",
+    icon: <BankOutlined />,
+  },
+  {
+    label: (
+      <Link
+        href="/customer-type"
+        className="dk-text-sm dk-text-[#222] dk-font-Inter dk-font-bold"
+      >
+        Kiểu khách hàng
+      </Link>
+    ),
+    key: "customer-type",
+    icon: <BankOutlined />,
+  },
+  {
+    label: (
+      <Link
+        href="/feedback"
+        className="dk-text-sm dk-text-[#222] dk-font-Inter dk-font-bold"
+      >
+        Phản hồi
+      </Link>
+    ),
+    key: "feedback",
+    icon: <BankOutlined />,
+  },
+  {
+    label: (
+      <Link
+        href="/hotel"
+        className="dk-text-sm dk-text-[#222] dk-font-Inter dk-font-bold"
+      >
+        Khách sạn
+      </Link>
+    ),
+    key: "hotel",
+    icon: <BankOutlined />,
+  },
+  {
+    label: (
+      <Link
+        href="/role-account"
+        className="dk-text-sm dk-text-[#222] dk-font-Inter dk-font-bold"
+      >
+        Role Account
+      </Link>
+    ),
+    key: "role-account",
+    icon: <BankOutlined />,
+  },
+  {
+    label: (
+      <Link
+        href="/room-type"
+        className="dk-text-sm dk-text-[#222] dk-font-Inter dk-font-bold"
+      >
+        Kiểu phòng
+      </Link>
+    ),
+    key: "room-type",
+    icon: <BankOutlined />,
+  },
+  {
+    label: (
+      <Link
+        href="/support-type"
+        className="dk-text-sm dk-text-[#222] dk-font-Inter dk-font-bold"
+      >
+        Kiểu hỗ trợ
+      </Link>
+    ),
+    key: "support-type",
     icon: <BankOutlined />,
   },
 ];
@@ -140,7 +212,9 @@ const Navigation: React.FC = () => {
   return (
     <nav>
       <Menu
-        className={`dk-text-[#222] dk-text-lg dk-font-bold dk-py-3 dk-border-none dk-shadow-md dk-font-Inter ${user ? "" : "dk-hidden"}`}
+        className={`dk-text-[#222] dk-text-lg dk-font-bold dk-py-3 dk-border-none dk-shadow-md dk-font-Inter ${
+          user ? "" : "dk-hidden"
+        }`}
         onClick={onClick}
         selectedKeys={[current]}
         mode="horizontal"
