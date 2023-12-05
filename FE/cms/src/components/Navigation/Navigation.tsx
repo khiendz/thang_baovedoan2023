@@ -200,6 +200,18 @@ const items: MenuProps["items"] = [
     key: "support-type",
     icon: <BankOutlined />,
   },
+  {
+    label: (
+      <Link
+        href="/user"
+        className="dk-text-sm dk-text-[#222] dk-font-Inter dk-font-bold"
+      >
+        Người dùng
+      </Link>
+    ),
+    key: "user",
+    icon: <BankOutlined />,
+  },
 ];
 
 const Navigation: React.FC = () => {
