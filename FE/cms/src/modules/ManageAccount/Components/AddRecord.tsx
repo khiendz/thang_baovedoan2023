@@ -50,8 +50,8 @@ const CollectionCreateForm: React.FC<CollectionCreateFormProps> = ({
         const result = await save(
           {
             ...row,
-            RoleId: parseInt(row.RoleId.toString()),
-            UserId: parseInt(row.UserId.toString())
+            RoleId: parseInt(row?.RoleId?.toString()),
+            UserId: row?.UserId ? parseInt(row?.UserId?.toString()) : null
           },
           setAccounts,
           accounts
