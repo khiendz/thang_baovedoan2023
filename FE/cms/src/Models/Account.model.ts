@@ -1,3 +1,4 @@
+import { RoleAccount } from "./RoleAccount.model";
 import { User } from "./User.model";
 
 export class Account {
@@ -7,4 +8,5 @@ export class Account {
   RoleId: number;
   UserId: number;
   User: User;
+  RoleAccount: RoleAccount;
 }

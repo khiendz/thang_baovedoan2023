@@ -39,9 +39,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
         return res.json({ ...result });
     } else if (req.method === 'DELETE') {
-        const { userId } = req.query;
+        const { accountId } = req.query;
 
-        const result = await DeleteAccountById(parseInt(userId?.toString() || "0"));
+        const result = await DeleteAccountById(parseInt(accountId?.toString() || "0"));
 
         if (!result) {
             return res.status(500).json({ error: 'Failed to delete a support account' });
@@ -55,7 +55,12 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
 const GetAccounts = async () => {
     try {
-        const accounts = await prisma.account.findMany();
+        const accounts = await prisma.account.findMany({
+            include: {
+                RoleAccount: true,
+                User: true
+            }
+        });
 
         if (accounts) {
             return {

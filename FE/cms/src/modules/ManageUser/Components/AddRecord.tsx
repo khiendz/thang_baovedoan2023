@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { Button, Form, FormInstance, Input, Modal } from "antd";
+import { Button, Form, FormInstance, Input, Modal, Select } from "antd";
 import { useAppContext } from "hook/use-app-context";
-import { User } from "Models";
+import { Account, User } from "Models";
 
 interface CollectionCreateFormProps {
   open: boolean;
@@ -27,6 +27,7 @@ const CollectionCreateForm: React.FC<CollectionCreateFormProps> = ({
   setPopup,
 }) => {
   const { data: users, setData: setUsers } = useAppContext("users");
+  const { data: accounts } = useAppContext("accounts");
 
   return (
     <Modal
@@ -82,16 +83,37 @@ const CollectionCreateForm: React.FC<CollectionCreateFormProps> = ({
         <Form.Item
           name="Phone"
           label="Số điện thoại"
-          rules={[{ required: true, message: "Làm ơn nhập số điện thoại" }]}
+          rules={[
+            { required: true, message: "Làm ơn nhập số điện thoại" },
+            {
+              pattern: /^(?:\+?84|0)(?:\d{9,10})$/,
+              message: "Số điện thoại không hợp lệ",
+            },
+          ]}
         >
-          <Input />
+          <Input type={"number"}/>
         </Form.Item>
-        <Form.Item
-          name="AccountId"
-          label="Tài khoản"
-          rules={[{ required: true, message: "Làm ơn chọn tài khoản" }]}
-        >
-          <Input />
+        <Form.Item name="AccountId" label="Tài khoản">
+          <Select
+            className="dk-w-full"
+            defaultValue={{ value: "1", label: "default" }}
+            options={
+              accounts
+                ? [
+                    ...accounts?.map((ob: Account) => {
+                      return {
+                        value: ob?.UserId,
+                        label: `Tài khoản: ${ob?.UserName}`,
+                        ob: ob,
+                      };
+                    }),
+                  ]
+                : []
+            }
+            onChange={(value) => {
+              form.setFieldValue("AccountId", value);
+            }}
+          />
         </Form.Item>
       </Form>
     </Modal>

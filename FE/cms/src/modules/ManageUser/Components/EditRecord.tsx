@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Button, Form, FormInstance, Input, Modal } from "antd";
+import { Button, Form, FormInstance, Input, Modal, Select } from "antd";
+import { Account } from "Models";
+import { useAppContext } from "hook/use-app-context";
 
 interface CollectionEditFormProps {
   open: boolean;
@@ -23,6 +25,7 @@ const CollectionCreateForm: React.FC<CollectionEditFormProps> = ({
   save,
   form,
 }) => {
+  const { data: accounts } = useAppContext("accounts");
   return (
     <Modal
       open={open}
@@ -65,16 +68,40 @@ const CollectionCreateForm: React.FC<CollectionEditFormProps> = ({
         <Form.Item
           name="Phone"
           label="Số điện thoại"
-          rules={[{ required: true, message: "Làm ơn nhập số điện thoại" }]}
+          rules={[
+            { required: true, message: "Làm ơn nhập số điện thoại" },
+            { 
+              pattern: /^(?:\+?84|0)(?:\d{9,10})$/,
+              message: 'Số điện thoại không hợp lệ',
+            }
+          ]}
         >
-          <Input />
+          <Input type="number"/>
         </Form.Item>
         <Form.Item
           name="AccountId"
           label="Tài khoản"
-          rules={[{ required: true, message: "Làm ơn chọn tài khoản" }]}
         >
-          <Input />
+            <Select
+            className="dk-w-full"
+            defaultValue={{ value: "1", label: "default" }}
+            options={
+              accounts
+                ? [
+                    ...accounts?.map((ob: Account) => {
+                      return {
+                        value: ob?.UserId,
+                        label: `Tài khoản: ${ob?.UserName}`,
+                        ob: ob,
+                      };
+                    }),
+                  ]
+                : []
+            }
+            onChange={(value) => {
+              form.setFieldValue("AccountId", value);
+            }}
+          />
         </Form.Item>
       </Form>
     </Modal>

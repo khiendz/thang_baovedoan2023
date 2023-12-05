@@ -7,5 +7,5 @@ export class User {
     Address: number;
     Phone: number;
     AccountId: number;
-    Account: Account;
+    Account: Account[];
 }

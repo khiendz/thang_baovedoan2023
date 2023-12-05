@@ -7,7 +7,7 @@ import {
   Modal,
   Select,
 } from "antd";
-import { Customer } from "Models";
+import { Account, Customer, RoleAccount, User } from "Models";
 import { useAppContext } from "hook/use-app-context";
 import { CustomerType } from "Models/CustomerType.model";
 interface CollectionCreateFormProps {
@@ -35,6 +35,8 @@ const CollectionCreateForm: React.FC<CollectionCreateFormProps> = ({
 }) => {
   const { data: accounts, setData: setAccounts } =
     useAppContext("accounts");
+  const { data: roleAccounts } = useAppContext("role-accounts");
+  const { data: users } = useAppContext("users");
 
   return (
     <Modal
@@ -44,10 +46,12 @@ const CollectionCreateForm: React.FC<CollectionCreateFormProps> = ({
       cancelText="Hủy"
       onCancel={onCancel}
       onOk={async (ob) => {
-        const row = (await form.validateFields()) as Customer;
+        const row = (await form.validateFields()) as Account;
         const result = await save(
           {
             ...row,
+            RoleId: parseInt(row.RoleId.toString()),
+            UserId: parseInt(row.UserId.toString())
           },
           setAccounts,
           accounts
@@ -82,21 +86,44 @@ const CollectionCreateForm: React.FC<CollectionCreateFormProps> = ({
         </Form.Item>
         <Form.Item
           name="RoleId"
-          label="RoleId"
+          label="Kiểu role"
           rules={[
-            { required: true, message: "Làm ơn nhập role id" }
+            { required: true, message: "Làm ơn chọn role" }
         ]}
         >
-          <Input />
+          <Select
+            className="dk-w-full"
+            defaultValue={
+              { value: "1", label: "Minion"}
+            }
+            options={[
+              ...roleAccounts?.map((ob: RoleAccount) => {
+                return { value: ob.RoleId, label: ob.RoleName, ob: ob };
+              }),
+            ]}
+            onChange={(value) => {
+              form.setFieldValue("RoleId", value);
+            }}
+          />
         </Form.Item>
         <Form.Item
           name="UserId"
-          label="User Id"
-          rules={[
-            { required: true, message: "Làm ơn nhập user id" }
-        ]}
+          label="Người dùng"
         >
-          <Input />
+          <Select
+            className="dk-w-full"
+            defaultValue={
+              { value: "1", label: "default"}
+            }
+            options={users ? [
+              ...users?.map((ob: User) => {
+                return { value: ob?.UserId, label: `${ob?.FirstName + " " + ob?.LastName}`, ob: ob };
+              }),
+            ] : []}
+            onChange={(value) => {
+              form.setFieldValue("UserId", value);
+            }}
+          />
         </Form.Item>
       </Form>
     </Modal>

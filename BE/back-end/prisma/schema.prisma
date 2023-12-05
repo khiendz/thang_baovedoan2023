@@ -68,7 +68,7 @@ model Customer {
   FirstName      String
   LastName       String
   Email          String            @unique
-  Phone          String           @unique
+  Phone          String            @unique
   Address        String?
   CustomerTypeId Int
   Bookings       Booking[]
@@ -157,7 +157,7 @@ model Hotel {
   Country     String?
   StarRating  Int?
   Description String?
-  Phone       String?
+  Phone       String?    @unique
   Website     String?
   Email       String
   RoomTypes   RoomType[]
@@ -191,7 +191,7 @@ model User {
   FirstName String
   LastName  String
   Address   String
-  Phone     Int
+  Phone     String    @unique
   AccountId Int?
   Account   Account[]
 }

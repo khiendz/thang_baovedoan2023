@@ -41,6 +41,7 @@ export const handleDelete = async (key: number, users: User[], setUsers: any) =>
     const newData = users.filter(
         (item: User) => item.UserId !== key
     );
+    if (result.status == 200)
     setUsers(newData);
     return result;
 };

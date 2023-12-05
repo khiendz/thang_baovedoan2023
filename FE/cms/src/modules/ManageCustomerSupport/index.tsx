@@ -40,7 +40,7 @@ const ManageCustomerSupport = () => {
         const item = newData[index];
         const newTourType = { ...item, ...row};
         const result = await changeCustomerSupport(newTourType);
-        if (result && result.data == 200) {
+        if (result && result.status == 200) {
           const updateItem = result.data;
           newData.splice(index, 1, {
             ...item,

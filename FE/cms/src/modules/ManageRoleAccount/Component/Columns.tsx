@@ -61,7 +61,7 @@ const Columns = (
     title: "Cập nhật",
     dataIndex: "operation",
     align: "center",
-    width: "13%",
+    width: "250px",
     fixed: "right",
     render: (_: any, record: RoleAccount) => {
       const editable = isEditing(record);

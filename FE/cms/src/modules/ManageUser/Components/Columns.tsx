@@ -2,7 +2,7 @@ import GetColumnSearchProps from "components/GetColumnSearchProps";
 import EditRecord from "./EditRecord";
 import { FormInstance, Popconfirm } from "antd";
 import { CustomerType } from "Models/CustomerType.model";
-import { User } from "Models";
+import { Account, User } from "Models";
 
 const Columns = (
   setSearchText: any,
@@ -101,7 +101,30 @@ const Columns = (
     width: "250px",
     fixed: "right",
     render: (_: any, record: User) => {
-      const editable = isEditing(record);
+
+      const missAccounts = record?.Account ? record?.Account
+      .filter((ob: Account) => {
+        if (ob?.UserId == record?.UserId) return ob;
+      })
+      .map((ele) => {
+        return ele.UserName;
+      })
+      .join(", ") : null;
+
+    const editable = isEditing(record);
+
+    const titleDelete = () => {
+      return missAccounts ? (
+        <div className="dk-flex dk-flex-col dk-gap-2 dk-max-w-[450px]">
+          <span className="dk-font-medium dk-font-Inter dk-text-sm dk-text-[#222]">
+            Việc xóa người dùng này sẽ bao gồm xóa cả những tài khoản liên quan:
+          </span>
+          <span className="dk-font-semibold dk-font-Inter dk-text-sm dk-text-[#222]">
+            {missAccounts} ?
+          </span>
+        </div>
+      ) : "Bạn có chắc muốn xóa người dùng này";
+    };
 
       return (
         <div className="dk-flex dk-gap-3 dk-text-[#1677ff]">
@@ -114,7 +137,7 @@ const Columns = (
             Form={form}
           />
           <Popconfirm
-            title={"Bạn có chắc chắn muốn xóa người dùng này ?"}
+            title={titleDelete}
             onConfirm={async () => {
               const result = await handleDelete(
                 record.UserId,

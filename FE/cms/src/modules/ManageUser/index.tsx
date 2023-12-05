@@ -7,10 +7,11 @@ import MergedColumns from "./Components/MergeColumns";
 import { handleDelete, handleAdd, changeUser } from "./services";
 import { useAppContext } from "hook/use-app-context";
 import { User } from "Models";
-import { getAllUser } from "services";
+import { getAllAccount, getAllUser } from "services";
 
 const ManageUser = () => {
   const { data: users, setData: setUsers } = useAppContext("users");
+  const { data: accounts, setData: setAccounts } = useAppContext("accounts");
   const { setData: setPopup } = useAppContext("popup-message");
   const [form] = Form.useForm();
   const [editingKey, setEditingKey] = useState("");
@@ -20,6 +21,9 @@ const ManageUser = () => {
 
   useEffect(() => {
     setUsers([]);
+    setAccounts([]);
+    initData();
+    initAccount();
     setPopup({
       title: "",
       messagePopup: "",
@@ -36,9 +40,9 @@ const ManageUser = () => {
       const index = newData.findIndex((item) => key === item.UserId);
       if (index > -1) {
         const item = newData[index];
-        const newTourType = { ...item, ...row };
+        const newTourType = { ...item, ...row, };
         const result = await changeUser(newTourType);
-        if (result && result.data == 200) {
+        if (result && result.status == 200) {
           const updateItem = result.data;
           newData.splice(index, 1, {
             ...item,
@@ -73,15 +77,20 @@ const ManageUser = () => {
     setEditingKey(record.UserId?.toString() || "");
   };
 
-  useEffect(() => {
-    initData();
-  }, []);
-
   const initData = async () => {
     try {
       const result = await getAllUser();
       if (result && result?.data) {
         setUsers(result?.data?.reverse());
+      }
+    } catch (e) {}
+  };
+
+  const initAccount = async () => {
+    try {
+      const result = await getAllAccount();
+      if (result && result?.data) {
+        setAccounts(result?.data?.reverse());
       }
     } catch (e) {}
   };
@@ -100,7 +109,7 @@ const ManageUser = () => {
     handleDelete,
     setUsers,
     setPopup,
-    users
+    users,
   );
 
   const mergedColumns = MergedColumns(columns, isEditing, form);

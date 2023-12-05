@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { Customer, CustomerSupport, PrismaClient, Promotion, Tour } from '@prisma/client';
+import { CustomerSupport, PrismaClient } from '@prisma/client';
 import { apiHandler } from 'helpers/api';
 
 const prisma = new PrismaClient();

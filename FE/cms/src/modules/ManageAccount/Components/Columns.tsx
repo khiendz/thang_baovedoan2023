@@ -1,4 +1,4 @@
-import { Account, Customer, Promotion, TourType } from "Models";
+import { Account, Customer, Promotion, TourType, User } from "Models";
 import GetColumnSearchProps from "components/GetColumnSearchProps";
 import EditRecord from "./EditRecord";
 import { FormInstance, Popconfirm } from "antd";
@@ -57,7 +57,7 @@ const Columns = (
     align: "left",
   },
   {
-    title: "RoleId",
+    title: "Loại tài khoản",
     className: "column-money",
     dataIndex: "RoleId",
     width: "200px",
@@ -69,16 +69,16 @@ const Columns = (
       searchedColumn,
       searchText
     ),
-    render: (roleId: number) => (
+    render: (roleId: number, record: Account) => (
       <p className="dk-min-w-[350px] dk-text-sm dk-font-medium dk-font-Inter dk-line-clamp-5">
-        {roleId}
+        {record?.RoleAccount?.RoleName}
       </p>
     ),
     editable: true,
     align: "left",
   },
   {
-    title: "UserId",
+    title: "Người dùng",
     className: "column-money",
     dataIndex: "UserId",
     width: "200px",
@@ -90,9 +90,9 @@ const Columns = (
       searchedColumn,
       searchText
     ),
-    render: (UserId: number) => (
+    render: (UserId: number, record: Account) => (
       <p className="dk-min-w-[350px] dk-text-sm dk-font-medium dk-font-Inter dk-line-clamp-5">
-        {UserId}
+        {record?.User?.FirstName + " " + record?.User?.LastName}
       </p>
     ),
     editable: true,

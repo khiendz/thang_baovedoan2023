@@ -7,10 +7,12 @@ import Columns from "./Components/Columns";
 import MergedColumns from "./Components/MergeColumns";
 import { handleDelete, handleAdd, changeAccount } from "./services";
 import { useAppContext } from "hook/use-app-context";
-import { getAllAccount } from "services";
+import { getAllAccount, getAllRoleAccount, getAllUser } from "services";
 
 const ManageAccount = () => {
   const { data: accounts, setData: setAccounts } = useAppContext("accounts");
+  const { data: roleAccounts, setData: setRoleAccounts } = useAppContext("role-accounts");
+  const { data: users, setData: setUsers } = useAppContext("users");
   const { setData: setPopup } = useAppContext("popup-message");
   const [form] = Form.useForm();
   const [editingKey, setEditingKey] = useState("");
@@ -20,6 +22,10 @@ const ManageAccount = () => {
 
   useEffect(() => {
     setAccounts([]);
+    setRoleAccounts([]);
+    initData();
+    initRoleAccount();
+    initUser();
     setPopup({
       title: "",
       messagePopup: "",
@@ -74,15 +80,29 @@ const ManageAccount = () => {
     setEditingKey(record.AccountId?.toString() || "");
   };
 
-  useEffect(() => {
-    initData();
-  }, []);
-
   const initData = async () => {
     try {
       const result = await getAllAccount();
       if (result && result?.data) {
         setAccounts(result?.data?.reverse());
+      }
+    } catch (e) {}
+  };
+
+  const initRoleAccount = async () => {
+    try {
+      const result = await getAllRoleAccount();
+      if (result && result?.data) {
+        setRoleAccounts(result?.data?.reverse());
+      }
+    } catch (e) {}
+  };
+
+  const initUser = async () => {
+    try {
+      const result = await getAllUser();
+      if (result && result?.data) {
+        setUsers(result?.data?.reverse());
       }
     } catch (e) {}
   };
