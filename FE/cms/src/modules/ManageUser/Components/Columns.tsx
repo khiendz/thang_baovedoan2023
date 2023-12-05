@@ -1,7 +1,6 @@
 import GetColumnSearchProps from "components/GetColumnSearchProps";
 import EditRecord from "./EditRecord";
 import { FormInstance, Popconfirm } from "antd";
-import { CustomerType } from "Models/CustomerType.model";
 import { Account, User } from "Models";
 
 const Columns = (
@@ -16,9 +15,9 @@ const Columns = (
   cancel: any,
   form: FormInstance,
   handleDelete: any,
-  setCustomerTypes: any,
+  setUsers: any,
   setPopup: any,
-  customerTypes: CustomerType[]
+  users: User[]
 ) => [
   {
     title: "Họ",
@@ -141,8 +140,8 @@ const Columns = (
             onConfirm={async () => {
               const result = await handleDelete(
                 record.UserId,
-                customerTypes,
-                setCustomerTypes
+                users,
+                setUsers
               );
               setPopup({
                 title: result?.status == 200 ? "Thành công" : "Thất bại",
