@@ -64,8 +64,12 @@ const GetTours = async () => {
                     }
                 },
                 Feedback: true,
-                RoomType: true,
-                TourType: true
+                RoomType: {
+                    include: {
+                        Hotel: true
+                    }
+                },
+                TourType: true,
             }
         });
 
@@ -120,8 +124,12 @@ const AddTour = async (tour: Tour) => {
                     }
                 },
                 Feedback: true,
-                RoomType: true,
-                TourType: true
+                RoomType: {
+                    include: {
+                        Hotel: true
+                    }
+                },
+                TourType: true,
             }
         });
 
@@ -195,8 +203,12 @@ const UpdateTour = async (tour: Tour) => {
                     }
                 },
                 Feedback: true,
-                RoomType: true,
-                TourType: true
+                RoomType: {
+                    include: {
+                        Hotel: true
+                    }
+                },
+                TourType: true,
             }
         });
 

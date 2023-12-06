@@ -73,7 +73,7 @@ const Columns = (
     title: "Mô tả",
     className: "column-money",
     dataIndex: "Description",
-    width: "150px",
+    width: "250px",
     ...GetColumnSearchProps(
       "Description",
       setSearchText,
@@ -251,6 +251,10 @@ const Columns = (
     render: (RoomTypeId: number, record: Tour) => (
       <p className="dk-font-Inter dk-text-sm dk-font-semibold dk-flex dk-flex-col">
         {" "}
+        <span className="dk-font-Roboto dk-font-bold">
+          Khách sạn:{" "}
+          <span className="dk-font-normal">{record.RoomType?.Hotel?.Name}</span>
+        </span>
         <span className="dk-font-Roboto dk-font-bold">
           Tên phòng:{" "}
           <span className="dk-font-normal">{record.RoomType?.Name}</span>
