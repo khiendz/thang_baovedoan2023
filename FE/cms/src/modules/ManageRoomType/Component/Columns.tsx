@@ -20,8 +20,9 @@ const Columns = (
   roomTypes: RoomType[]
 ) => [
   {
-    title: "Tên kiểu phòng",
+    title: "Tên phòng",
     dataIndex: "Name",
+    width: "300px",
     ...GetColumnSearchProps(
       "Name",
       setSearchText,
@@ -39,7 +40,7 @@ const Columns = (
     title: "Số lượng người tối đa",
     className: "column-money",
     dataIndex: "MaxOccupancy",
-    width: "27%",
+    width: "150px",
     ...GetColumnSearchProps(
       "MaxOccupancy",
       setSearchText,
@@ -51,6 +52,69 @@ const Columns = (
     render: (maxOccupancy: string) => (
       <div className="dk-min-w-[350px] dk-text-sm dk-font-medium dk-font-Inter dk-line-clamp-5">
         {maxOccupancy}
+      </div>
+    ),
+    editable: true,
+    align: "left",
+  },
+  {
+    title: "Giá phòng",
+    className: "column-money",
+    dataIndex: "Price",
+    width: "270px",
+    ...GetColumnSearchProps(
+      "Price",
+      setSearchText,
+      setSearchedColumn,
+      searchInput,
+      searchedColumn,
+      searchText
+    ),
+    render: (price: number) => (
+      <div className="dk-min-w-[350px] dk-text-sm dk-font-medium dk-font-Inter dk-line-clamp-5">
+        {price}
+      </div>
+    ),
+    editable: true,
+    align: "left",
+  },
+  {
+    title: "Khách sạn",
+    className: "column-money",
+    dataIndex: "HotelId",
+    width: "300px",
+    ...GetColumnSearchProps(
+      "HotelId",
+      setSearchText,
+      setSearchedColumn,
+      searchInput,
+      searchedColumn,
+      searchText
+    ),
+    render: (hotelId: number, record: RoomType) => (
+      <div className="dk-min-w-[350px] dk-text-sm dk-font-medium dk-font-Inter dk-line-clamp-5">
+        {record.Hotel?.Name}
+      </div>
+    ),
+    editable: true,
+    align: "left",
+  },
+  {
+    title: "Phí trả trễ phòng",
+    className: "column-money",
+    dataIndex: "KateFee",
+    width: "270px",
+    ...GetColumnSearchProps(
+      "KateFee",
+      setSearchText,
+      setSearchedColumn,
+      searchInput,
+      searchedColumn,
+      searchText
+    ),
+    render: (kateFee: number) => (
+      <div className="dk-min-w-[350px] dk-text-sm dk-font-medium dk-font-Inter dk-line-clamp-5">
+        {kateFee}
       </div>
     ),
     editable: true,

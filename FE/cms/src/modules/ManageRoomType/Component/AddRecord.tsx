@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { Button, Form, FormInstance, Input, Modal } from "antd";
-import { RoomType } from "Models";
+import { Button, Form, FormInstance, Input, Modal, Select } from "antd";
+import { Hotel, RoomType } from "Models";
 import { useAppContext } from "hook/use-app-context";
 
 interface CollectionCreateFormProps {
@@ -28,6 +28,7 @@ const CollectionCreateForm: React.FC<CollectionCreateFormProps> = ({
 }) => {
   const { data: roomTypes, setData: setRoomTypes } =
     useAppContext("room-types");
+  const { data: hotels, setData: setHotels } = useAppContext("hotels");
   return (
     <Modal
       open={open}
@@ -86,7 +87,17 @@ const CollectionCreateForm: React.FC<CollectionCreateFormProps> = ({
           label="Khách sạn"
           rules={[{ required: true, message: "Làm ơn chọn khách sạn" }]}
         >
-          <Input />
+          <Select
+            className="dk-w-full"
+            options={[
+              ...hotels?.map((ob: Hotel) => {
+                return { value: ob.HotelId, label: ob.Name, ob: ob };
+              }),
+            ]}
+            onChange={(value) => {
+              form.setFieldValue("HotelId", value);
+            }}
+          />
         </Form.Item>
         <Form.Item
           name="KateFee"

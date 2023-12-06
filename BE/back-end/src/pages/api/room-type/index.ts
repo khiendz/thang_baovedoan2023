@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { PrismaClient, RoleAccount, RoomType } from '@prisma/client';
+import { PrismaClient, RoomType } from '@prisma/client';
 import { apiHandler } from 'helpers/api';
 
 const prisma = new PrismaClient();
@@ -55,7 +55,12 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
 const GetRoomType = async () => {
     try {
-        const roomTypeResult = await prisma.roomType.findMany();
+        const roomTypeResult = await prisma.roomType.findMany({
+            include: {
+                Hotel: true,
+                Availability: true,
+            }
+        });
 
         if (roomTypeResult) {
             return {
@@ -85,11 +90,15 @@ const AddRoomType = async (roomType: RoomType) => {
         const roomTypeResult = await prisma.roomType.create({
             data: {
                 Name: roomType.Name,
-                MaxOccupancy: roomType.MaxOccupancy,
-                Price: roomType.Price,
+                MaxOccupancy: +(roomType?.MaxOccupancy || 0),
+                Price: +(roomType?.Price || 0),
                 HotelId: roomType.HotelId,
-                KateFee: roomType.KateFee
+                KateFee: +roomType.KateFee
             },
+            include: {
+                Hotel: true,
+                Availability: true,
+            }
         });
 
         return {
@@ -116,10 +125,14 @@ const UpdateRoomType = async (roomType: RoomType) => {
             },
             data: {
                 Name: roomType.Name,
-                MaxOccupancy: roomType.MaxOccupancy,
-                Price: roomType.Price,
+                MaxOccupancy: +(roomType?.MaxOccupancy || 0),
+                Price: +(roomType?.Price || 0),
                 HotelId: roomType.HotelId,
-                KateFee: roomType.KateFee
+                KateFee: +roomType.KateFee
+            },
+            include: {
+                Hotel: true,
+                Availability: true,
             }
         });
 

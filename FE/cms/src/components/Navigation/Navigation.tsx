@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState } from "react";
-import { HomeOutlined, BankOutlined } from "@ant-design/icons";
 import type { MenuProps } from "antd";
 import { Menu } from "antd";
 import Link from "next/link";
@@ -18,7 +17,6 @@ const items: MenuProps["items"] = [
       </Link>
     ),
     key: "home",
-    icon: <HomeOutlined />,
   },
   {
     label: (
@@ -30,7 +28,6 @@ const items: MenuProps["items"] = [
       </Link>
     ),
     key: "discount",
-    icon: <BankOutlined />,
   },
   {
     label: (
@@ -42,7 +39,6 @@ const items: MenuProps["items"] = [
       </Link>
     ),
     key: "tour",
-    icon: <BankOutlined />,
   },
   {
     label: (
@@ -54,7 +50,6 @@ const items: MenuProps["items"] = [
       </Link>
     ),
     key: "booking",
-    icon: <BankOutlined />,
   },
   {
     label: (
@@ -66,7 +61,6 @@ const items: MenuProps["items"] = [
       </Link>
     ),
     key: "customers",
-    icon: <BankOutlined />,
   },
   {
     label: (
@@ -78,7 +72,6 @@ const items: MenuProps["items"] = [
       </Link>
     ),
     key: "payment",
-    icon: <BankOutlined />,
   },
   {
     label: (
@@ -90,7 +83,6 @@ const items: MenuProps["items"] = [
       </Link>
     ),
     key: "collections",
-    icon: <BankOutlined />,
   },
   {
     label: (
@@ -102,7 +94,6 @@ const items: MenuProps["items"] = [
       </Link>
     ),
     key: "availability",
-    icon: <BankOutlined />,
   },
   {
     label: (
@@ -114,7 +105,6 @@ const items: MenuProps["items"] = [
       </Link>
     ),
     key: "account",
-    icon: <BankOutlined />,
   },
   {
     label: (
@@ -126,7 +116,6 @@ const items: MenuProps["items"] = [
       </Link>
     ),
     key: "customer-support",
-    icon: <BankOutlined />,
   },
   {
     label: (
@@ -138,7 +127,6 @@ const items: MenuProps["items"] = [
       </Link>
     ),
     key: "customer-type",
-    icon: <BankOutlined />,
   },
   {
     label: (
@@ -150,7 +138,6 @@ const items: MenuProps["items"] = [
       </Link>
     ),
     key: "feedback",
-    icon: <BankOutlined />,
   },
   {
     label: (
@@ -162,7 +149,6 @@ const items: MenuProps["items"] = [
       </Link>
     ),
     key: "hotel",
-    icon: <BankOutlined />,
   },
   {
     label: (
@@ -174,7 +160,6 @@ const items: MenuProps["items"] = [
       </Link>
     ),
     key: "role-account",
-    icon: <BankOutlined />,
   },
   {
     label: (
@@ -186,7 +171,6 @@ const items: MenuProps["items"] = [
       </Link>
     ),
     key: "room-type",
-    icon: <BankOutlined />,
   },
   {
     label: (
@@ -198,7 +182,6 @@ const items: MenuProps["items"] = [
       </Link>
     ),
     key: "support-type",
-    icon: <BankOutlined />,
   },
   {
     label: (
@@ -210,7 +193,6 @@ const items: MenuProps["items"] = [
       </Link>
     ),
     key: "user",
-    icon: <BankOutlined />,
   },
 ];
 

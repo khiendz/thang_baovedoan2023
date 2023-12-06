@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { Form, InputRef, Table } from "antd";
 import "./style.scss";
 import { useAppContext } from "hook/use-app-context";
-import { getAllRoomType } from "services";
+import { getAllHotel, getAllRoomType } from "services";
 import MergedColumns from "./Component/MergedColumns";
 import Columns from "./Component/Columns";
 import { changeRoomType, handleAdd, handleDelete } from "./service";
@@ -12,6 +12,8 @@ import { RoleAccount, RoomType } from "Models";
 export default function ManageRoomType() {
   const { data: roomTypes, setData: setRoomTypes } =
     useAppContext("room-types");
+  const { data: hotels, setData: setHotels } =
+    useAppContext("hotels");
   const { setData: setPopup } = useAppContext("popup-message");
   const [form] = Form.useForm();
   const [editingKey, setEditingKey] = useState("");
@@ -24,19 +26,21 @@ export default function ManageRoomType() {
 
   useEffect(() => {
     setRoomTypes([]);
+    setHotels([]);
     setPopup({
       title: "",
       messagePopup: "",
       state: true,
     });
     initData();
+    initHotel();
   }, []);
 
   const save = async (key: React.Key) => {
     try {
       const row = (await form.validateFields()) as RoomType;
       const newData = [...roomTypes];
-      const index = newData.findIndex((item) => key == item.RoleId);
+      const index = newData.findIndex((item) => key == item.RoomTypeId);
       if (index > -1) {
         const item = newData[index];
         const newCollection = { ...item, ...row };
@@ -82,6 +86,16 @@ export default function ManageRoomType() {
       }
     } catch (e) {}
   };
+
+  const initHotel = async () => {
+    try {
+      const result = await getAllHotel();
+      if (result && result?.data) {
+        setHotels(result?.data?.reverse());
+      }
+    } catch (e) {}
+  };
+
 
   const columns = Columns(
     setSearchText,

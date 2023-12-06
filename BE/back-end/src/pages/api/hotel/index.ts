@@ -82,12 +82,25 @@ const GetHotel = async () => {
 
 const AddHotel = async (hotel: Hotel) => {
     try {
+        const exitsPhone = hotel.Phone ?  await prisma.hotel.findUnique({
+            where: {
+                Phone: hotel.Phone
+            }
+        }) : null;
+
+        if (exitsPhone) {
+            return {
+                data: null,
+                message: "Đã tồn tại khách sạn trùng số điện thoại",
+                status: "500"
+            };
+        }
         const hotelResult = await prisma.hotel.create({
             data: {
                 Name: hotel.Name,
                 Address: hotel.Address,
                 Country: hotel.Country,
-                StarRating: hotel.StarRating,
+                StarRating: +(hotel.StarRating || 0),
                 Description: hotel.Description,
                 Phone: hotel.Phone,
                 Website: hotel.Website,
@@ -113,6 +126,21 @@ const AddHotel = async (hotel: Hotel) => {
 
 const UpdateHotel = async (hotel: Hotel) => {
     try {
+        
+        const exitsPhone = hotel.Phone ?  await prisma.hotel.findUnique({
+            where: {
+                Phone: hotel.Phone
+            }
+        }) : null;
+
+        if (exitsPhone) {
+            return {
+                data: null,
+                message: "Đã tồn tại khách sạn trùng số điện thoại",
+                status: "500"
+            };
+        }
+
         const updateHotel = await prisma.hotel.update({
             where: {
                 HotelId: hotel?.HotelId
@@ -121,11 +149,12 @@ const UpdateHotel = async (hotel: Hotel) => {
                 Name: hotel.Name,
                 Address: hotel.Address,
                 Country: hotel.Country,
-                StarRating: hotel.StarRating,
+                StarRating: +(hotel.StarRating || 0),
                 Description: hotel.Description,
                 Phone: hotel.Phone,
                 Website: hotel.Website,
-                Email: hotel.Email
+                Email: hotel.Email,
+                City: hotel.City
             }
         });
 

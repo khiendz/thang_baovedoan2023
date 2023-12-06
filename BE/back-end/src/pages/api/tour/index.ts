@@ -55,7 +55,19 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
 const GetTours = async () => {
     try {
-        const tour = await prisma.tour.findMany();
+        const tour = await prisma.tour.findMany({
+            include: {
+                Bookings: {
+                    include: {
+                        Customer: true,
+                        Payments: true,
+                    }
+                },
+                Feedback: true,
+                RoomType: true,
+                TourType: true
+            }
+        });
 
         if (tour) {
             return {
@@ -99,6 +111,17 @@ const AddTour = async (tour: Tour) => {
                 Img: tour.Img,
                 RoomStartDate: tour.RoomStartDate,
                 RoomEndDate: tour.RoomEndDate
+            },
+            include: {
+                Bookings: {
+                    include: {
+                        Customer: true,
+                        Payments: true,
+                    }
+                },
+                Feedback: true,
+                RoomType: true,
+                TourType: true
             }
         });
 
@@ -116,7 +139,7 @@ const AddTour = async (tour: Tour) => {
                     },
                     data: {
                         OrderSlot: tourType.OrderSlot + tour.TotalMember
-                    }
+                    },
                 });
             }
             
@@ -163,6 +186,17 @@ const UpdateTour = async (tour: Tour) => {
                 Img: tour.Img,
                 RoomStartDate: tour.RoomStartDate,
                 RoomEndDate: tour.RoomEndDate
+            },
+            include: {
+                Bookings: {
+                    include: {
+                        Customer: true,
+                        Payments: true,
+                    }
+                },
+                Feedback: true,
+                RoomType: true,
+                TourType: true
             }
         });
 

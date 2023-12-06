@@ -5,21 +5,25 @@ import {
   getCollectionImageByTourTypeId,
   AddTour,
 } from "services";
-import { Promotion, Tour, TourType } from "Models";
+import { Hotel, Promotion, RoomType, Tour, TourType } from "Models";
 import { CollectionImage } from "Models/CollectionImage";
 import { calRankRating, checkStateRating, stateRating } from "utils";
 import { QuestionCircleOutlined } from "@ant-design/icons";
-import { InputNumber } from "antd";
+import { InputNumber, Select } from "antd";
 import Slides from "modules/Slides";
 import AcceptOrder from "modules/AcceptOrder";
 import format from "date-fns/format";
 import { useAppContext } from "hook/use-app-context";
+import { getAllHotel } from "services/hotel-service";
+import { getAllRoomType } from "services/room-type-service";
 
 export default function TourDetail() {
   const { setData: setPopup } = useAppContext("popup-message");
   const { data: tour, setData: setTour } = useAppContext("tour");
   const { data: tourType, setData: setTourTypeData } =
     useAppContext("tour-type");
+  const { data: hotels, setData: setHotels } = useAppContext("hotels");
+  const { data: roomTypes, setData: setRoomTypes } = useAppContext("rooms");
 
   const router = useRouter();
   const [stateRate, setStateRating] = useState<string>(stateRating.Normal);
@@ -28,6 +32,8 @@ export default function TourDetail() {
   const [orderAccept, setOrrderAccept] = useState(false);
 
   useEffect(() => {
+    setHotels([]);
+    setRoomTypes([]);
     setPopup({
       title: "",
       messagePopup: "",
@@ -65,6 +71,8 @@ export default function TourDetail() {
 
   const initData = () => {
     initTourType();
+    initHotels();
+    initRoomTypes();
   };
 
   const initTourType = async () => {
@@ -95,6 +103,30 @@ export default function TourDetail() {
       if (rest) {
         const data: CollectionImage[] = rest;
         return data;
+      }
+    } catch (e) {
+      // Xử lý lỗi nếu cần
+    }
+  };
+  
+  const initHotels = async () => {
+    if (id === null || id === undefined) return;
+    try {
+      const rest = await getAllHotel();
+      if (rest) {
+        setHotels(rest.data);
+      }
+    } catch (e) {
+      // Xử lý lỗi nếu cần
+    }
+  };
+
+  const initRoomTypes = async () => {
+    if (id === null || id === undefined) return;
+    try {
+      const rest = await getAllRoomType();
+      if (rest) {
+        setRoomTypes(rest.data);
       }
     } catch (e) {
       // Xử lý lỗi nếu cần
@@ -210,6 +242,74 @@ export default function TourDetail() {
                 onChange={(e) => onChangeTotalChildren(e)}
               />
             </div>
+            <Select
+            className="dk-w-full dk-h-fit"
+            defaultValue={
+              { value: "1", label: "Tự đăng ký khách sạn"}
+            }
+            options={[
+              ...hotels?.map((ob: Hotel) => {
+                return { value: 
+                  ob.HotelId, 
+                  label: (
+                  <div className="dk-font-Inter dk-text-sm dk-font-semibold dk-flex dk-flex-col dk-h-fit dk-p-2">
+                  <span className="dk-font-Roboto dk-font-bold">
+                    Tên khách sạn:{" "}
+                    <span className="dk-font-normal">{ob?.Name}</span>
+                  </span>
+                  <span className="dk-font-Roboto dk-font-bold">
+                    Số sao: <span className="dk-font-normal">{ob.StarRating}</span>
+                  </span>
+                  <span className="dk-font-Roboto dk-font-bold">
+                    Miêu tả: <span className="dk-font-normal">{ob.Description}</span>
+                  </span>
+                  <span className="dk-font-Roboto dk-font-bold">
+                    Địa chỉ: <span className="dk-font-normal">{ob.Address}</span>
+                  </span>
+                  <span className="dk-font-Roboto dk-font-bold">
+                    Địa chỉ email: <span className="dk-font-normal">{ob.Email}</span>
+                  </span>
+                </div> ),
+                  ob: ob };
+              }),
+            ]}
+            onChange={(value) => {
+              setTour({...tour,HotelId: value})
+            }}
+          />
+          {
+            tour?.HotelId ? (
+            <Select
+            placeholder="Chọn phòng của khách sạn"
+            className="dk-w-full dk-h-fit"
+            options={[
+              ...roomTypes?.map((ob: RoomType) => {
+                return { value: 
+                  ob.RoomTypeId, 
+                  label: (
+                  <div className="dk-font-Inter dk-text-sm dk-font-semibold dk-flex dk-flex-col dk-h-fit dk-p-2">
+                  <span className="dk-font-Roboto dk-font-bold">
+                    Tên phòng:{" "}
+                    <span className="dk-font-normal">{ob?.Name}</span>
+                  </span>
+                  <span className="dk-font-Roboto dk-font-bold">
+                    Tối đa số người: <span className="dk-font-normal">{ob.MaxOccupancy}</span>
+                  </span>
+                  <span className="dk-font-Roboto dk-font-bold">
+                    Giá phòng: <span className="dk-font-normal">{ob.Price}</span>
+                  </span>
+                  <span className="dk-font-Roboto dk-font-bold">
+                    Phí trễ phòng: <span className="dk-font-normal">{ob.KateFee}</span>
+                  </span>
+                </div> ),
+                  ob: ob };
+              }),
+            ]}
+            onChange={(value) => {
+              setTour({...tour,RoomTypeId: value})
+            }}
+          />) : null
+          }
             <div className="dk-flex dk-gap-2">
               <QuestionCircleOutlined />
               <p className="dk-text-sm dk-font-Inter dk-font-medium">

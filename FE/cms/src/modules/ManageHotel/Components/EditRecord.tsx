@@ -26,8 +26,8 @@ const CollectionCreateForm: React.FC<CollectionEditFormProps> = ({
   return (
     <Modal
       open={open}
-      title="Tạo thành viên mới"
-      okText="Tạo thành viên"
+      title="Cập nhật khách sạn"
+      okText="Cập nhật khách sạn"
       cancelText="Hủy"
       onCancel={onCancel}
       onOk={() => {
@@ -49,12 +49,12 @@ const CollectionCreateForm: React.FC<CollectionEditFormProps> = ({
           <Input />
         </Form.Item>
         <Form.Item
-          name="Địa chỉ khách sạn"
-          label="SupportTypeId"
-          rules={[{ required: true, message: "Làm ơn nhập địa chỉ khách sạn" }]}
-        >
-          <Input />
-        </Form.Item>
+  name="Address"
+  label="Địa chỉ khách sạn"
+  rules={[{ required: true, message: "Làm ơn nhập địa chỉ khách sạn" }]}
+>
+  <Input />
+</Form.Item>
         <Form.Item
           name="City"
           label="Thành phố"
@@ -66,6 +66,41 @@ const CollectionCreateForm: React.FC<CollectionEditFormProps> = ({
           name="Country"
           label="Quốc gia"
           rules={[{ required: true, message: "Làm ơn nhập quốc gia" }]}
+        >
+          <Input />
+        </Form.Item>
+        <Form.Item
+          name="StarRating"
+          label="Số sao"
+          rules={[{ required: true, message: "Làm ơn nhập số sao" }]}
+        >
+          <Input />
+        </Form.Item>
+        <Form.Item
+          name="Description"
+          label="Mô tả"
+          rules={[{ required: true, message: "Làm ơn nhập mô tả" }]}
+        >
+          <Input />
+        </Form.Item>
+        <Form.Item
+          name="Phone"
+          label="Số điện thoại"
+          rules={[{ required: true, message: "Làm ơn nhập số điện thoại" }]}
+        >
+          <Input />
+        </Form.Item>
+        <Form.Item
+          name="Website"
+          label="Địa chỉ website"
+          rules={[{ required: true, message: "Làm ơn nhập địa chỉ website" }]}
+        >
+          <Input />
+        </Form.Item>
+        <Form.Item
+          name="Email"
+          label="Địa chỉ email"
+          rules={[{ required: true, message: "Làm ơn nhập địa chỉ email" }]}
         >
           <Input />
         </Form.Item>

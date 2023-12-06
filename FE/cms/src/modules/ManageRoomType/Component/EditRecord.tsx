@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Button, Form, FormInstance, Input, Modal } from "antd";
+import { Button, Form, FormInstance, Input, Modal, Select } from "antd";
+import { useAppContext } from "hook/use-app-context";
+import { Hotel } from "Models";
 
 interface CollectionEditFormProps {
   open: boolean;
@@ -23,6 +25,7 @@ const CollectionCreateForm: React.FC<CollectionEditFormProps> = ({
   save,
   form,
 }) => {
+  const { data: hotels, setData: setHotels } = useAppContext("hotels");
   return (
     <Modal
       open={open}
@@ -69,7 +72,17 @@ const CollectionCreateForm: React.FC<CollectionEditFormProps> = ({
           label="Khách sạn"
           rules={[{ required: true, message: "Làm ơn chọn khách sạn" }]}
         >
-          <Input />
+            <Select
+            className="dk-w-full"
+            options={[
+              ...hotels?.map((ob: Hotel) => {
+                return { value: ob.HotelId, label: ob.Name, ob: ob };
+              }),
+            ]}
+            onChange={(value) => {
+              form.setFieldValue("HotelId", value);
+            }}
+          />
         </Form.Item>
         <Form.Item
           name="KateFee"

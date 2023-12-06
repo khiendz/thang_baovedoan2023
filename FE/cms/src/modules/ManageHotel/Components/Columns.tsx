@@ -81,7 +81,7 @@ const Columns = (
     title: "Quốc gia",
     className: "column-money",
     dataIndex: "Country",
-    width: "450px",
+    width: "200px",
     ...GetColumnSearchProps(
       "Country",
       setSearchText,
@@ -92,6 +92,101 @@ const Columns = (
     ),
     render: (country: string) => (
       <p className="dk-font-Inter dk-text-sm dk-font-semibold">{country}</p>
+    ),
+    editable: true,
+    align: "left",
+  },
+  {
+    title: "Đánh giá khách sạn",
+    className: "column-money",
+    dataIndex: "StarRating",
+    width: "250px",
+    ...GetColumnSearchProps(
+      "Country",
+      setSearchText,
+      setSearchedColumn,
+      searchInput,
+      searchedColumn,
+      searchText
+    ),
+    render: (starRating: number) => (
+      <p className="dk-font-Inter dk-text-sm dk-font-semibold">{starRating}</p>
+    ),
+    editable: true,
+    align: "left",
+  },
+  {
+    title: "Mô tả khách sạn",
+    className: "column-money",
+    dataIndex: "Description",
+    width: "350px",
+    ...GetColumnSearchProps(
+      "Country",
+      setSearchText,
+      setSearchedColumn,
+      searchInput,
+      searchedColumn,
+      searchText
+    ),
+    render: (description: string) => (
+      <p className="dk-font-Inter dk-text-sm dk-font-semibold">{description}</p>
+    ),
+    editable: true,
+    align: "left",
+  },
+  {
+    title: "Số điện thoại khách sạn",
+    className: "column-money",
+    dataIndex: "Phone",
+    width: "150px",
+    ...GetColumnSearchProps(
+      "Phone",
+      setSearchText,
+      setSearchedColumn,
+      searchInput,
+      searchedColumn,
+      searchText
+    ),
+    render: (Phone: number) => (
+      <p className="dk-font-Inter dk-text-sm dk-font-semibold">{Phone}</p>
+    ),
+    editable: true,
+    align: "left",
+  },
+  {
+    title: "Website",
+    className: "column-money",
+    dataIndex: "Website",
+    width: "250px",
+    ...GetColumnSearchProps(
+      "Website",
+      setSearchText,
+      setSearchedColumn,
+      searchInput,
+      searchedColumn,
+      searchText
+    ),
+    render: (Website: string) => (
+      <p className="dk-font-Inter dk-text-sm dk-font-semibold">{Website}</p>
+    ),
+    editable: true,
+    align: "left",
+  },
+  {
+    title: "Email",
+    className: "column-money",
+    dataIndex: "Email",
+    width: "200px",
+    ...GetColumnSearchProps(
+      "Email",
+      setSearchText,
+      setSearchedColumn,
+      searchInput,
+      searchedColumn,
+      searchText
+    ),
+    render: (Email: string) => (
+      <p className="dk-font-Inter dk-text-sm dk-font-semibold">{Email}</p>
     ),
     editable: true,
     align: "left",
