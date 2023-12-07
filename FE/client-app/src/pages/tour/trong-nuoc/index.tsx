@@ -29,7 +29,7 @@ export default function LocalTour() {
       <div className="dk-text-[#222] dk-font-Inter content-container content-miss dk-flex dk-flex-col 
       dk-gap-2 dk-relative dk-z-10 dk-mb-5 dk-pb-8">
         <h2 className="dk-text-[#222] dk-font-semibold dk-text-lg">
-          Tours du lịch mùa đông trong nước
+          Tours du lịch nổi bật
         </h2>
         {tourTypesList ? (
           <div className="card-listing dk-flex dk-flex-wrap dk-gap-12 dk-justify-center dk-mt-8 dk-relative">

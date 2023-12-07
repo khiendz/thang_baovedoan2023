@@ -108,6 +108,27 @@ const Columns = (
     align: "left",
   },
   {
+    title: "Mã thanh toán",
+    className: "column-money",
+    dataIndex: "OrderCode",
+    width: "200px",
+    ...GetColumnSearchProps(
+      "OrderCode",
+      setSearchText,
+      setSearchedColumn,
+      searchInput,
+      searchedColumn,
+      searchText
+    ),
+    render: (orderCode: string) => (
+      <p className="dk-min-w-[350px] dk-text-sm dk-font-medium dk-font-Inter dk-line-clamp-5">
+        {orderCode}
+      </p>
+    ),
+    editable: true,
+    align: "left",
+  },
+  {
     title: "Cập nhật",
     dataIndex: "operation",
     align: "center",

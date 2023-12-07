@@ -1,35 +1,24 @@
 'use client'
 
 import React, { useState } from 'react';
-import { HomeOutlined, BankOutlined } from '@ant-design/icons';
+import { HomeOutlined } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { Menu } from 'antd';
 import Link from 'next/link';
 
 const items: MenuProps['items'] = [
   {
-    label: <Link href='/' className='dk-text-sm dk-text-[#222] dk-font-Inter dk-font-bold'>TRANG CHỦ</Link>,
+    label: <Link href='/' className='dk-text-sm dk-text-[#222] dk-font-Inter dk-font-bold'>Trang chủ</Link>,
     key: 'home',
     icon: <HomeOutlined />,
   },
   {
-    label: <Link href='/khach-san' className='dk-text-sm dk-text-[#222] dk-font-Inter dk-font-bold'><span>KHÁCH SẠN</span></Link>,
-    key: 'hotel',
-    icon: <BankOutlined />
+    label: <Link href='/tour/trong-nuoc' className='dk-text-sm dk-text-[#222] dk-font-Inter dk-font-bold'><span>Tour du lịch trong nước</span></Link>,
+    key: 'tour-in',
   },
   {
-    label: <Link href='/tour/trong-nuoc' className='dk-text-sm dk-text-[#222] dk-font-Inter dk-font-bold'><span>TOUR DU LỊCH</span></Link>,
-    key: 'tour',
-    children: [
-      {
-        label: <Link href='/tour/trong-nuoc' className='dk-text-sm dk-text-[#222] dk-font-Inter dk-font-bold'><span>TRONG NƯỚC</span></Link>,
-        key: 'local'
-      },
-      {
-        label: <Link href='/tour/nuoc-ngoai' className='dk-text-sm dk-text-[#222] dk-font-Inter dk-font-bold'><span>NGOÀI NƯỚC</span></Link>,
-        key: 'global'
-      },
-    ],
+    label: <Link href='/tour/nuoc-ngoai' className='dk-text-sm dk-text-[#222] dk-font-Inter dk-font-bold'><span>Tour du lịch ngoài nước</span></Link>,
+    key: 'tour-out',
   },
 ];
 

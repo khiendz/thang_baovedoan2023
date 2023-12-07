@@ -53,29 +53,29 @@ const CollectionCreateForm: React.FC<CollectionEditFormProps> = ({
         name="form_in_modal"
         initialValues={{ modifier: "public" }}
       >
-       <Form.Item
-            name="BookingID"
-            label="Đơn booking"
-            rules={[{ required: true, message: "Làm ơn chọn đơn booking" }]}
-          >
-            <Select
-              className="dk-w-full"
-              options={[
-                ...bookings?.map((ob: Booking) => {
-                  return {
-                    value: ob.CustomerID,
-                    label: `${
-                      ob?.Customer?.FirstName + " " + ob?.Customer?.LastName
-                    }`,
-                    ob: ob,
-                  };
-                }),
-              ]}
-              onChange={(value) => {
-                form.setFieldValue("CustomerID", value);
-              }}
-            />
-          </Form.Item>
+        <Form.Item
+          name="BookingID"
+          label="Đơn booking"
+          rules={[{ required: true, message: "Làm ơn chọn đơn booking" }]}
+        >
+          <Select
+            className="dk-w-full"
+            options={[
+              ...bookings?.map((ob: Booking) => {
+                return {
+                  value: ob.CustomerID,
+                  label: `${
+                    ob?.Customer?.FirstName + " " + ob?.Customer?.LastName
+                  }`,
+                  ob: ob,
+                };
+              }),
+            ]}
+            onChange={(value) => {
+              form.setFieldValue("CustomerID", value);
+            }}
+          />
+        </Form.Item>
         <Form.Item
           name="PaymentDate"
           label="Ngày thanh toán"
@@ -96,6 +96,13 @@ const CollectionCreateForm: React.FC<CollectionEditFormProps> = ({
           rules={[{ required: true, message: "Làm ơn tổng tiền thanh toán" }]}
         >
           <Input type="number" />
+        </Form.Item>
+        <Form.Item
+          name="OrderCode"
+          label="Mã thanh toán"
+          rules={[{ required: true, message: "Làm ơn nhập mã thanh toán" }]}
+        >
+          <Input />
         </Form.Item>
       </Form>
     </Modal>

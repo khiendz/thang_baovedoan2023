@@ -76,7 +76,7 @@ const GetToursTypes = async () => {
     } catch (error) {
         console.error(error);
         return {
-            tour: null,
+            data: null,
             message: "Internal Server Error",
             status: "500"
         };
@@ -88,7 +88,7 @@ const AddTourType = async (tourTypeData: TourType) => {
         const tour = await prisma.tourType.create({
             data: {
                 Name: tourTypeData.Name,
-                Description: tourTypeData?.Description,
+                Description: tourTypeData?.Description?.toString(),
                 PriceElder: tourTypeData.PriceElder,
                 PriceChildren: tourTypeData.PriceChildren,
                 PromotionId: tourTypeData?.PromotionId || 0,
@@ -116,7 +116,7 @@ const AddTourType = async (tourTypeData: TourType) => {
 
         if (tour) {
             return {
-                tour: tour,
+                data: tour,
                 message: "Success",
                 status: "200"
             };
@@ -130,7 +130,7 @@ const AddTourType = async (tourTypeData: TourType) => {
     } catch (error) {
         console.error(error);
         return {
-            tour: null,
+            data: null,
             message: "Internal Server Error",
             status: "500"
         };

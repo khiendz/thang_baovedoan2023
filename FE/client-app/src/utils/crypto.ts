@@ -30,6 +30,7 @@ export function generateHmacSha256(orderParams: any): string {
 
 export async function sendOrder(orderParams: OrderParams) {
     orderParams.signature = generateHmacSha256(orderParams);
+    orderParams.buyerPhone = "0382033517";
     try {
         const response = await axios.post('https://api-merchant.payos.vn/v2/payment-requests', orderParams, {
             headers: {
@@ -37,8 +38,21 @@ export async function sendOrder(orderParams: OrderParams) {
                 'x-api-key': apiKey,
             },
         });
-        debugger
         console.log('Order request successful. Response:', response.data);
+        return response;
+    } catch (error: any) {
+        console.error('Error sending order request:', error.message);
+    }
+}
+
+export async function checkPayment(id: string) {
+    try {
+        const response = await axios.get(`https://api-merchant.payos.vn/v2/payment-requests/${id}`, {
+            headers: {
+                'x-client-id': clientId,
+                'x-api-key': apiKey,
+            },
+        });
         return response;
     } catch (error: any) {
         console.error('Error sending order request:', error.message);

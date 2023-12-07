@@ -5,33 +5,38 @@ import {
   getCollectionImageByTourTypeId,
   AddTour,
 } from "services";
-import { Hotel, Promotion, RoomType, Tour, TourType } from "Models";
+import { Promotion, Tour, TourType } from "Models";
 import { CollectionImage } from "Models/CollectionImage";
 import { calRankRating, checkStateRating, stateRating } from "utils";
 import { QuestionCircleOutlined } from "@ant-design/icons";
-import { InputNumber, Select } from "antd";
+import { InputNumber } from "antd";
 import Slides from "modules/Slides";
 import AcceptOrder from "modules/AcceptOrder";
 import format from "date-fns/format";
 import { useAppContext } from "hook/use-app-context";
 import { getAllHotel } from "services/hotel-service";
 import { getAllRoomType } from "services/room-type-service";
+import { UserOutlined, StarOutlined } from "@ant-design/icons";
+import { initTour } from "./service";
+import { SelectHotel } from "./components/SelectHotel";
+import { SelectRoom } from "./components/SelectRoom";
+import { checkPayment } from "utils/crypto";
+import { DeletePaymentByOrderCode } from "services/payment-service";
 
 export default function TourDetail() {
-  const { setData: setPopup } = useAppContext("popup-message");
-  const { data: tour, setData: setTour } = useAppContext("tour");
-  const { data: tourType, setData: setTourTypeData } =
-    useAppContext("tour-type");
-  const { data: hotels, setData: setHotels } = useAppContext("hotels");
-  const { data: roomTypes, setData: setRoomTypes } = useAppContext("rooms");
-
-  const router = useRouter();
-  const [stateRate, setStateRating] = useState<string>(stateRating.Normal);
-  const { id } = router.query;
-  const [tourTypes, setTourType] = useState<TourType>(new TourType());
-  const [orderAccept, setOrrderAccept] = useState(false);
+  const { setData: setPopup } = useAppContext("popup-message"),
+    { data: tour, setData: setTour } = useAppContext("tour"),
+    { data: tourType, setData: setTourTypeData } = useAppContext("tour-type"),
+    { setData: setHotels } = useAppContext("hotels"),
+    { setData: setRoomTypes } = useAppContext("room-types"),
+    router = useRouter(),
+    [stateRate, setStateRating] = useState<string>(stateRating.Normal),
+    { idTour, id, status, cancel } = router.query,
+    [tourTypes, setTourType] = useState<TourType>(new TourType()),
+    [orderAccept, setOrrderAccept] = useState(false);
 
   useEffect(() => {
+    initData();
     setHotels([]);
     setRoomTypes([]);
     setPopup({
@@ -39,35 +44,31 @@ export default function TourDetail() {
       messagePopup: "",
       state: true,
     });
-  }, []);
-
-  useEffect(() => {
-    initData();
-  }, [id]);
+  }, [idTour]);
 
   useEffect(() => {
     if (tourTypes) {
-      console.log(tourTypes);
       setTourTypeData(tourTypes);
-      let tourInit = new Tour();
-      tourInit.TotalChd = 0;
-      tourInit.TotalElder = 0;
-      tourInit.TourName = tourTypes.Name;
-      tourInit.StartDate = tourTypes.StartDate;
-      tourInit.EndDate = tourTypes.EndDate;
-      tourInit.Location = tourTypes.Description;
-      tourInit.TotalMember = 0;
-      tourInit.TotalChd = 0;
-      tourInit.TotalElder = 0;
-      tourInit.PriceTotal = 0;
-      tourInit.TourTypeId = tourTypes.TourTypeId;
-      tourInit.RoomTypeId = 1;
-      tourInit.Img = tourTypes.Img;
-      tourInit.RoomStartDate = tourTypes.StartDate;
-      tourInit.RoomEndDate = tourTypes.EndDate;
+      const tourInit = initTour(tourTypes);
       setTour(tourInit);
     }
   }, [tourTypes]);
+
+  useEffect(() => {
+    if (!status) return;
+    checkPaymentById(id?.toString() || "");
+  }, [status]);
+  
+  const checkPaymentById = async (id: string) => {
+      const checkPaymentResult = await checkPayment(id);
+      const {orderCode,status} = checkPaymentResult?.data?.data;
+      if (orderCode && status && status == "CANCELLED") {
+        handlePopup(false, "Thanh toán không thành công");
+        const result = await DeletePaymentByOrderCode(orderCode);
+        return
+      }
+      handlePopup(true, "Thanh toán thành công, nhân viên sẽ sớm liên hệ với bạn trong ít phút");
+  }
 
   const initData = () => {
     initTourType();
@@ -76,9 +77,9 @@ export default function TourDetail() {
   };
 
   const initTourType = async () => {
-    if (id === null || id === undefined) return;
+    if (idTour === null || idTour === undefined) return;
     try {
-      const idParam = parseInt(id.toString());
+      const idParam = parseInt(idTour.toString());
       const rest = await getTourTypeById(idParam);
       if (rest) {
         let data: TourType = rest;
@@ -90,25 +91,21 @@ export default function TourDetail() {
         const rating = checkStateRating(pointRating);
         setStateRating(rating);
       }
-    } catch (e) {
-      // Xử lý lỗi nếu cần
-    }
+    } catch (e) {}
   };
 
   const initCollectionImage = async () => {
-    if (id === null || id === undefined) return;
+    if (idTour === null || idTour === undefined) return;
     try {
-      const idParam = parseInt(id.toString());
+      const idParam = parseInt(idTour.toString());
       const rest = await getCollectionImageByTourTypeId(idParam);
       if (rest) {
         const data: CollectionImage[] = rest;
         return data;
       }
-    } catch (e) {
-      // Xử lý lỗi nếu cần
-    }
+    } catch (e) {}
   };
-  
+
   const initHotels = async () => {
     if (id === null || id === undefined) return;
     try {
@@ -116,9 +113,7 @@ export default function TourDetail() {
       if (rest) {
         setHotels(rest.data);
       }
-    } catch (e) {
-      // Xử lý lỗi nếu cần
-    }
+    } catch (e) {}
   };
 
   const initRoomTypes = async () => {
@@ -128,9 +123,7 @@ export default function TourDetail() {
       if (rest) {
         setRoomTypes(rest.data);
       }
-    } catch (e) {
-      // Xử lý lỗi nếu cần
-    }
+    } catch (e) {}
   };
 
   const onChangeTotalElder = (value: any) => {
@@ -150,48 +143,44 @@ export default function TourDetail() {
   const save = async (tour: Tour) => {
     try {
       const result = await AddTour(tour);
+
       if (!result) {
-        setPopup({
-          title: "Thất bại",
-          messagePopup: "Vui lòng kiểm tra lại thông tin",
-          state: true,
-        });
-        setOrrderAccept(false);
-        return;
+        handlePopup(false,"Vui lòng kiểm tra lại thông tin");
+        return result;
       }
 
-      initTourType();
-      setPopup({
-        title: result.status == 200 ? "Thành công" : "Thất bại",
-        messagePopup: result?.message
-          ? result?.message
-          : "Vui lòng chờ nhân viên liên hệ",
-        state: result.status == 200,
-      });
+      initData();
+      const isSuccess = result.status == 200;
       onChangeTotalChildren(0);
       onChangeTotalElder(0);
       setOrrderAccept(false);
+
+      return result;
     } catch (e) {
-      setPopup({
-        title: "Thất bại",
-        messagePopup: "Vui lòng kiểm tra lại thông tin",
-        state: true,
-      });
+      handlePopup(false,"Vui lòng kiểm tra lại thông tin");
       setOrrderAccept(false);
     }
   };
 
-  return tour && tourType ? (
+  const handlePopup = (isSuccess: boolean, message: string) => {
+    setPopup({
+      title: isSuccess ? "Thành công" : "Thất bại",
+      messagePopup: message,
+      state: isSuccess,
+    });
+  };
+
+  return idTour && tour && tourType ? (
     <>
       <div className="dk-text-[#222] dk-font-Inter content-container content-miss dk-flex dk-flex-col dk-gap-2 dk-relative dk-z-10 dk-mb-5">
-        <h1 className="dk-text-[#222] dk-font-semibold dk-text-4xl">
+        <h1 className="dk-text-[#003c71] dk-font-semibold dk-text-4xl dk-w-full dk-bg-white dk-rounded-lg dk-p-4">
           {tourTypes?.Name}
         </h1>
         <div className="rate dk-flex dk-gap-2 dk-items-center">
-          <span className="dk-font-Inter dk-font-bold dk-text-red-500">
-            Rating {tourTypes.RateTourType} ❤️ - Trải Ngiệm
+          <span className="dk-font-Inter dk-font-bold dk-text-green-400">
+            Rating {tourTypes.RateTourType} ⭐ - Trải Ngiệm
           </span>
-          <span className="dk-font-Inter dk-font-bold dk-text-red-500">
+          <span className="dk-font-Inter dk-font-bold dk-text-green-400">
             {stateRate}
           </span>
         </div>
@@ -201,20 +190,31 @@ export default function TourDetail() {
               <Slides data={tourTypes.CollectionImamge || []} />
             </div>
           ) : null}
-          <div className="dk-bg-white dk-rounded-lg dk-p-4 dk-w-full dk-mt-8 dk-flex dk-gap-2 dk-flex-col">
+          <div className="dk-bg-white dk-rounded-lg dk-p-4 dk-w-full dk-mt-8 dk-flex dk-gap-2 dk-flex-col dk-border-l-8 dk-border-l-blue-800">
             <p className="dk-text-[20px] dk-font-bold dk-text-[#003c71] dk-font-Inter">
               Lịch khởi hành & giá
             </p>
 
-            <p>Số lượng người còn trống: {tourType?.MaxSlot}</p>
+            <p>
+              <span className="dk-font-bold dk-text-lg dk-font-Inter">
+                Dịch vụ tour du lịch dành cho :{" "}
+              </span>
+              {tourType?.MaxSlot} người <UserOutlined />
+            </p>
             <p
               className={`${
                 (tourTypes.OrderSlot || 0) >= (tourTypes.MaxSlot || 0)
-                  ? "dk-p-3 dk-bg-red-500 dk-w-fit dk-rounded-xl dk-text-[#FFF] dk-font-Roboto dk-text-lg"
+                  ? "dk-p-3 dk-bg-red-500 dk-w-fit dk-rounded-xl dk-text-[#FFF] dk-font-Roboto "
                   : ""
-              }`}
+              } dk-text-lg`}
             >
-              Số lượng người đã đặt: {tourType?.OrderSlot} {(tourTypes.OrderSlot || 0) >= (tourTypes.MaxSlot || 0) ? "- Số lượng người đặt tour đã đạt tối đa" : ""}
+              <span className="dk-font-bold dk-text-lg dk-font-Inter">
+                Số lượng người đã đặt :{" "}
+              </span>
+              {tourType?.OrderSlot} <UserOutlined />
+              {(tourTypes.OrderSlot || 0) >= (tourTypes.MaxSlot || 0)
+                ? "- Số lượng người đặt tour đã đạt tối đa"
+                : ""}
             </p>
             <div className="dk-font-bold dk-text-sm dk-flex dk-gap-2 dk-items-center">
               <div>
@@ -242,74 +242,8 @@ export default function TourDetail() {
                 onChange={(e) => onChangeTotalChildren(e)}
               />
             </div>
-            <Select
-            className="dk-w-full dk-h-fit"
-            defaultValue={
-              { value: "1", label: "Tự đăng ký khách sạn"}
-            }
-            options={[
-              ...hotels?.map((ob: Hotel) => {
-                return { value: 
-                  ob.HotelId, 
-                  label: (
-                  <div className="dk-font-Inter dk-text-sm dk-font-semibold dk-flex dk-flex-col dk-h-fit dk-p-2">
-                  <span className="dk-font-Roboto dk-font-bold">
-                    Tên khách sạn:{" "}
-                    <span className="dk-font-normal">{ob?.Name}</span>
-                  </span>
-                  <span className="dk-font-Roboto dk-font-bold">
-                    Số sao: <span className="dk-font-normal">{ob.StarRating}</span>
-                  </span>
-                  <span className="dk-font-Roboto dk-font-bold">
-                    Miêu tả: <span className="dk-font-normal">{ob.Description}</span>
-                  </span>
-                  <span className="dk-font-Roboto dk-font-bold">
-                    Địa chỉ: <span className="dk-font-normal">{ob.Address}</span>
-                  </span>
-                  <span className="dk-font-Roboto dk-font-bold">
-                    Địa chỉ email: <span className="dk-font-normal">{ob.Email}</span>
-                  </span>
-                </div> ),
-                  ob: ob };
-              }),
-            ]}
-            onChange={(value) => {
-              setTour({...tour,HotelId: value})
-            }}
-          />
-          {
-            tour?.HotelId ? (
-            <Select
-            placeholder="Chọn phòng của khách sạn"
-            className="dk-w-full dk-h-fit"
-            options={[
-              ...roomTypes?.map((ob: RoomType) => {
-                return { value: 
-                  ob.RoomTypeId, 
-                  label: (
-                  <div className="dk-font-Inter dk-text-sm dk-font-semibold dk-flex dk-flex-col dk-h-fit dk-p-2">
-                  <span className="dk-font-Roboto dk-font-bold">
-                    Tên phòng:{" "}
-                    <span className="dk-font-normal">{ob?.Name}</span>
-                  </span>
-                  <span className="dk-font-Roboto dk-font-bold">
-                    Tối đa số người: <span className="dk-font-normal">{ob.MaxOccupancy}</span>
-                  </span>
-                  <span className="dk-font-Roboto dk-font-bold">
-                    Giá phòng: <span className="dk-font-normal">{ob.Price}</span>
-                  </span>
-                  <span className="dk-font-Roboto dk-font-bold">
-                    Phí trễ phòng: <span className="dk-font-normal">{ob.KateFee}</span>
-                  </span>
-                </div> ),
-                  ob: ob };
-              }),
-            ]}
-            onChange={(value) => {
-              setTour({...tour,RoomTypeId: value})
-            }}
-          />) : null
-          }
+            <SelectHotel />
+            {tour?.HotelId && tour.HotelId != 0 ? <SelectRoom /> : null}
             <div className="dk-flex dk-gap-2">
               <QuestionCircleOutlined />
               <p className="dk-text-sm dk-font-Inter dk-font-medium">
@@ -317,11 +251,11 @@ export default function TourDetail() {
               </p>
             </div>
             <div className="total-price">
-              <span className="dk-text-xl dk-font-Roboto dk-font-medium dk-text-yellow-400">
+              <span className="dk-text-xl dk-font-Roboto dk-font-medium dk-text-black">
                 Tổng giá:{" "}
                 {(
-                  tour?.TotalChd * (tourTypes?.PriceChildren || 0) +
-                  tour?.TotalElder * (tourTypes?.PriceElder || 0)
+                  (tour?.TotalChd * (tourTypes?.PriceChildren || 0) +
+                  tour?.TotalElder * (tourTypes?.PriceElder || 0))
                 ).toLocaleString("vi-VN")}{" "}
                 VND
               </span>
@@ -342,13 +276,13 @@ export default function TourDetail() {
 
                 if (tour.TotalElder <= 0) {
                   setPopup({
-                    title: "Kiểm tra lại số lượng người lớn",
-                    messagePopup: "Số lượng người lớn phải lớn hơn 0",
+                    title: "Có vẻ quý khách chưa chọn số lượng người lớn",
+                    messagePopup: "Vui lòng thử lại",
                     state: false,
                   });
                   return;
                 }
-                
+
                 setOrrderAccept(!orderAccept);
               }}
             >

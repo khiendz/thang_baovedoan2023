@@ -53,7 +53,6 @@ const CollectionCreateForm: React.FC<CollectionCreateFormProps> = ({
         const result = await save(
           {
             ...row,
-            Description: row.Description?.toString(),
             PriceElder: parseInt(
               row?.PriceElder ? row?.PriceElder?.toString() : "0"
             ),
@@ -67,7 +66,7 @@ const CollectionCreateForm: React.FC<CollectionCreateFormProps> = ({
               row?.MaxSlot ? row?.MaxSlot?.toString() : "0"
             ),
             OrderSlot: parseInt(
-              row?.MaxSlot ? row?.MaxSlot?.toString() : "0"
+              row?.OrderSlot ? row?.OrderSlot?.toString() : "0"
             ),
           },
           setTourTypes,
@@ -95,12 +94,13 @@ const CollectionCreateForm: React.FC<CollectionCreateFormProps> = ({
           <Input />
         </Form.Item>
         <Form.Item name="Description" label="Mô tả tour">
-          <TextEditor
-            initialValues={form?.getFieldValue("Description")}
-            onChange={(value: any) => {
+          <TextEditor 
+            initialValues={""}
+            onChange={
+            (value: any) => {
               form.setFieldValue("Description", value);
-            }}
-          />
+            }
+          }/>
         </Form.Item>
         <Form.Item
           name="PriceElder"
@@ -132,7 +132,7 @@ const CollectionCreateForm: React.FC<CollectionCreateFormProps> = ({
               }),
             ]}
             onChange={(value) => {
-              form.setFieldValue("Description", value);
+              form.setFieldValue("PromotionId", value);
             }}
           />
         </Form.Item>
@@ -156,7 +156,7 @@ const CollectionCreateForm: React.FC<CollectionCreateFormProps> = ({
               { value: 1, label: "Ngoài nước" },
             ]}
             onChange={(value) => {
-              form.setFieldValue("Description", value);
+              form.setFieldValue("IsLocal", value);
             }}
           />
         </Form.Item>

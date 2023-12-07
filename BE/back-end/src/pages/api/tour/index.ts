@@ -89,7 +89,7 @@ const GetTours = async () => {
     } catch (error) {
         console.error(error);
         return {
-            tour: null,
+            data: null,
             message: "Internal Server Error",
             status: "500"
         };
@@ -111,10 +111,10 @@ const AddTour = async (tour: Tour) => {
                 TotalChd: tour.TotalChd,
                 TotalElder: tour.TotalElder,
                 TourID: tour.TourID,
-                RoomTypeId: tour.RoomTypeId,
+                RoomTypeId: tour?.RoomTypeId,
                 Img: tour.Img,
-                RoomStartDate: tour.RoomStartDate,
-                RoomEndDate: tour.RoomEndDate
+                RoomStartDate: tour.StartDate,
+                RoomEndDate: tour.EndDate,
             },
             include: {
                 Bookings: {
@@ -152,13 +152,13 @@ const AddTour = async (tour: Tour) => {
             }
             
             return {
-                tour: tourResult,
+                data: tourResult,
                 message: "Vui lòng chờ nhân viên liên hệ",
                 status: "200"
             };
         } else {
             return {
-                tour: null,
+                data: null,
                 message: "Đặt tour thất bại",
                 status: "500"
             };
@@ -166,7 +166,7 @@ const AddTour = async (tour: Tour) => {
     } catch (error) {
         console.error(error);
         return {
-            tour: null,
+            data: null,
             message: "Internal Server Error",
             status: "500"
         };
@@ -192,8 +192,8 @@ const UpdateTour = async (tour: Tour) => {
                 TourID: tour.TourID,
                 RoomTypeId: tour.RoomTypeId,
                 Img: tour.Img,
-                RoomStartDate: tour.RoomStartDate,
-                RoomEndDate: tour.RoomEndDate
+                RoomStartDate: tour.StartDate,
+                RoomEndDate: tour.EndDate,
             },
             include: {
                 Bookings: {
@@ -229,6 +229,32 @@ const UpdateTour = async (tour: Tour) => {
 
 const DeleteTour = async (tourId: number) => {
     try {
+        const tour = await prisma.tour.findUnique({
+            where: {
+                TourID: tourId
+            }
+        });
+        const tourType = await prisma.tourType.findUnique({
+            where: {
+                TourTypeId: tour?.TourTypeId
+            }
+        });
+
+        const exitsBooking = await prisma.booking.deleteMany({
+            where: {
+                TourID: tourId
+            }
+        });
+
+        await prisma.tourType.update({
+            where: {
+                TourTypeId: tour?.TourTypeId
+            },
+            data: {
+                OrderSlot: tourType?.OrderSlot && tour?.TotalMember ? tourType?.OrderSlot - tour?.TotalMember : tourType?.OrderSlot
+            }
+        })
+
         const result = await prisma.tour.delete({
             where: {
                 TourID: tourId

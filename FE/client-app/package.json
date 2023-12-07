@@ -20,6 +20,7 @@
     "classnames": "^2.3.2",
     "crypto": "^1.0.1",
     "date-fns": "^2.30.0",
+    "diacritic": "^0.0.2",
     "dotenv": "^16.3.1",
     "eslint": "8.48.0",
     "eslint-config-next": "13.4.19",

@@ -86,7 +86,7 @@ const AddPromotion = async (promotion: Promotion) => {
             data: {
                 PromotionID: promotion.PromotionID,
                 PromoCode: promotion.PromoCode,
-                Description: promotion?.Description,
+                Description: promotion?.Description?.toString(),
                 Discount: promotion.Discount,
                 StartDate: promotion.StartDate,
                 EndDate: promotion.EndDate,
@@ -126,7 +126,7 @@ const UpdatePromotion = async (promotion: Promotion) => {
             },
             data: {
                 PromoCode: promotion.PromoCode,
-                Description: promotion?.Description,
+                Description: promotion?.Description?.toString(),
                 Discount: promotion.Discount,
                 StartDate: promotion.StartDate,
                 EndDate: promotion.EndDate,

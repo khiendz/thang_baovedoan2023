@@ -45,9 +45,10 @@ export const handleDelete = async (key: number, tourTypes: TourType[], setTourTy
   };
 
 export const handleAdd = async (tourType: TourType, setTourTypes: any, tourTypes: TourType[]) => {
+  debugger
     const result = await handleAddTourType(tourType);
     setTourTypes([
-      { ...result.tour, TourTypeId: tourTypes.length + 1 },
+      { ...result.data },
       ...tourTypes,
     ]);
     return result;

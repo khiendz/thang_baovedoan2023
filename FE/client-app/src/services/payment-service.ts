@@ -70,3 +70,45 @@ export async function DeletePaymentById(paymentID: number) {
     return null;
 }
 
+export async function DeletePaymentByOrderCode(orderCode: string) {
+    try {
+        const res: any = await fetchWrapper.delete(`${domainBE}/api/payment/order-code?orderCode=${orderCode}`);
+
+        if (res.status === 200) {
+            return res.data;
+        }
+    } catch (e) {
+        console.error('Error delete payment:', e);
+    }
+
+    return null;
+}
+
+export async function GetTotalPayment() {
+    try {
+        const res: any = await fetchWrapper.get(`${domainBE}/api/payment/total`);
+
+        if (res.status === 200) {
+            return res.data;
+        }
+    } catch (e) {
+        console.error('Error delete payment:', e);
+    }
+    return null;
+}
+
+export async function GetPaymentByPhone(phoneNumber: string) {
+    try {
+        const res: any = await fetchWrapper.get(`${domainBE}/api/payment/phone?phoneNumber=${phoneNumber}`);
+
+        if (res.status === 200) {
+            return res.data;
+        }
+    } catch (e) {
+        console.error('Error delete payment:', e);
+    }
+    return null;
+}
+
+
+

@@ -35,20 +35,34 @@ const Columns = (
     ),
     render: (name: string, record: Tour) => (
       <div className="dk-font-Inter dk-text-sm dk-font-semibold dk-flex dk-flex-col">
-      {" "}
-      <span className="dk-font-Roboto dk-font-bold">
-        Tên khách đặt tour:{" "}
-        <span className="dk-font-normal">{record?.Bookings[0]?.Customer?.FirstName + " " + record?.Bookings[0]?.Customer?.LastName}</span>
-      </span>
-      <div className="dk-font-Roboto dk-font-bold dk-flex dk-gap-2">
-        Email:
-        <span className="dk-font-normal">{record.Bookings[0]?.Customer?.Email}</span>
+        {" "}
+        <span className="dk-font-Roboto dk-font-bold">
+          Tên khách đặt tour:{" "}
+          <span className="dk-font-normal">
+            {record?.Bookings[0]?.Customer?.FirstName +
+              " " +
+              record?.Bookings[0]?.Customer?.LastName}
+          </span>
+        </span>
+        <div className="dk-font-Roboto dk-font-bold dk-flex dk-gap-2">
+          Email:
+          <span className="dk-font-normal">
+            {record.Bookings[0]?.Customer?.Email}
+          </span>
+        </div>
+        <div className="dk-font-Roboto dk-font-bold dk-flex dk-gap-2">
+          Số điện thoại:
+          <span className="dk-font-normal">
+            {record?.Bookings[0]?.Customer?.Phone}
+          </span>
+        </div>
+        <div className="dk-font-Roboto dk-font-bold dk-flex dk-gap-2">
+          Mã thanh toán:
+          <span className="dk-font-normal">
+            {record?.Bookings[0]?.Payments[0]?.OrderCode}
+          </span>
+        </div>
       </div>
-      <div className="dk-font-Roboto dk-font-bold dk-flex dk-gap-2">
-        Số điện thoại:
-        <span className="dk-font-normal">{record?.Bookings[0]?.Customer?.Phone}</span>
-      </div>
-    </div>
     ),
     editable: true,
   },
@@ -71,9 +85,9 @@ const Columns = (
   },
   {
     title: "Mô tả",
-    className: "column-money",
+    className: "column-money dk-text-wrap",
     dataIndex: "Description",
-    width: "250px",
+    width: "450px",
     ...GetColumnSearchProps(
       "Description",
       setSearchText,
@@ -83,7 +97,7 @@ const Columns = (
       searchText
     ),
     render: (description: string) => (
-      <p className="dk-block dk-min-w-[350px] dk-text-sm dk-font-medium dk-font-Inter">
+      <p className="dk-block dk-min-w-[350px] dk-text-sm dk-font-medium dk-font-Inter dk-line-clamp-3 dk-w-full">
         {description}
       </p>
     ),
@@ -221,7 +235,7 @@ const Columns = (
           Tên kiểu tour:{" "}
           <span className="dk-font-normal">{record.TourType?.Name}</span>
         </span>
-        <div className="dk-font-Roboto dk-font-bold dk-flex dk-gap-2">
+        <div className="dk-font-Roboto dk-font-bold dk-gap-2 dk-line-clamp-3 dk-overflow-hidden">
           Mô tả kiểu tour:
           <div
             className="dk-font-normal"
@@ -350,6 +364,33 @@ const Columns = (
     align: "left",
   },
   {
+    title: "Tình trạng thanh toán",
+    className: "column-money",
+    dataIndex: "TourID",
+    width: "450px",
+    ...GetColumnSearchProps(
+      "TourID",
+      setSearchText,
+      setSearchedColumn,
+      searchInput,
+      searchedColumn,
+      searchText
+    ),
+    render: (tourID: number, record: Tour) => (
+      <div
+        className="dk-max-w-full dk-text-sm dk-font-bold dk-font-Inter dk-line-clamp-5"
+      >
+        {
+          record.Bookings[0].Payments[0] != null ? 
+          <div className="dk-p-1 dk-bg-green-500 dk-rounded-lg dk-w-fit dk-text-[#FFF]">Đã thanh toán</div> : 
+          <div className="dk-p-1 dk-bg-red-500 dk-rounded-lg dk-w-fit dk-text-[#FFF]">Chưa thanh toán</div>
+        }
+      </div>
+    ),
+    editable: true,
+    align: "left",
+  },
+  {
     title: "Cập nhật",
     dataIndex: "operation",
     align: "center",
@@ -357,6 +398,24 @@ const Columns = (
     fixed: "right",
     render: (_: any, record: Tour) => {
       const editable = isEditing(record);
+      const missBooking = record.Bookings.map((ele) => {
+        return ele.BookingID;
+      }).join(", ");
+
+      const titleDelete = () => {
+        return missBooking ? (
+          <div className="dk-flex dk-flex-col dk-gap-2 dk-max-w-[450px]">
+            <span className="dk-font-medium dk-font-Inter dk-text-sm dk-text-[#222]">
+              Việc xóa tour này sẽ bao gồm xóa cả những booking liên quan:
+            </span>
+            <span className="dk-font-semibold dk-font-Inter dk-text-sm dk-text-[#222]">
+              {missBooking} ?
+            </span>
+          </div>
+        ) : (
+          "Sure to delete?"
+        );
+      };
       return (
         <div className="dk-flex dk-gap-3 dk-text-[#1677ff]">
           <EditRecord
@@ -369,7 +428,7 @@ const Columns = (
             Tours={tours}
           />
           <Popconfirm
-            title="Sure to delete?"
+            title={titleDelete}
             onConfirm={async () => {
               const result = await handleDelete(record.TourID, tours, setTour);
               setPopup({

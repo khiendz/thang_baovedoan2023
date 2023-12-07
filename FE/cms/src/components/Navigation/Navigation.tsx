@@ -5,6 +5,7 @@ import type { MenuProps } from "antd";
 import { Menu } from "antd";
 import Link from "next/link";
 import { useAppContext } from "hook/use-app-context";
+import {CaretDownOutlined} from "@ant-design/icons";
 
 const items: MenuProps["items"] = [
   {
@@ -13,87 +14,79 @@ const items: MenuProps["items"] = [
         href="/"
         className="dk-text-sm dk-text-[#222] dk-font-Inter dk-font-bold"
       >
-        Kiểu Tour
+        Quản trị tour
       </Link>
     ),
+    icon: <CaretDownOutlined />,
     key: "home",
-  },
-  {
-    label: (
-      <Link
-        href="/uu-dai"
-        className="dk-text-sm dk-text-[#222] dk-font-Inter dk-font-bold"
-      >
-        Ưu đãi
-      </Link>
-    ),
-    key: "discount",
-  },
-  {
-    label: (
-      <Link
-        href="/tour"
-        className="dk-text-sm dk-text-[#222] dk-font-Inter dk-font-bold"
-      >
-        Tour
-      </Link>
-    ),
-    key: "tour",
-  },
-  {
-    label: (
-      <Link
-        href="/booking"
-        className="dk-text-sm dk-text-[#222] dk-font-Inter dk-font-bold"
-      >
-        Booking
-      </Link>
-    ),
-    key: "booking",
-  },
-  {
-    label: (
-      <Link
-        href="/customers"
-        className="dk-text-sm dk-text-[#222] dk-font-Inter dk-font-bold"
-      >
-        Khách hàng
-      </Link>
-    ),
-    key: "customers",
-  },
-  {
-    label: (
-      <Link
-        href="/payment"
-        className="dk-text-sm dk-text-[#222] dk-font-Inter dk-font-bold"
-      >
-        Thanh toán
-      </Link>
-    ),
-    key: "payment",
-  },
-  {
-    label: (
-      <Link
-        href="/collection-images"
-        className="dk-text-sm dk-text-[#222] dk-font-Inter dk-font-bold"
-      >
-        Bộ sưu tập ảnh
-      </Link>
-    ),
-    key: "collections",
-  },
-  {
-    label: (
-      <Link
-        href="/availability"
-        className="dk-text-sm dk-text-[#222] dk-font-Inter dk-font-bold"
-      >
-        Tình trạng phòng trống
-      </Link>
-    ),
-    key: "availability",
+    children: [
+      {
+        label: (
+          <Link
+            href="/uu-dai"
+            className="dk-text-sm dk-text-[#222] dk-font-Inter dk-font-bold"
+          >
+            Ưu đãi
+          </Link>
+        ),
+        key: "discount",
+      },
+      {
+        label: (
+          <Link
+            href="/tour"
+            className="dk-text-sm dk-text-[#222] dk-font-Inter dk-font-bold"
+          >
+            Tour
+          </Link>
+        ),
+        key: "tour",
+      },
+      {
+        label: (
+          <Link
+            href="/booking"
+            className="dk-text-sm dk-text-[#222] dk-font-Inter dk-font-bold"
+          >
+            Booking
+          </Link>
+        ),
+        key: "booking",
+      },
+      {
+        label: (
+          <Link
+            href="/customers"
+            className="dk-text-sm dk-text-[#222] dk-font-Inter dk-font-bold"
+          >
+            Khách hàng
+          </Link>
+        ),
+        key: "customers",
+      },
+      {
+        label: (
+          <Link
+            href="/payment"
+            className="dk-text-sm dk-text-[#222] dk-font-Inter dk-font-bold"
+          >
+            Thanh toán
+          </Link>
+        ),
+        key: "payment",
+      },
+      {
+        label: (
+          <Link
+            href="/collection-images"
+            className="dk-text-sm dk-text-[#222] dk-font-Inter dk-font-bold"
+          >
+            Bộ sưu tập ảnh
+          </Link>
+        ),
+        key: "collections",
+      },
+    ]
   },
   {
     label: (
@@ -101,10 +94,35 @@ const items: MenuProps["items"] = [
         href="/account"
         className="dk-text-sm dk-text-[#222] dk-font-Inter dk-font-bold"
       >
-        Tài khoản
+        Quản trị tài khoản
       </Link>
     ),
     key: "account",
+    icon: <CaretDownOutlined />,
+    children: [
+      {
+        label: (
+          <Link
+            href="/role-account"
+            className="dk-text-sm dk-text-[#222] dk-font-Inter dk-font-bold"
+          >
+            Role Account
+          </Link>
+        ),
+        key: "role-account",
+      },
+      {
+        label: (
+          <Link
+            href="/user"
+            className="dk-text-sm dk-text-[#222] dk-font-Inter dk-font-bold"
+          >
+            Người dùng
+          </Link>
+        ),
+        key: "user",
+      },
+    ]
   },
   {
     label: (
@@ -112,32 +130,57 @@ const items: MenuProps["items"] = [
         href="/customer-support"
         className="dk-text-sm dk-text-[#222] dk-font-Inter dk-font-bold"
       >
-        Hỗ trợ khách hàng
+        Quản trị khách hàng
       </Link>
     ),
+    icon: <CaretDownOutlined />,
     key: "customer-support",
-  },
-  {
-    label: (
-      <Link
-        href="/customer-type"
-        className="dk-text-sm dk-text-[#222] dk-font-Inter dk-font-bold"
-      >
-        Kiểu khách hàng
-      </Link>
-    ),
-    key: "customer-type",
-  },
-  {
-    label: (
-      <Link
-        href="/feedback"
-        className="dk-text-sm dk-text-[#222] dk-font-Inter dk-font-bold"
-      >
-        Phản hồi
-      </Link>
-    ),
-    key: "feedback",
+    children: [
+      {
+        label: (
+          <Link
+            href="/customer-support"
+            className="dk-text-sm dk-text-[#222] dk-font-Inter dk-font-bold"
+          >
+            Hỗ trợ khách hàng
+          </Link>
+        ),
+        key: "customer-support",
+      },
+      {
+        label: (
+          <Link
+            href="/customer-type"
+            className="dk-text-sm dk-text-[#222] dk-font-Inter dk-font-bold"
+          >
+            Kiểu khách hàng
+          </Link>
+        ),
+        key: "customer-type",
+      },
+      {
+        label: (
+          <Link
+            href="/feedback"
+            className="dk-text-sm dk-text-[#222] dk-font-Inter dk-font-bold"
+          >
+            Phản hồi
+          </Link>
+        ),
+        key: "feedback",
+      },
+      {
+        label: (
+          <Link
+            href="/support-type"
+            className="dk-text-sm dk-text-[#222] dk-font-Inter dk-font-bold"
+          >
+            Kiểu hỗ trợ
+          </Link>
+        ),
+        key: "support-type",
+      },
+    ]
   },
   {
     label: (
@@ -153,17 +196,6 @@ const items: MenuProps["items"] = [
   {
     label: (
       <Link
-        href="/role-account"
-        className="dk-text-sm dk-text-[#222] dk-font-Inter dk-font-bold"
-      >
-        Role Account
-      </Link>
-    ),
-    key: "role-account",
-  },
-  {
-    label: (
-      <Link
         href="/room-type"
         className="dk-text-sm dk-text-[#222] dk-font-Inter dk-font-bold"
       >
@@ -171,29 +203,7 @@ const items: MenuProps["items"] = [
       </Link>
     ),
     key: "room-type",
-  },
-  {
-    label: (
-      <Link
-        href="/support-type"
-        className="dk-text-sm dk-text-[#222] dk-font-Inter dk-font-bold"
-      >
-        Kiểu hỗ trợ
-      </Link>
-    ),
-    key: "support-type",
-  },
-  {
-    label: (
-      <Link
-        href="/user"
-        className="dk-text-sm dk-text-[#222] dk-font-Inter dk-font-bold"
-      >
-        Người dùng
-      </Link>
-    ),
-    key: "user",
-  },
+  }, 
 ];
 
 const Navigation: React.FC = () => {

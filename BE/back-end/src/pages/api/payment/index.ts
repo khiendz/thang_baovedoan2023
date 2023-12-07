@@ -95,7 +95,8 @@ const AddPayment = async (payment: Payment) => {
             data: {
                BookingID: payment.BookingID,
                PaymentDate: payment.PaymentDate,
-               Amount: payment.Amount
+               Amount: payment.Amount,
+               OrderCode: payment.OrderCode
             },
             include: {
                 Booking: {
@@ -132,7 +133,8 @@ const UpdatePayment = async (payment: Payment) => {
             data: {
                 BookingID: payment.BookingID,
                 PaymentDate: payment.PaymentDate,
-                Amount: payment.Amount
+                Amount: payment.Amount,
+                OrderCode: payment.OrderCode
             },
             include: {
                 Booking: {

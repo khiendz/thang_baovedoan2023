@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { Booking, PrismaClient, Promotion, Tour } from '@prisma/client';
+import { Booking, PrismaClient } from '@prisma/client';
 import { apiHandler } from 'helpers/api';
 
 const prisma = new PrismaClient();
@@ -93,6 +93,9 @@ const AddBooking = async (booking: Booking) => {
                 CustomerID: booking?.CustomerID,
                 TourID: booking.TourID,
             },
+            include: {
+                Customer: true
+            }
         });
 
         if (bookingResult) {
@@ -129,6 +132,9 @@ const UpdateBooking = async (booking: Booking) => {
                 BookingDate: booking.BookingDate,
                 CustomerID: booking?.CustomerID,
                 TourID: booking.TourID,
+            },
+            include: {
+                Customer: true
             }
         });
 

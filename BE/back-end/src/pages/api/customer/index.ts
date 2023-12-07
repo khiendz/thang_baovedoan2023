@@ -90,9 +90,9 @@ const AddCustomer = async (customer: Customer) => {
 
         if (existingCustomer) {
             return {
-                data: null,
+                data: existingCustomer,
                 message: "Đã tồn tại khách hàng trùng email",
-                status: "400",
+                status: "200",
             };
         }
 
@@ -106,7 +106,7 @@ const AddCustomer = async (customer: Customer) => {
             return {
                 data: null,
                 message: "Đã tồn tại khách hàng trùng số điện thoại",
-                status: "400",
+                status: "200",
             };
         }
 
@@ -151,7 +151,7 @@ const UpdateCustomer = async (customer: Customer) => {
             return {
                 data: null,
                 message: "Đã tồn tại khách hàng trùng email",
-                status: "400",
+                status: "200",
             };
         }
 
@@ -163,9 +163,9 @@ const UpdateCustomer = async (customer: Customer) => {
 
         if (existingCustomer && existingCustomer.CustomerID !== customer.CustomerID) {
             return {
-                data: null,
+                data: existingCustomer,
                 message: "Đã tồn tại khách hàng trùng số điện thoại",
-                status: "400",
+                status: "200",
             };
         }
 

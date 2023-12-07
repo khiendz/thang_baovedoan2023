@@ -1,5 +1,3 @@
-import React from 'react';
-import axios from 'axios';
 import { Tour } from 'Models';
 import { fetchWrapper } from 'helpers';
 
@@ -55,7 +53,7 @@ export async function UpdateTour(tour: Tour) {
 
 export async function AddTour(tour: Tour) {
     try {
-        const res: any = await axios.post(`${domainBE}/api/tour`,tour);
+        const res: any = await fetchWrapper.post(`${domainBE}/api/tour`,tour);
 
         if (res.status === 200) {
             return res.data;
@@ -69,7 +67,7 @@ export async function AddTour(tour: Tour) {
 
 export async function DeleteTourById(tourId: number) {
     try {
-        const res: any = await axios.delete(`${domainBE}/api/tour?tourTypeId=${tourId}`);
+        const res: any = await fetchWrapper.delete(`${domainBE}/api/tour?tourId=${tourId}`);
 
         if (res.status === 200) {
             return res.data;

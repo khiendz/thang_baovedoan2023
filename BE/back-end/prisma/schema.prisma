@@ -102,6 +102,7 @@ model Payment {
   BookingID   Int
   PaymentDate DateTime
   Amount      Float
+  OrderCode   String   @unique
   Booking     Booking  @relation(fields: [BookingID], references: [BookingID])
 }
 

@@ -5,5 +5,6 @@ export class Payment {
   BookingID: number;
   PaymentDate: Date;
   Amount: number;
+  OrderCode: string;
   Booking: Booking;
 }

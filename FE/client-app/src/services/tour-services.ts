@@ -69,7 +69,7 @@ export async function AddTour(tour: Tour) {
 
 export async function DeleteTourById(tourId: number) {
     try {
-        const res: any = await fetchWrapper.delete(`${domainBE}/api/tour?tourTypeId=${tourId}`);
+        const res: any = await fetchWrapper.delete(`${domainBE}/api/tour?tourId=${tourId}`);
 
         if (res.status === 200) {
             return res.data;
