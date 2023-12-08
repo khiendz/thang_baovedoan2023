@@ -33,13 +33,22 @@ const GetPaymentByPhone = async (phoneNumber: string) => {
                 Booking: {
                     Customer: {
                         Phone: phoneNumber
-                    }
+                    },
                 }
             }, 
             include: {
                 Booking: {
                     include: {
-                        Customer: true
+                        Customer: true,
+                        Tour: {
+                            include: {
+                                RoomType: {
+                                    include: {
+                                        Hotel: true
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }

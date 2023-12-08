@@ -23,6 +23,18 @@ const items: MenuProps["items"] = [
       {
         label: (
           <Link
+            href="/"
+            className="dk-text-sm dk-text-[#222] dk-font-Inter dk-font-bold"
+          >
+            Kiểu tour
+          </Link>
+        ),
+        icon: <CaretDownOutlined />,
+        key: "home",
+      },
+      {
+        label: (
+          <Link
             href="/uu-dai"
             className="dk-text-sm dk-text-[#222] dk-font-Inter dk-font-bold"
           >

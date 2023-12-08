@@ -6,15 +6,12 @@ import "./style.scss";
 
 const { Meta } = Card;
 
-type Props = {
-  data: TourType;
-};
-
-const TourCard: React.FC<Props> = (props: Props) => {
+const TourCard: React.FC<any> = (props: any) => {
+  const {className} = props;
   const data = props.data;
   return props.data ? (
-    <a href={`/tour-detail/${data?.TourTypeId}`} className="hover:dk-cursor-pointer hover:dk-scale-[1.2]
-     hover:dk-transition-[transform_0.3s_ease] dk-shadow-xl dk-h-fit dk-h-[465px]">
+    <a href={`/tour-detail/${data?.TourTypeId}`} className={`hover:dk-cursor-pointer hover:dk-scale-[1.2]
+     hover:dk-transition-[transform_0.3s_ease] dk-shadow-xl dk-min-h-fit dk-h-[465px] ${className ? className : ""}`}>
       <Card
         style={{ width: 300 }}
         className="dk-min-h-[400px]"

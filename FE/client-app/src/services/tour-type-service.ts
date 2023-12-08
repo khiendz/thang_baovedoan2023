@@ -41,3 +41,15 @@ export async function getTourByRegion (region: number = typeRegion.local) {
     }
 }
 
+export async function getTopTourType (id: number = 0) {
+    try {
+        const res: any = await fetchWrapper.get(`${domainBE}/api/tour-type/top/${id}`);
+        if (res.status == 200) 
+            return res.data;
+    } catch {
+        return null;
+    }
+}
+
+
+

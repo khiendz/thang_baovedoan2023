@@ -10,13 +10,15 @@ import {
 } from "@ant-design/icons";
 import { TourType } from "Models";
 import TourCard from "components/TourCard/indext";
-import { JoinFileCDN, getTourByRegion, typeRegion } from "services";
+import { JoinFileCDN, getAllTouType, getTopTourType, getTourByRegion, typeRegion } from "services";
 import { removeAccents } from "utils/charactor-util";
 
 export default function Home() {
   const [tourTypesList, setTourTypeList] = useState<TourType[]>([]);
+  const [tourTypeGlobal, setTourTypeGlobal] = useState<TourType[]>([]);
   const [searchInput, setSearchInput] = useState<string>("");
   const [timeoutId,setTimeoutId] = useState<string>("");
+  const [topTourType,setTopTour] = useState<TourType[]>([]);
   const timeoutIdRef = useRef(timeoutId);
   timeoutIdRef.current = timeoutId;
   const [searchingData,setSeachingData] = useState<TourType[]>([]);
@@ -26,13 +28,21 @@ export default function Home() {
   useEffect(() => {
     const initData = async () => {
       try {
-        const rest = await getTourByRegion(typeRegion.global);
+        const rest = await getAllTouType();
         if (rest) {
-          const data: TourType[] = rest;
+          const data: TourType[] = rest.data;
           setTourTypeList(data);
         }
+        const restGlobal = await getTopTourType(1);
+        if (rest) {
+          const data: TourType[] = restGlobal;
+          setTourTypeGlobal(data);
+        }
+        const restTopTourType = await getTopTourType(0);
+        if (restTopTourType) {
+          setTopTour(restTopTourType);
+        }
       } catch (e) {
-        // Xử lý lỗi nếu cần
       }
     };
 
@@ -90,8 +100,9 @@ export default function Home() {
         <h2 className="dk-font-medium dk-text-xs dk-text-[#FFF]">
           Combo khách sạn - vé máy bay - đưa đón sân bay giá tốt nhất
         </h2>
-        <div className="search-form dk-flex dk-flex-col dk-h-fit dk-min-h-[220px] dk-w-fit dk-min-w-[760px] dk-p-4 dk-rounded dk-shadow-sm dk-mt-4 content-miss content-miss-v2 dk-gap-5 dk-relative dk-z-20">
-          <div className="field dk-relative">
+        <div className="search-form dk-flex dk-h-fit dk-min-h-[220px] dk-w-[750px] dk-p-4 
+        dk-rounded dk-shadow-sm dk-mt-4 content-miss content-miss-v2 dk-gap-5 dk-relative dk-z-20 dk-justify-between">
+          <div className="field dk-relative dk-w-[750px]">
             <QuestionCircleOutlined className="dk-absolute dk-left-2 dk-top-4 dk-z-[3] dk-text-[#222]" />
             <input
               className="field dk-outline-none dk-text-sm dk-relative dk-z-[2] dk-text-[#222] dk-bg-[#FFF] dk-px-8 dk-appearance-none dk-rounded dk-h-12 dk-w-full dk-border-[2px] dk-border-amber-600 dk-border-dashed"
@@ -104,10 +115,10 @@ export default function Home() {
                 <ul className="dk-flex dk-flex-col dk-z-20 dk-relative dk-text-[#222] dk-text-sm dk-font-bold dk-max-h-full dk-overflow-hidden">
                   {
                     searchingData?.map((ele,index) => (
-                      <li key={index} className="dk-h-100% dk-p-4 hover:dk-bg-blue-100">
+                      <li key={index} className="dk-h-100% dk-p-4 hover:dk-bg-blue-100 dk-border-b-[2px] dk-border-b-[#222]">
                         <a href={`/tour-detail/${ele.TourTypeId}`} className="dk-flex dk-justify-between dk-gap-8">
-                          <div className="dk-line-clamp-5">
-                            <p>{ele.Name}</p>
+                          <div className="dk-line-clamp-7">
+                            <p className="dk-font-Roboto dk-font-bold dk-text-lg">{ele.Name}</p>
                             <div dangerouslySetInnerHTML={{ __html: ele.Description ? ele.Description: "" }}></div>
                             </div>
                            <img src={JoinFileCDN(ele.Img || "")} className="dk-w-[150px] dk-h-[100px]"/>
@@ -119,72 +130,6 @@ export default function Home() {
               </div> : 
               null
             }
-          </div>
-          <div className="select dk-flex dk-flex-row dk-gap-4 dk-relative dk-z-10">
-            <div className="select-date dk-flex dk-gap-4">
-              <div className="dk-flex dk-flex-col dk-whitespace-nowrap dk-flex-nowrap dk-items-center dk-gap-2 dk-relative dk-z-10">
-                <label
-                  htmlFor={"dateFromTo"}
-                  className="dk-text-[#fff] dk-font-medium dk-text-sm dk-text-center dk-w-full dk-flex dk-justify-start dk-relative dk-z-10"
-                >
-                  Ngày khởi hành
-                </label>
-                <input
-                  type="date"
-                  name="dateFromTo"
-                  className="dk-outline-none dk-text-sm dk-relative dk-z-[2] dk-text-[#222] dk-bg-[#FFF] dk-px-8 dk-appearance-none dk-rounded dk-h-12 dk-w-full dk-border-[2px] dk-border-amber-600 dk-border-dashed dk-max-w-[200px]"
-                />
-              </div>
-              <div className="dk-flex dk-flex-col dk-whitespace-nowrap dk-flex-nowrap dk-items-center dk-gap-2">
-                <label
-                  htmlFor={"dateFromTo"}
-                  className="dk-text-[#fff] dk-font-medium dk-text-sm dk-text-center dk-w-full dk-flex dk-justify-start dk-relative dk-z-10"
-                >
-                  Ngày kết thúc
-                </label>
-                <input
-                  type="date"
-                  name="dateFromTo"
-                  className="dk-outline-none dk-text-sm dk-relative dk-z-[2] dk-text-[#222] dk-bg-[#FFF] dk-px-8 dk-appearance-none dk-rounded dk-h-12 dk-w-full dk-border-[2px] dk-border-amber-600 dk-border-dashed dk-max-w-[200px]"
-                />
-              </div>
-            </div>
-            <div className="description select-date dk-flex dk-gap-4 dk-relative dk-z-10">
-              <div className="dk-flex dk-flex-col dk-whitespace-nowrap dk-flex-nowrap dk-items-center dk-gap-2">
-                <label
-                  htmlFor={"oldPeople"}
-                  className="dk-text-[#fff] dk-font-medium dk-text-sm dk-text-center dk-w-full dk-flex dk-justify-start"
-                >
-                  Số người lớn
-                </label>
-                <input
-                  type="number"
-                  name="oldPeople"
-                  placeholder="Nhập số lượng"
-                  className="dk-outline-none dk-text-sm dk-relative dk-z-[2] dk-text-[#222] dk-bg-[#FFF] dk-px-4 dk-appearance-none dk-rounded dk-h-12 dk-w-full dk-border-[2px] dk-border-amber-600 dk-border-dashed dk-max-w-[150px]"
-                />
-              </div>
-              <div className="dk-flex dk-flex-col dk-whitespace-nowrap dk-flex-nowrap dk-items-center dk-gap-2 dk-relative dk-z-10">
-                <label
-                  htmlFor={"youngPeople"}
-                  className="dk-text-[#fff] dk-font-medium dk-text-sm dk-text-center dk-w-full dk-flex dk-justify-start"
-                >
-                  Số trẻ em
-                </label>
-                <input
-                  type="number"
-                  name="youngPeople"
-                  placeholder="Nhập số lượng"
-                  className="dk-outline-none dk-text-sm dk-relative dk-z-[2] dk-text-[#222] dk-bg-[#FFF] dk-px-4 dk-appearance-none dk-rounded dk-h-12 dk-w-full dk-border-[2px] dk-border-amber-600 dk-border-dashed dk-max-w-[150px]"
-                />
-              </div>
-            </div>
-          </div>
-          <div className="dk-w-full dk-flex dk-items-center dk-justify-center dk-relative dk-z-10">
-            <button className="dk-p-4 dk-flex dk-gap-4 dk-bg-[#F79321] dk-text-sm dk-font-bold dk-font-Roboto dk-rounded dk-text-[#FFf]">
-              <SecurityScanOutlined />
-              <span>Tìm kiếm</span>
-            </button>
           </div>
         </div>
         <div className="search-form dk-flex dk-flex-col dk-h-fit dk-min-h-[220px] dk-w-fit dk-min-w-[760px] dk-p-4 dk-rounded dk-shadow-sm dk-mt-4 content-miss content-miss-v2 dk-gap-5 dk-relative dk-z-10">
@@ -218,16 +163,33 @@ export default function Home() {
       </div>
       <div className="dk-text-[#222] content-container content-miss content-base dk-font-Roboto dk-gap-2 dk-relative dk-z-10 dk-mb-5 dk-flex dk-flex-col">
         <h2 className="dk-text-[#222] dk-font-semibold dk-text-lg">
-          Tours du lịch nổi bật
+          Tours du lịch nổi bật trong nước
         </h2>
         <p className="dk-text-[#888] dk-font-semibold dk-text-sm">
           Trải nghiệm du lịch đặc biệt
         </p>
         <div className="card-listing dk-flex dk-flex-wrap dk-gap-5 dk-justify-center dk-mt-5">
-          {tourTypesList ? (
+          {topTourType ? (
             <div className="card-listing dk-flex dk-flex-wrap dk-gap-12 dk-justify-center dk-mt-8 dk-relative">
-              {tourTypesList?.map((ele, index) => (
-                <TourCard key={index} data={ele} />
+              {topTourType?.map((ele, index) => (
+                <TourCard key={index} data={ele} className="blinking"/>
+              ))}
+            </div>
+          ) : null}
+        </div>
+      </div>
+      <div className="dk-text-[#222] content-container content-miss content-base dk-font-Roboto dk-gap-2 dk-relative dk-z-10 dk-mb-5 dk-flex dk-flex-col">
+        <h2 className="dk-text-[#222] dk-font-semibold dk-text-lg">
+          Tours du lịch nổi bật ngoài nước
+        </h2>
+        <p className="dk-text-[#888] dk-font-semibold dk-text-sm">
+          Trải nghiệm du lịch đặc biệt
+        </p>
+        <div className="card-listing dk-flex dk-flex-wrap dk-gap-5 dk-justify-center dk-mt-5">
+          {tourTypeGlobal ? (
+            <div className="card-listing dk-flex dk-flex-wrap dk-gap-12 dk-justify-center dk-mt-8 dk-relative">
+              {tourTypeGlobal?.map((ele, index) => (
+                <TourCard key={index} data={ele} className="blinking"/>
               ))}
             </div>
           ) : null}
