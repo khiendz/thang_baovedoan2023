@@ -26,7 +26,7 @@ export default function AcceptOrder(props: any) {
     paymentOrder.returnUrl = window.location.href;
     paymentOrder.description = `${removeAccents(customer.LastName)} payment`;
     const orderCode = generateUID();
-    paymentOrder.orderCode = parseFloat(orderCode);
+    paymentOrder.orderCode = orderCode;
     const addPaymentResult = await handleAddPayment(orderCode,tour);
     if (addPaymentResult && addPaymentResult.status == 200) {
       const result = await sendOrder(paymentOrder);
@@ -36,12 +36,12 @@ export default function AcceptOrder(props: any) {
     }
   }
 
-  const handleAddPayment = async (orderCode: string, tour: Tour) => {
+  const handleAddPayment = async (orderCode: number, tour: Tour) => {
     const payment = new Payment();
     payment.Amount = tour.PriceTotal;
     payment.BookingID = tour?.Bookings[0]?.BookingID;
     payment.PaymentDate = new Date();
-    payment.OrderCode = orderCode;
+    payment.OrderCode = orderCode.toString();
     const addPaymentResult = await AddPayment(payment);
     return addPaymentResult;
   }

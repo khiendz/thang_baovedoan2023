@@ -215,7 +215,7 @@ const DeleteBorrowedBook = async (tourTypeId: number) => {
     }
 }
 
-export default apiHandler(handler);
+export default apiHandler(handler,["GET","PUT"]);
 
 export const config = {
     api: {

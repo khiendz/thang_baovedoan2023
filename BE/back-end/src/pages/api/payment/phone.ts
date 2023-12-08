@@ -68,4 +68,4 @@ const GetPaymentByPhone = async (phoneNumber: string) => {
     }
 }
 
-export default apiHandler(handler);
+export default apiHandler(handler,["GET"]);

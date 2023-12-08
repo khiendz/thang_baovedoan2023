@@ -157,4 +157,4 @@ const DeleteAvailability = async (availabilityId: number) => {
     }
 }
 
-export default apiHandler(handler);
+export default apiHandler(handler,["GET"]);

@@ -155,4 +155,4 @@ const DeleteRoleAccountById = async (roleAccountId: number) => {
     }
 }
 
-export default apiHandler(handler);
+export default apiHandler(handler,["GET"]);

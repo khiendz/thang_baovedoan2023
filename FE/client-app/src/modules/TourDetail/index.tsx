@@ -16,7 +16,7 @@ import format from "date-fns/format";
 import { useAppContext } from "hook/use-app-context";
 import { getAllHotel } from "services/hotel-service";
 import { getAllRoomType } from "services/room-type-service";
-import { UserOutlined, StarOutlined } from "@ant-design/icons";
+import { UserOutlined } from "@ant-design/icons";
 import { initTour } from "./service";
 import { SelectHotel } from "./components/SelectHotel";
 import { SelectRoom } from "./components/SelectRoom";
@@ -107,7 +107,6 @@ export default function TourDetail() {
   };
 
   const initHotels = async () => {
-    if (id === null || id === undefined) return;
     try {
       const rest = await getAllHotel();
       if (rest) {
@@ -117,7 +116,6 @@ export default function TourDetail() {
   };
 
   const initRoomTypes = async () => {
-    if (id === null || id === undefined) return;
     try {
       const rest = await getAllRoomType();
       if (rest) {

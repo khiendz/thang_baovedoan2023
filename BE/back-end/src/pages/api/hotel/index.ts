@@ -196,4 +196,4 @@ const DeleteHotel = async (hotelId: number) => {
     }
 }
 
-export default apiHandler(handler);
+export default apiHandler(handler,["GET"]);

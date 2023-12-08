@@ -88,7 +88,6 @@ const FormLogin: React.FC<any> = (props: any) => {
           </Form.Item>
         </Form>
       </Modal>
-      <Notification />
     </>
   );
 };

@@ -155,4 +155,4 @@ const DeleteCustomerType = async (customerTypeId: number) => {
     }
 }
 
-export default apiHandler(handler);
+export default apiHandler(handler,["GET"]);

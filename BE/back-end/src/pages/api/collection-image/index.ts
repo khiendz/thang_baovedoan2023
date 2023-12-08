@@ -181,4 +181,4 @@ const DeleteCollection = async (collectionId: number) => {
     }
 }
 
-export default apiHandler(handler);
+export default apiHandler(handler,["GET"]);

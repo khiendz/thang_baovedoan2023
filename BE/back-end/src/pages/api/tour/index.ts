@@ -276,7 +276,7 @@ const DeleteTour = async (tourId: number) => {
     }
 }
 
-export default apiHandler(handler);
+export default apiHandler(handler,["GET","POST",]);
 
 export const config = {
     api: {

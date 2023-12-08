@@ -48,4 +48,4 @@ const DeletePaymentByOrderCode = async (paymentId: string) => {
     }
 }
 
-export default apiHandler(handler);
+export default apiHandler(handler,["GET","DELETE"]);
