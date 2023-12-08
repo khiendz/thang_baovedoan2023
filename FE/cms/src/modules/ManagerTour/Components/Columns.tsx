@@ -399,7 +399,7 @@ const Columns = (
     render: (_: any, record: Tour) => {
       const editable = isEditing(record);
       const missBooking = record.Bookings.map((ele) => {
-        return ele.BookingID;
+        return (`Mã Booking: ${ele.BookingID}- Tên người booking: ${ele.Customer.LastName}- Số điện thoại: ${ele.Customer.Phone}`);
       }).join(", ");
 
       const titleDelete = () => {
