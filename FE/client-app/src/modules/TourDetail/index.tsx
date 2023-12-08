@@ -6,7 +6,7 @@ import {
   AddTour,
 } from "services";
 import { Promotion, Tour, TourType } from "Models";
-import { CollectionImage } from "Models/CollectionImage";
+import { CollectImg } from "Models/CollectionImage";
 import { calRankRating, checkStateRating, stateRating } from "utils";
 import { QuestionCircleOutlined } from "@ant-design/icons";
 import { InputNumber } from "antd";
@@ -83,9 +83,9 @@ export default function TourDetail() {
       const rest = await getTourTypeById(idParam);
       if (rest) {
         let data: TourType = rest;
-        const collectImage: CollectionImage[] =
+        const collectImage: CollectImg[] =
           (await initCollectionImage()) || [];
-        data.CollectionImamge = collectImage;
+        data.CollectImg = collectImage;
         setTourType(data);
         const pointRating = calRankRating([data?.RateTourType || 0]);
         const rating = checkStateRating(pointRating);
@@ -100,7 +100,7 @@ export default function TourDetail() {
       const idParam = parseInt(idTour.toString());
       const rest = await getCollectionImageByTourTypeId(idParam);
       if (rest) {
-        const data: CollectionImage[] = rest;
+        const data: CollectImg[] = rest;
         return data;
       }
     } catch (e) {}
@@ -183,9 +183,9 @@ export default function TourDetail() {
           </span>
         </div>
         <div className="dk-flex dk-justify-between">
-          {tourTypes.CollectionImamge ? (
+          {tourTypes.CollectImg && tourTypes.CollectImg.length > 0 ? (
             <div className="card-listing dk-flex dk-flex-wrap dk-gap-12 dk-justify-center dk-mt-8 dk-relative dk-max-w-full">
-              <Slides data={tourTypes.CollectionImamge || []} />
+              <Slides data={tourTypes?.CollectImg || []} />
             </div>
           ) : null}
           <div className="dk-bg-white dk-rounded-lg dk-p-4 dk-w-full dk-mt-8 dk-flex dk-gap-2 dk-flex-col dk-border-l-8 dk-border-l-blue-800">

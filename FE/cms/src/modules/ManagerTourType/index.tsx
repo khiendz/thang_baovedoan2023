@@ -61,13 +61,19 @@ const ManagerTourType = () => {
         });
         setTourTypes(newData);
         setEditingKey("");
+        initData();
+        initPromotion();
       } else {
         newData.push(row);
         setTourTypes(newData);
         setEditingKey("");
+        initData();
+        initPromotion();
       }
     } catch (errInfo) {
       console.log("Validate Failed:", errInfo);
+      initData();
+      initPromotion();
     }
   };
 

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Carousel } from 'antd';
-import { CollectionImage } from 'Models/CollectionImage';
+import { CollectImg } from 'Models/CollectionImage';
 import "./styles.scss";
 import { JoinFileCDN } from 'services';
 
@@ -15,7 +15,7 @@ const contentStyle: React.CSSProperties = {
 };
 
 type Props = {
-  data: CollectionImage[];
+  data: CollectImg[];
 };
 
 const Slides: React.FC<Props> = (props: Props) => {
@@ -28,7 +28,7 @@ const Slides: React.FC<Props> = (props: Props) => {
       {
         props.data.map((e,index) => (
           <div key={index}>
-            <img className='dk-w-[95%] dk-aspect-[3/2] dk-rounded-3xl dk-p-2 dk-bg-white' src={JoinFileCDN(e.Src)}/>
+            <img className='dk-w-[95%] dk-aspect-[3/2] dk-rounded-3' src={JoinFileCDN(e.Src)}/>
           </div>
         ))
       }

@@ -12,6 +12,7 @@ import { TourType } from "Models";
 import TourCard from "components/TourCard/indext";
 import { JoinFileCDN, getAllTouType, getTopTourType, getTourByRegion, typeRegion } from "services";
 import { removeAccents } from "utils/charactor-util";
+import Slides from "modules/Slides";
 
 export default function Home() {
   const [tourTypesList, setTourTypeList] = useState<TourType[]>([]);
@@ -48,11 +49,6 @@ export default function Home() {
 
     initData();
   }, []); 
-
-  useEffect(() => {
-   if (tourTypesList) {
-   }
-  }, [tourTypesList]);
 
   useEffect(() => {
       clearTimeout(timeoutIdRef.current);
@@ -149,7 +145,7 @@ export default function Home() {
         <div className="contact dk-flex dk-justify-between dk-text-sm dk-relative dk-z-10">
           <div className="contact-items dk-bg-white dk-text-lg dk-rounded-lg dk-p-4 dk-text-[#222] dk-font-Inter dk-font-semibold dk-flex dk-flex-nowrap dk-gap-5">
             <PhoneOutlined />
-            <p>Hỗ trợ chuyên viên</p>
+            <p>Hỗ trợ chuyên viên - hotline: 0382033515</p>
           </div>
           <div className="contact-items dk-bg-white dk-text-lg dk-rounded-lg dk-p-4 dk-text-[#222] dk-font-Inter dk-font-semibold dk-flex dk-flex-nowrap dk-gap-5">
             <GlobalOutlined />

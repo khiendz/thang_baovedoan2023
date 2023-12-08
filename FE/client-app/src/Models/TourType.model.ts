@@ -1,4 +1,4 @@
-import { CollectionImage } from "./CollectionImage";
+import { CollectImg } from "./CollectionImage";
 import { Promotion } from "./Promotion.model";
 import { Tour } from "./Tour.model";
 
@@ -11,7 +11,7 @@ export class TourType {
     PromotionId: number;
     Img: string | null;
     RateTourType: number | null;
-    CollectionImamge: CollectionImage[];
+    CollectImg: CollectImg[];
     IsLocal: number;
     StartDate: Date;
     EndDate: Date;

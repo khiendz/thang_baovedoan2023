@@ -58,7 +58,13 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
 const GetToursTypes = async () => {
     try {
-        const tour = await prisma.tourType.findMany();
+        const tour = await prisma.tourType.findMany({
+            include: {
+                CollectImg: true,
+                Promotion: true,
+                Tours: true
+            }
+        });
 
         if (tour) {
             return {

@@ -14,7 +14,7 @@ export default function LocalTour() {
         const rest = await getTourByRegion(typeRegion.local);
         if (rest) {
           const data: TourType[] = rest;
-          setTourTypeList(data);
+          setTourTypeList(data.reverse());
         }
       } catch (e) {
         // Xử lý lỗi nếu cần
