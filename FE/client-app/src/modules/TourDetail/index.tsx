@@ -58,17 +58,20 @@ export default function TourDetail() {
     if (!status) return;
     checkPaymentById(id?.toString() || "");
   }, [status]);
-  
+
   const checkPaymentById = async (id: string) => {
-      const checkPaymentResult = await checkPayment(id);
-      const {orderCode,status} = checkPaymentResult?.data?.data;
-      if (orderCode && status && status == "CANCELLED") {
-        handlePopup(false, "Thanh toán không thành công");
-        const result = await DeletePaymentByOrderCode(orderCode);
-        return
-      }
-      handlePopup(true, "Thanh toán thành công, nhân viên sẽ sớm liên hệ với bạn trong ít phút");
-  }
+    const checkPaymentResult = await checkPayment(id);
+    const { orderCode, status } = checkPaymentResult?.data?.data;
+    if (orderCode && status && status == "CANCELLED") {
+      handlePopup(false, "Thanh toán không thành công");
+      const result = await DeletePaymentByOrderCode(orderCode);
+      return;
+    }
+    handlePopup(
+      true,
+      "Thanh toán thành công, nhân viên sẽ sớm liên hệ với bạn trong ít phút"
+    );
+  };
 
   const initData = () => {
     initTourType();
@@ -83,8 +86,7 @@ export default function TourDetail() {
       const rest = await getTourTypeById(idParam);
       if (rest) {
         let data: TourType = rest;
-        const collectImage: CollectImg[] =
-          (await initCollectionImage()) || [];
+        const collectImage: CollectImg[] = (await initCollectionImage()) || [];
         data.CollectImg = collectImage;
         setTourType(data);
         const pointRating = calRankRating([data?.RateTourType || 0]);
@@ -143,7 +145,7 @@ export default function TourDetail() {
       const result = await AddTour(tour);
 
       if (!result) {
-        handlePopup(false,"Vui lòng kiểm tra lại thông tin");
+        handlePopup(false, "Vui lòng kiểm tra lại thông tin");
         return result;
       }
 
@@ -155,7 +157,7 @@ export default function TourDetail() {
 
       return result;
     } catch (e) {
-      handlePopup(false,"Vui lòng kiểm tra lại thông tin");
+      handlePopup(false, "Vui lòng kiểm tra lại thông tin");
       setOrrderAccept(false);
     }
   };
@@ -242,18 +244,44 @@ export default function TourDetail() {
             </div>
             <SelectHotel />
             {tour?.HotelId && tour.HotelId != 0 ? <SelectRoom /> : null}
+            {tourType?.Promotion?.length > 0 &&
+            tourType?.Promotion[0]?.Description ? (
+              <div className="dk-flex dk-gap-2">
+                <div className="dk-text-sm dk-font-Inter dk-font-medium">
+                  <div
+                    className="schedule dk-flex dk-flex-col dk-gap-4 dk-bg-white dk-p-4 dk-rounded-lg"
+                    dangerouslySetInnerHTML={{
+                      __html: tourType?.Promotion[0].Description
+                        ? tourType?.Promotion[0].Description
+                        : "",
+                    }}
+                  ></div>
+                </div>
+              </div>
+            ) : null}
+            {tourType && tourType.Promotion?.length > 0 && tourType?.Promotion[0]?.Discount &&
+            tour.TotalElder > 0 ? (
+              <span className="dk-p-1 dk-w-fit dk-bg-red-600 dk-rounded-md dk-text-[#FFF]">
+                Đã áp dụng giảm giá vào tổng hóa đơn
+              </span>
+            ) : null}
             <div className="dk-flex dk-gap-2">
               <QuestionCircleOutlined />
               <p className="dk-text-sm dk-font-Inter dk-font-medium">
                 Liên hệ xác nhận đặt chỗ
               </p>
             </div>
-            <div className="total-price">
+            <div className="total-price dk-flex dk-flex-col dk-gap-2">
               <span className="dk-text-xl dk-font-Roboto dk-font-medium dk-text-black">
                 Tổng giá:{" "}
                 {(
-                  (tour?.TotalChd * (tourTypes?.PriceChildren || 0) +
-                  tour?.TotalElder * (tourTypes?.PriceElder || 0))
+                  tour?.TotalChd * (tourTypes?.PriceChildren || 0) +
+                  tour?.TotalElder * (tourTypes?.PriceElder || 0) -
+                  ((tour?.TotalChd * (tourTypes?.PriceChildren || 0) +
+                    tour?.TotalElder * (tourTypes?.PriceElder || 0)) /
+                    100) *
+                    (tourType && tourType.Promotion?.length > 0 && tourType?.Promotion[0]?.Discount ? 
+                      ((tourType as TourType)?.Promotion[0]?.Discount || 1) : 1)
                 ).toLocaleString("vi-VN")}{" "}
                 VND
               </span>

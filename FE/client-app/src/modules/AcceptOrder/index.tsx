@@ -87,8 +87,12 @@ export default function AcceptOrder(props: any) {
       ...tourParam,
       Description: values.different,
       PriceTotal:
-        tourParam.TotalElder * (tourType.PriceElder || 1) +
-        tourParam.TotalChd * (tourType.PriceChildren || 1),
+      tourParam?.TotalChd * (tourType?.PriceChildren || 0) +
+      tourParam?.TotalElder * (tourType?.PriceElder || 0) -
+      ((tourParam?.TotalChd * (tourType?.PriceChildren || 0) +
+      tourParam?.TotalElder * (tourType?.PriceElder || 0)) /
+        100) *
+        (tourType?.Promotion[0]?.Discount || 1),
       TotalMember: tourParam.TotalElder + tourParam.TotalChd,
     };
     setTour(tourParam);
@@ -112,8 +116,12 @@ export default function AcceptOrder(props: any) {
           ...tourParam,
           Description: values.different,
           PriceTotal:
-            tourParam.TotalElder * (tourType.PriceElder || 1) +
-            tourParam.TotalChd * (tourType.PriceChildren || 1),
+          tourParam?.TotalChd * (tourType?.PriceChildren || 0) +
+          tourParam?.TotalElder * (tourType?.PriceElder || 0) -
+          ((tourParam?.TotalChd * (tourType?.PriceChildren || 0) +
+          tourParam?.TotalElder * (tourType?.PriceElder || 0)) /
+            100) *
+            (tourType?.Promotion[0]?.Discount || 1),
           TotalMember: tourParam.TotalElder + tourParam.TotalChd,
           Bookings: [result]
         };
