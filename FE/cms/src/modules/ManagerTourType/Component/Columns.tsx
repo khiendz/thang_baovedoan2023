@@ -235,21 +235,18 @@ const Columns = (
     width: "250px",
     fixed: "right",
     render: (_: any, record: TourType) => {
-      const missPromotion = promotions
-        .filter((ob: Promotion) => {
-          if (ob.TourTypeId == record.TourTypeId) return ob;
-        })
+      const missPromotion = record?.Tours ? record?.Tours
         .map((ele) => {
-          return ele.Name;
+          return (`Mã tour ${ele.TourID}`);
         })
-        .join(", ");
+        .join(", ") : "Bạn có chắc muốn xóa kiểu tour này";
       const editable = isEditing(record);
 
       const titleDelete = () => {
         return (
           <div className="dk-flex dk-flex-col dk-gap-2 dk-max-w-[450px]">
             <span className="dk-font-medium dk-font-Inter dk-text-sm dk-text-[#222]">
-              Việc xóa tour này sẽ bao gồm xóa cả những ưu đãi liên quan:
+              Việc xóa tour này sẽ bao gồm xóa cả những ưu đãi và các tour được tạo liên quan:
             </span>
             <span className="dk-font-semibold dk-font-Inter dk-text-sm dk-text-[#222]">
               {missPromotion} ?
