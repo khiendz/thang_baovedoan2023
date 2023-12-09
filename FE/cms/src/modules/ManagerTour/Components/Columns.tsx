@@ -1,4 +1,4 @@
-import { Tour, TourType } from "Models";
+import { Tour } from "Models";
 import GetColumnSearchProps from "components/GetColumnSearchProps";
 import EditRecord from "./EditRecord";
 import { FormInstance, Popconfirm } from "antd";
@@ -413,7 +413,7 @@ const Columns = (
             </span>
           </div>
         ) : (
-          "Sure to delete?"
+          "Bạn có muốn xóa dữ liệu này?"
         );
       };
       return (

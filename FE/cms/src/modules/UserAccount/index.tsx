@@ -14,6 +14,8 @@ export default function UserAccount() {
     {
       if (data && data.user)
         setUser(data?.user?.User)
+      else 
+        setUser(null)
     });
     return () => subscription.unsubscribe();
   },[]);

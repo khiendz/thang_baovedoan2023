@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { Button, Checkbox, Form, Input, Modal } from "antd";
 import { userService } from "services";
 import { useAppContext } from "hook/use-app-context";
-import Notification from "components/Notification";
 
 type FieldType = {
   username?: string;
@@ -12,6 +11,7 @@ type FieldType = {
 
 const FormLogin: React.FC<any> = (props: any) => {
   const { setData: setPopup } = useAppContext("popup-message");
+  const { data: user, setData: setUser } = useAppContext("user");
 
   useEffect(() => {
     setPopup({
@@ -24,10 +24,19 @@ const FormLogin: React.FC<any> = (props: any) => {
   const onFinish = async (values: any) => {
     try {
       const result = await userService.login(values.username, values.password);
+      if (result.data.data && result.data.data.user.RoleAccount.Description == 1) {
+        setPopup({
+          title: "Tài khoản thường không thể truy cập cms",
+          messagePopup: "Vui lòng thử lại",
+          state: false,
+        });
+        userService.logout();
+        return;
+      }
       setPopup({
-        title: result?.status == 200 ? "Thành công" : "Thất bại",
-        messagePopup: result?.message,
-        state: result?.status == 200,
+        title: result?.data?.status == 200 ? "Thành công" : "Thất bại",
+        messagePopup: result?.data?.message,
+        state: result?.data?.status == 200,
       });
       if (result && result.status == 200) {
         props.onCancel();
@@ -71,16 +80,6 @@ const FormLogin: React.FC<any> = (props: any) => {
           >
             <Input.Password />
           </Form.Item>
-
-          <Form.Item<FieldType>
-            label="Lưu đăng nhập"
-            name="remember"
-            valuePropName="checked"
-            wrapperCol={{ offset: 8, span: 16 }}
-          >
-            <Checkbox>Remember me</Checkbox>
-          </Form.Item>
-
           <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
             <Button type="primary" htmlType="submit">
               Submit
@@ -88,7 +87,6 @@ const FormLogin: React.FC<any> = (props: any) => {
           </Form.Item>
         </Form>
       </Modal>
-      <Notification />
     </>
   );
 };

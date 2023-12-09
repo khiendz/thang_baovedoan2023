@@ -1,10 +1,23 @@
 import { RoomType } from "Models";
 import { Select } from "antd";
 import { useAppContext } from "hook/use-app-context";
+import { useState, useEffect } from "react";
 
 export const SelectRoom = () => {
   const { data: roomTypes } = useAppContext("room-types");
   const { data: tour, setData: setTour } = useAppContext("tour");
+  const [ rooms, setRoom ] = useState([]);
+
+  useEffect(() => {
+      if (tour && tour.HotelId) {
+        setRoom(
+          roomTypes.filter((ob: RoomType) =>
+            ob?.HotelId == tour?.HotelId
+          )  
+        );
+      }
+  }, [tour]);
+
   return roomTypes && tour ? (
     <Select
     placeholder="Chọn phòng của khách sạn"
@@ -19,7 +32,7 @@ export const SelectRoom = () => {
           </div>
         ),
       },
-      ...roomTypes?.map((ob: RoomType) => {
+      ...rooms?.map((ob: RoomType) => {
         return {
           value: ob.RoomTypeId,
           label: (

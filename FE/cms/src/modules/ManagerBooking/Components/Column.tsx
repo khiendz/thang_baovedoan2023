@@ -123,7 +123,7 @@ const Columns = (
               Bookings={bookings}
             />
           <Popconfirm
-            title="Sure to delete?"
+            title="Bạn có chắc chắn muốn xóa?"
             onConfirm={async () => {
               const result = await handleDelete(record.PromotionID,bookings,setBookings);
               setPopup({

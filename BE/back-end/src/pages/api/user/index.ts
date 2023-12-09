@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { PrismaClient, RoleAccount, RoomType, SupportType, User } from '@prisma/client';
+import { PrismaClient, User } from '@prisma/client';
 import { apiHandler } from 'helpers/api';
 
 const prisma = new PrismaClient();
@@ -232,4 +232,4 @@ const DeleteUserById = async (userId: number) => {
     }
 }
 
-export default apiHandler(handler);
+export default apiHandler(handler,["GET","POST"]);

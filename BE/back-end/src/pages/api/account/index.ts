@@ -87,6 +87,29 @@ const GetAccounts = async () => {
 
 const AddAccount = async (account: Account) => {
     try {
+        const exitsUserName = await prisma.account.findMany({
+            where: {
+                UserName: account.UserName
+            },
+            include: {
+                RoleAccount: true,
+                User: true
+            }
+        });
+
+        if (exitsUserName?.length > 0) {
+            await prisma.user.delete({
+                where: {
+                    UserId: account.UserId
+                }
+            });
+            return {
+                data: null,
+                message: "Đã tồn tại tài khoản có cùng user name",
+                status: "400",
+            };
+        }
+
         const accountResult = await prisma.account.create({
             data: {
                 UserName: account.UserName,
@@ -95,8 +118,8 @@ const AddAccount = async (account: Account) => {
                 UserId: account.UserId
             },
             include: {
-                User: true,
-                RoleAccount: true
+                RoleAccount: true,
+                User: true
             }
         });
 
@@ -129,8 +152,8 @@ const UpdateAccount = async (account: Account) => {
                 UserId: account.UserId
             },
             include: {
-                User: true,
-                RoleAccount: true
+                RoleAccount: true,
+                User: true
             }
         });
 
@@ -154,10 +177,6 @@ const DeleteAccountById = async (accountId: number) => {
         const result = await prisma.account.delete({
             where: {
                 AccountId: accountId
-            },
-            include: {
-                User: true,
-                RoleAccount: true
             }
         })
 
@@ -176,4 +195,4 @@ const DeleteAccountById = async (accountId: number) => {
     }
 }
 
-export default apiHandler(handler);
+export default apiHandler(handler,["GET","POST"]);
