@@ -22,6 +22,7 @@ import { SelectHotel } from "./components/SelectHotel";
 import { SelectRoom } from "./components/SelectRoom";
 import { checkPayment } from "utils/crypto";
 import { DeletePaymentByOrderCode } from "services/payment-service";
+import { getAllPromotion } from "services/promotion-services";
 
 export default function TourDetail() {
   const { setData: setPopup } = useAppContext("popup-message"),
@@ -86,6 +87,17 @@ export default function TourDetail() {
       const rest = await getTourTypeById(idParam);
       if (rest) {
         let data: TourType = rest;
+        if (data.PromotionId) {
+          const proms = await getAllPromotion();
+          if (proms?.data?.length > 0) {
+            const prom = proms.data.find((ob: Promotion) => ob.PromotionID == data.PromotionId) ?? null;
+            if (prom) {
+              data?.Promotion?.push(
+                prom
+            );
+            }
+          }
+        }
         const collectImage: CollectImg[] = (await initCollectionImage()) || [];
         data.CollectImg = collectImage;
         setTourType(data);
@@ -281,7 +293,7 @@ export default function TourDetail() {
                     tour?.TotalElder * (tourTypes?.PriceElder || 0)) /
                     100) *
                     (tourType && tourType.Promotion?.length > 0 && tourType?.Promotion[0]?.Discount ? 
-                      ((tourType as TourType)?.Promotion[0]?.Discount || 1) : 1)
+                      ((tourType as TourType)?.Promotion[0]?.Discount || 1) : 0)
                 ).toLocaleString("vi-VN")}{" "}
                 VND
               </span>
