@@ -32,16 +32,16 @@ export default function Home() {
         const rest = await getAllTouType();
         if (rest) {
           const data: TourType[] = rest.data;
-          setTourTypeList(data);
+          setTourTypeList(data.reverse());
         }
         const restGlobal = await getTopTourType(1);
         if (rest) {
           const data: TourType[] = restGlobal;
-          setTourTypeGlobal(data);
+          setTourTypeGlobal(data.reverse());
         }
         const restTopTourType = await getTopTourType(0);
         if (restTopTourType) {
-          setTopTour(restTopTourType);
+          setTopTour(restTopTourType.reverse());
         }
       } catch (e) {
       }

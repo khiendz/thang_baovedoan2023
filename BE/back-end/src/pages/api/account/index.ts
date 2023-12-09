@@ -94,6 +94,10 @@ const AddAccount = async (account: Account) => {
                 RoleId: account.RoleId,
                 UserId: account.UserId
             },
+            include: {
+                User: true,
+                RoleAccount: true
+            }
         });
 
         return {
@@ -123,6 +127,10 @@ const UpdateAccount = async (account: Account) => {
                 Password: account.Password,
                 RoleId: account.RoleId,
                 UserId: account.UserId
+            },
+            include: {
+                User: true,
+                RoleAccount: true
             }
         });
 
@@ -146,6 +154,10 @@ const DeleteAccountById = async (accountId: number) => {
         const result = await prisma.account.delete({
             where: {
                 AccountId: accountId
+            },
+            include: {
+                User: true,
+                RoleAccount: true
             }
         })
 
