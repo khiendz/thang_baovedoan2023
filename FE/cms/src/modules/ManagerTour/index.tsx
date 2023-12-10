@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { Form, InputRef, Table } from "antd";
 import AddRecord from "./Components/AddRecord";
 import { Tour, TourType } from "Models";
-import { getAllTour } from "services";
+import { getAllRoomType, getAllTour, getAllTourType } from "services";
 import "./style.scss";
 import Columns from "./Components/Columns";
 import MergedColumns from "./Components/MergedColumns";
@@ -11,6 +11,8 @@ import { useAppContext } from "hook/use-app-context";
 
 const ManagerTour = () => {
   const { setData: setPopup } = useAppContext("popup-message");
+  const { data: tourTypes, setData: setTourTypes } = useAppContext("tour-types");
+  const { data: roomTypes, setData: setRoomTypes } = useAppContext("room-types");
   const [tours, setTour] = useState<Tour[]>([]);
   const [form] = Form.useForm();
   const [editingKey, setEditingKey] = useState("");
@@ -19,6 +21,8 @@ const ManagerTour = () => {
   const searchInput = useRef<InputRef>(null);
 
   useEffect(() => {
+    setTourTypes([]);
+    setRoomTypes([]);
     setPopup({
       title: "",
       messagePopup: "",
@@ -72,6 +76,8 @@ const ManagerTour = () => {
 
   useEffect(() => {
     initData();
+    initTourType();
+    initRoomType();
   }, []);
 
   const initData = async () => {
@@ -79,6 +85,24 @@ const ManagerTour = () => {
       const result = await getAllTour();
       if (result && result?.data) {
         setTour(result?.data?.reverse());
+      }
+    } catch (e) {}
+  };
+
+  const initTourType = async () => {
+    try {
+      const result = await getAllTourType();
+      if (result && result?.data) {
+        setTourTypes(result?.data);
+      }
+    } catch (e) {}
+  };
+
+  const initRoomType = async () => {
+    try {
+      const result = await getAllRoomType();
+      if (result && result?.data) {
+        setRoomTypes(result?.data);
       }
     } catch (e) {}
   };

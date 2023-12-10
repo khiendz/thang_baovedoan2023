@@ -6,10 +6,12 @@ import {
   FormInstance,
   Input,
   Modal,
+  Select,
 } from "antd";
-import { Tour } from "Models";
+import { RoomType, Tour, TourType } from "Models";
 import UploadFileImage from "components/UploadFileImage";
 import dayjs from "dayjs";
+import { useAppContext } from "hook/use-app-context";
 
 interface CollectionEditFormProps {
   open: boolean;
@@ -37,7 +39,8 @@ const CollectionCreateForm: React.FC<CollectionEditFormProps> = ({
   save,
   form,
 }) => {
-
+  const { data: tourTypes } = useAppContext("tour-types");
+  const { data: roomTypes } = useAppContext("room-types");
   form?.setFieldValue("StartDate", form?.getFieldValue("StartDate") ? dayjs(form?.getFieldValue("StartDate")) : dayjs(new Date()));
   form?.setFieldValue("EndDate", form?.getFieldValue("EndDate") ? dayjs(form?.getFieldValue("EndDate")) : dayjs(new Date()));
   form?.setFieldValue("RoomStartDate", form?.getFieldValue("RoomStartDate") ? dayjs(form?.getFieldValue("RoomStartDate")) : dayjs(new Date()));
@@ -133,14 +136,50 @@ const CollectionCreateForm: React.FC<CollectionEditFormProps> = ({
           label="Kiểu tour"
           rules={[{ required: true, message: "Làm ơn nhập kiểu tour" }]}
         >
-          <Input />
+            <Select
+            className="dk-w-full"
+            options={tourTypes ? [
+              ...tourTypes?.map((ob: TourType) => {
+                return { value: ob.TourTypeId, label: ob.Name, ob: ob };
+              }),
+            ] : []}
+            onChange={(value) => {
+              form.setFieldValue("TourTypeId", value);
+            }}
+           />
         </Form.Item>
         <Form.Item
-          name="RoomTypeID"
-          label="Kiểu phòng"
+          name="RoomTypeId"
           rules={[{ required: true, message: "Làm ơn nhập kiểu phòng" }]}
         >
-          <Input />
+            <Select
+            className="dk-w-full"
+            defaultValue={{ value: 0, label: "Tự động chọn phòng" }}
+            options={roomTypes ? [
+              { value: 0, label: "Tự động chọn phòng" },
+              ...roomTypes?.map((ob: RoomType) => {
+                return { value: ob.RoomTypeId, label: ob.Name, ob: ob };
+              }),
+            ] : []}
+            onChange={(value) => {
+              form.setFieldValue("RoomTypeId", value);
+            }}
+           />
+        </Form.Item>
+        <Form.Item
+          name="RoomStartDate"
+          label="Ngày thuê phòng bắt đầu"
+          rules={[{ required: true, message: "Làm ơn nhập ngày thuê phòng bắt đầu" }]}
+          valuePropName={'date'}
+        >
+          <DatePicker
+            format={"DD-MM-YYYY"}
+            defaultValue={dayjs(new Date())}
+            className="dk-w-full"
+            onChange={(value) => {
+              form.setFieldValue("RoomStartDate", value);
+            }}
+          />
         </Form.Item>
         <Form.Item
           name="RoomStartDate"

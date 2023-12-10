@@ -6,10 +6,12 @@ import {
   FormInstance,
   Input,
   Modal,
+  Select,
 } from "antd";
-import { Tour } from "Models";
+import { RoomType, Tour, TourType } from "Models";
 import UploadFileImage from "components/UploadFileImage";
 import dayjs from "dayjs";
+import { useAppContext } from "hook/use-app-context";
 interface CollectionCreateFormProps {
   open: boolean;
   onCreate: () => void;
@@ -35,8 +37,14 @@ const CollectionCreateForm: React.FC<CollectionCreateFormProps> = ({
   open,
   onCreate,
   onCancel,
+  tours,
+  save,
   form,
+  setTour,
+  setPopup
 }) => {
+  const { data: tourTypes } = useAppContext("tour-types");
+  const { data: roomTypes } = useAppContext("room-types");
   return (
     <Modal
       open={open}
@@ -46,6 +54,19 @@ const CollectionCreateForm: React.FC<CollectionCreateFormProps> = ({
       onCancel={onCancel}
       onOk={async (ob) => {
         const row = (await form.validateFields()) as Tour;
+        const result = await save({
+          ...row,
+          TotalElder: +row.TotalElder,
+          TotalChd: +row.TotalChd,
+          PriceTotal: +row.PriceTotal,
+          TotalMember: +row.TotalMember,
+          TourTypeId: +row.TourTypeId
+        },setTour,tours);
+        setPopup({
+          title: result?.status == 200 ? "Thành công" : "Thất bại",
+          messagePopup: result?.message,
+          state: result?.status == 200
+        });
         onCreate();
       }}
     >
@@ -124,18 +145,39 @@ const CollectionCreateForm: React.FC<CollectionCreateFormProps> = ({
           <Input />
         </Form.Item>
         <Form.Item
-          name="TourTypeID"
+          name="TourTypeId"
           label="Kiểu tour"
           rules={[{ required: true, message: "Làm ơn nhập kiểu tour" }]}
         >
-          <Input />
+            <Select
+            className="dk-w-full"
+            options={tourTypes ? [
+              ...tourTypes?.map((ob: TourType) => {
+                return { value: ob.TourTypeId, label: ob.Name, ob: ob };
+              }),
+            ] : []}
+            onChange={(value) => {
+              form.setFieldValue("TourTypeId", value);
+            }}
+           />
         </Form.Item>
         <Form.Item
-          name="TourTypeID"
+          name="RoomTypeId"
           label="Kiểu phòng"
-          rules={[{ required: true, message: "Làm ơn nhập kiểu phòng" }]}
         >
-          <Input />
+            <Select
+            className="dk-w-full"
+            defaultValue={{ value: 0, label: "Tự động chọn phòng" }}
+            options={roomTypes ? [
+              { value: 0, label: "Tự động chọn phòng" },
+              ...roomTypes?.map((ob: RoomType) => {
+                return { value: ob.RoomTypeId, label: ob.Name, ob: ob };
+              }),
+            ] : []}
+            onChange={(value) => {
+              form.setFieldValue("RoomTypeId", value);
+            }}
+           />
         </Form.Item>
         <Form.Item
           name="RoomStartDate"

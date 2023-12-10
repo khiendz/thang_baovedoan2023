@@ -6,9 +6,9 @@ import * as dotenv from 'dotenv';
 // Load giá trị từ tệp .env
 dotenv.config();
 
-const key: any = process.env.PAYOS_CHECKSUM_KEY || `153b7b9252d04567e7399c021a4fd1c3a11bfcaa868fed0d3fdc4bbf3dadcb45`;
-const clientId = process.env.PAYOS_CLIENT_ID || `d6102cc5-034f-488c-b9cc-54135353a8ec`;
-const apiKey = process.env.PAYOS_API_KEY || `28d3f0bc-08de-40e8-bdf2-5d1b275ca275`;
+const key: any = process.env.PAYOS_CHECKSUM_KEY || `c52401561779ca9ebb6f26d84cddf7042fd43440d9421c7055318bf319fe18e0`;
+const clientId = process.env.PAYOS_CLIENT_ID || `0a4616bd-19bc-49f1-8b0a-a6fea36a9ce3`;
+const apiKey = process.env.PAYOS_API_KEY || `eab5062b-d1b1-4c77-8997-ef7711bd9c30`;
 
 if (!key || !clientId || !apiKey) {
     console.error('One or more required environment variables are not defined in the .env file.');

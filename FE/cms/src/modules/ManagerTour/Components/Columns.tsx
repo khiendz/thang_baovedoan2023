@@ -39,27 +39,27 @@ const Columns = (
         <span className="dk-font-Roboto dk-font-bold">
           Tên khách đặt tour:{" "}
           <span className="dk-font-normal">
-            {record?.Bookings[0]?.Customer?.FirstName +
+            {record?.Bookings?.length > 0 ? (record?.Bookings[0]?.Customer?.FirstName +
               " " +
-              record?.Bookings[0]?.Customer?.LastName}
+              record?.Bookings[0]?.Customer?.LastName) : ""}
           </span>
         </span>
         <div className="dk-font-Roboto dk-font-bold dk-flex dk-gap-2">
           Email:
           <span className="dk-font-normal">
-            {record.Bookings[0]?.Customer?.Email}
+            {record?.Bookings?.length > 0 ?? record.Bookings[0]?.Customer?.Email}
           </span>
         </div>
         <div className="dk-font-Roboto dk-font-bold dk-flex dk-gap-2">
           Số điện thoại:
           <span className="dk-font-normal">
-            {record?.Bookings[0]?.Customer?.Phone}
+            {record?.Bookings?.length > 0 ?? record?.Bookings[0]?.Customer?.Phone}
           </span>
         </div>
         <div className="dk-font-Roboto dk-font-bold dk-flex dk-gap-2">
           Mã thanh toán:
           <span className="dk-font-normal">
-            {record?.Bookings[0]?.Payments[0]?.OrderCode}
+            {record?.Bookings?.length > 0 ?? record?.Bookings[0]?.Payments[0]?.OrderCode}
           </span>
         </div>
       </div>
@@ -119,7 +119,7 @@ const Columns = (
     ),
     render: (PriceElder: number) => (
       <p className="dk-font-Inter dk-text-sm dk-bg-green-800 dk-font-bold dk-rounded dk-text-[#FFF] dk-p-1 dk-w-fit">
-        {PriceElder.toLocaleString("vi-VN")} VND
+        {PriceElder?.toLocaleString("vi-VN")} VND
       </p>
     ),
     editable: true,
