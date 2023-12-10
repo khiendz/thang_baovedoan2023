@@ -381,7 +381,7 @@ const Columns = (
         className="dk-max-w-full dk-text-sm dk-font-bold dk-font-Inter dk-line-clamp-5"
       >
         {
-          record.Bookings[0].Payments[0] != null ? 
+          record?.Bookings?.length && record?.Bookings[0]?.Payments[0] != null ? 
           <div className="dk-p-1 dk-bg-green-500 dk-rounded-lg dk-w-fit dk-text-[#FFF]">Đã thanh toán</div> : 
           <div className="dk-p-1 dk-bg-red-500 dk-rounded-lg dk-w-fit dk-text-[#FFF]">Chưa thanh toán</div>
         }
