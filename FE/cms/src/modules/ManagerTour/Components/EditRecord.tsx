@@ -8,7 +8,7 @@ import {
   Modal,
   Select,
 } from "antd";
-import { RoomType, Tour, TourType } from "Models";
+import { Customer, RoomType, Tour, TourType } from "Models";
 import UploadFileImage from "components/UploadFileImage";
 import dayjs from "dayjs";
 import { useAppContext } from "hook/use-app-context";
@@ -41,6 +41,7 @@ const CollectionCreateForm: React.FC<CollectionEditFormProps> = ({
 }) => {
   const { data: tourTypes } = useAppContext("tour-types");
   const { data: roomTypes } = useAppContext("room-types");
+  const { data: customers } = useAppContext("customers");
   form?.setFieldValue("StartDate", form?.getFieldValue("StartDate") ? dayjs(form?.getFieldValue("StartDate")) : dayjs(new Date()));
   form?.setFieldValue("EndDate", form?.getFieldValue("EndDate") ? dayjs(form?.getFieldValue("EndDate")) : dayjs(new Date()));
   form?.setFieldValue("RoomStartDate", form?.getFieldValue("RoomStartDate") ? dayjs(form?.getFieldValue("RoomStartDate")) : dayjs(new Date()));
@@ -55,6 +56,7 @@ const CollectionCreateForm: React.FC<CollectionEditFormProps> = ({
       onOk={async (ob) => {
         const row = (await form.validateFields()) as Tour;
         onCreate();
+        save();
       }}
     >
       <Form
@@ -130,6 +132,23 @@ const CollectionCreateForm: React.FC<CollectionEditFormProps> = ({
           rules={[{ required: true, message: "Làm ơn nhập tổng trẻ em" }]}
         >
           <Input />
+        </Form.Item>
+        <Form.Item
+          name="CustomerId"
+          label="Khách hàng"
+          rules={[{ required: true, message: "Làm ơn chọn khách hàng" }]}
+        >
+            <Select
+            className="dk-w-full"
+            options={tourTypes ? [
+              ...customers?.map((ob: Customer) => {
+                return { value: ob.CustomerID, label: ob.FirstName + " " + ob.LastName, ob: ob };
+              }),
+            ] : []}
+            onChange={(value) => {
+              form.setFieldValue("CustomerId", value);
+            }}
+           />
         </Form.Item>
         <Form.Item
           name="TourTypeID"

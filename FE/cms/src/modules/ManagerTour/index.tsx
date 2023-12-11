@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { Form, InputRef, Table } from "antd";
 import AddRecord from "./Components/AddRecord";
 import { Tour, TourType } from "Models";
-import { getAllRoomType, getAllTour, getAllTourType } from "services";
+import { getAllCustomer, getAllRoomType, getAllTour, getAllTourType } from "services";
 import "./style.scss";
 import Columns from "./Components/Columns";
 import MergedColumns from "./Components/MergedColumns";
@@ -13,6 +13,7 @@ const ManagerTour = () => {
   const { setData: setPopup } = useAppContext("popup-message");
   const { data: tourTypes, setData: setTourTypes } = useAppContext("tour-types");
   const { data: roomTypes, setData: setRoomTypes } = useAppContext("room-types");
+  const { data: customers, setData: setCustomers } = useAppContext("customers");
   const [tours, setTour] = useState<Tour[]>([]);
   const [form] = Form.useForm();
   const [editingKey, setEditingKey] = useState("");
@@ -23,6 +24,7 @@ const ManagerTour = () => {
   useEffect(() => {
     setTourTypes([]);
     setRoomTypes([]);
+    setCustomers([]);
     setPopup({
       title: "",
       messagePopup: "",
@@ -30,8 +32,8 @@ const ManagerTour = () => {
     });
   }, []);
 
-  const isEditing = (record: TourType) =>
-    record?.TourTypeId?.toString() === editingKey;
+  const isEditing = (record: Tour) =>
+    record?.TourID?.toString() === editingKey;
 
   const save = async (key: React.Key) => {
     try {
@@ -53,6 +55,10 @@ const ManagerTour = () => {
         });
         setTour(newData);
         setEditingKey("");
+        initData();
+        initTourType();
+        initRoomType();
+        initCustomers();
       } else {
         newData.push(row);
         setTour(newData);
@@ -78,6 +84,7 @@ const ManagerTour = () => {
     initData();
     initTourType();
     initRoomType();
+    initCustomers();
   }, []);
 
   const initData = async () => {
@@ -107,6 +114,15 @@ const ManagerTour = () => {
     } catch (e) {}
   };
 
+  const initCustomers = async () => {
+    try {
+      const result = await getAllCustomer();
+      if (result && result?.data) {
+        setCustomers(result?.data);
+      }
+    } catch (e) {}
+  };
+
   const columns = Columns(
     setSearchText,
     setSearchedColumn,
@@ -125,7 +141,7 @@ const ManagerTour = () => {
   );
   const mergedColumns = MergedColumns(columns, isEditing, tours, form);
 
-  return tours ? (
+  return tours && customers && roomTypes ? (
     <>
       <Form form={form} component={false}>
         <AddRecord

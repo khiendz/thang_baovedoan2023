@@ -23,4 +23,5 @@ export class Tour {
   RoomType: RoomType;
   Bookings: Booking[];
   Feedback: Feedback[];
+  CustomerId: string | null; 
 }

@@ -47,19 +47,19 @@ const Columns = (
         <div className="dk-font-Roboto dk-font-bold dk-flex dk-gap-2">
           Email:
           <span className="dk-font-normal">
-            {record?.Bookings?.length > 0 ?? record.Bookings[0]?.Customer?.Email}
+            {record?.Bookings?.length > 0 ? record.Bookings[0]?.Customer?.Email : null}
           </span>
         </div>
         <div className="dk-font-Roboto dk-font-bold dk-flex dk-gap-2">
           Số điện thoại:
           <span className="dk-font-normal">
-            {record?.Bookings?.length > 0 ?? record?.Bookings[0]?.Customer?.Phone}
+            {record?.Bookings?.length > 0 ? record?.Bookings[0]?.Customer?.Phone : null}
           </span>
         </div>
         <div className="dk-font-Roboto dk-font-bold dk-flex dk-gap-2">
           Mã thanh toán:
           <span className="dk-font-normal">
-            {record?.Bookings?.length > 0 ?? record?.Bookings[0]?.Payments[0]?.OrderCode}
+            {record?.Bookings?.length > 0 ? record?.Bookings[0]?.Payments[0]?.OrderCode : "Chưa thanh toán"}
           </span>
         </div>
       </div>
@@ -398,7 +398,7 @@ const Columns = (
     fixed: "right",
     render: (_: any, record: Tour) => {
       const editable = isEditing(record);
-      const missBooking = record.Bookings.map((ele) => {
+      const missBooking = record?.Bookings?.map((ele) => {
         return (`Mã Booking: ${ele.BookingID}- Tên người booking: ${ele.Customer.LastName}- Số điện thoại: ${ele.Customer.Phone}`);
       }).join(", ");
 
@@ -420,9 +420,9 @@ const Columns = (
         <div className="dk-flex dk-gap-3 dk-text-[#1677ff]">
           <EditRecord
             onInit={() => {
-              edit(record, record.TourTypeId?.toString() || "");
+              edit(record, record.TourID?.toString() || "");
             }}
-            Save={() => save(record?.TourTypeId || "")}
+            Save={() => save(record?.TourID || "")}
             Cancel={cancel}
             Form={form}
             Tours={tours}

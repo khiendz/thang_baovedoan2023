@@ -8,10 +8,11 @@ import {
   Modal,
   Select,
 } from "antd";
-import { RoomType, Tour, TourType } from "Models";
+import { Booking, Customer, RoomType, Tour, TourType } from "Models";
 import UploadFileImage from "components/UploadFileImage";
 import dayjs from "dayjs";
 import { useAppContext } from "hook/use-app-context";
+import { AddBooking } from "services";
 interface CollectionCreateFormProps {
   open: boolean;
   onCreate: () => void;
@@ -45,6 +46,7 @@ const CollectionCreateForm: React.FC<CollectionCreateFormProps> = ({
 }) => {
   const { data: tourTypes } = useAppContext("tour-types");
   const { data: roomTypes } = useAppContext("room-types");
+  const { data: customers } = useAppContext("customers");
   return (
     <Modal
       open={open}
@@ -53,6 +55,10 @@ const CollectionCreateForm: React.FC<CollectionCreateFormProps> = ({
       cancelText="Hủy"
       onCancel={onCancel}
       onOk={async (ob) => {
+        form?.setFieldValue("StartDate", form?.getFieldValue("StartDate") ? dayjs(form?.getFieldValue("StartDate")) : dayjs(new Date()));
+        form?.setFieldValue("EndDate", form?.getFieldValue("EndDate") ? dayjs(form?.getFieldValue("EndDate")) : dayjs(new Date()));
+        form?.setFieldValue("RoomStartDate", form?.getFieldValue("RoomStartDate") ? dayjs(form?.getFieldValue("RoomStartDate")) : dayjs(new Date()));
+        form?.setFieldValue("RoomEndDate", form?.getFieldValue("RoomEndDate") ? dayjs(form?.getFieldValue("RoomEndDate")) : dayjs(new Date()));
         const row = (await form.validateFields()) as Tour;
         const result = await save({
           ...row,
@@ -62,6 +68,12 @@ const CollectionCreateForm: React.FC<CollectionCreateFormProps> = ({
           TotalMember: +row.TotalMember,
           TourTypeId: +row.TourTypeId
         },setTour,tours);
+        const booking = new Booking();
+        booking.BookingDate = new Date();
+        booking.CustomerID = + (row?.CustomerId ?? 0);
+        booking.TourID = result?.data?.TourID || 1;
+        const bookingAddResult = await AddBooking(booking);
+
         setPopup({
           title: result?.status == 200 ? "Thành công" : "Thất bại",
           messagePopup: result?.message,
@@ -145,9 +157,26 @@ const CollectionCreateForm: React.FC<CollectionCreateFormProps> = ({
           <Input />
         </Form.Item>
         <Form.Item
+          name="CustomerId"
+          label="Khách hàng"
+          rules={[{ required: true, message: "Làm ơn chọn khách hàng" }]}
+        >
+            <Select
+            className="dk-w-full"
+            options={tourTypes ? [
+              ...customers?.map((ob: Customer) => {
+                return { value: ob.CustomerID, label: ob.FirstName + " " + ob.LastName, ob: ob };
+              }),
+            ] : []}
+            onChange={(value) => {
+              form.setFieldValue("CustomerId", value);
+            }}
+           />
+        </Form.Item>
+        <Form.Item
           name="TourTypeId"
           label="Kiểu tour"
-          rules={[{ required: true, message: "Làm ơn nhập kiểu tour" }]}
+          rules={[{ required: true, message: "Làm ơn chọn kiểu tour" }]}
         >
             <Select
             className="dk-w-full"
@@ -158,6 +187,7 @@ const CollectionCreateForm: React.FC<CollectionCreateFormProps> = ({
             ] : []}
             onChange={(value) => {
               form.setFieldValue("TourTypeId", value);
+              form.setFieldValue("TourTypeID", value);
             }}
            />
         </Form.Item>
@@ -245,7 +275,7 @@ const AddRecord: React.FC<Props> = (props) => {
           setOpen(true);
         }}
       >
-        Thêm loại tour
+        Thêm tour
       </Button>
       <CollectionCreateForm
         open={open}

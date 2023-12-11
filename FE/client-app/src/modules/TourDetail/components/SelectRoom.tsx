@@ -48,10 +48,6 @@ export const SelectRoom = () => {
                 </span>
               </span>
               <span className="dk-font-Roboto dk-font-bold">
-                Giá phòng:{" "}
-                <span className="dk-font-normal">{ob.Price}</span>
-              </span>
-              <span className="dk-font-Roboto dk-font-bold">
                 Phí trễ phòng:{" "}
                 <span className="dk-font-normal">{ob.KateFee}</span>
               </span>

@@ -8,15 +8,25 @@ const { Meta } = Card;
 
 const TourCard: React.FC<any> = (props: any) => {
   const {className} = props;
-  const data = props.data;
+  const data = props.data as TourType;
+  debugger
   return props.data ? (
     <a href={`/tour-detail/${data?.TourTypeId}`} className={`hover:dk-cursor-pointer hover:dk-scale-[1.2]
      hover:dk-transition-[transform_0.3s_ease] dk-shadow-xl dk-min-h-fit dk-h-[465px] ${className ? className : ""}`}>
       <Card
         style={{ width: 300 }}
-        className="dk-min-h-[400px]"
+        className="dk-min-h-[465px] dk-relative"
         cover={<img alt="example" src={JoinFileCDN(data?.Img || "")} className="dk-w-[250px] dk-aspect-[3/2]" />}
       >
+        {
+          data?.Promotion?.length > 0 ? 
+            (<div className="dk-font-semibold dk-text-4 v-ribbon dk-bg-red-500 v-ribbon">
+              <span>
+                {data?.Promotion[0].Discount} %
+              </span>
+            </div>) :
+            null
+        }
         <Meta 
           className="dk-font-Inter dk-font-bold" 
           title={data?.Name} 

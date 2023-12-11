@@ -55,12 +55,19 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
 const GetRoomType = async () => {
     try {
+
         const roomTypeResult = await prisma.roomType.findMany({
+            where: {
+                Tour: {
+                    none: {}
+                }
+            },
             include: {
                 Hotel: true,
                 Availability: true,
             }
         });
+
 
         if (roomTypeResult) {
             return {
@@ -174,4 +181,4 @@ const DeleteRoomTypeById = async (roomTypeId: number) => {
     }
 }
 
-export default apiHandler(handler,["GET"]);
+export default apiHandler(handler, ["GET"]);

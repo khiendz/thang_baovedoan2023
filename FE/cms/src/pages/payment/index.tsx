@@ -3,7 +3,7 @@ import LayoutDefault from "components/layouts/LayoutDefault";
 import React from "react";
 import ManagePayment from "modules/ManagePayment";
 
-export default function Booking() {
+export default function PaymentPAge() {
   return (
     <LayoutDefault>
       <div className="content-container content-miss dk-flex dk-flex-col dk-font-Roboto dk-gap-4 dk-relative dk-z-10">

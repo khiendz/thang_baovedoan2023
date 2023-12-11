@@ -111,8 +111,8 @@ const AddTour = async (tour: Tour) => {
                 TotalChd: tour.TotalChd,
                 TotalElder: tour.TotalElder,
                 TourID: tour.TourID,
-                RoomTypeId: tour?.RoomTypeId,
-                Img: tour.Img,
+                RoomTypeId: tour?.RoomTypeId || 0,
+                Img: tour?.Img,
                 RoomStartDate: tour.StartDate,
                 RoomEndDate: tour.EndDate,
             },
@@ -189,7 +189,7 @@ const UpdateTour = async (tour: Tour) => {
                 TotalMember: tour.TotalMember,
                 TotalChd: tour.TotalChd,
                 TotalElder: tour.TotalElder,
-                TourID: tour.TourID,
+                TourTypeId: tour.TourTypeId,
                 RoomTypeId: tour.RoomTypeId,
                 Img: tour.Img,
                 RoomStartDate: tour.StartDate,
@@ -237,6 +237,14 @@ const DeleteTour = async (tourId: number) => {
         const tourType = await prisma.tourType.findUnique({
             where: {
                 TourTypeId: tour?.TourTypeId
+            }
+        });
+
+        const exitsPayment = await prisma.payment.deleteMany({
+            where: {
+                Booking: {
+                    TourID: tourId
+                }
             }
         });
 

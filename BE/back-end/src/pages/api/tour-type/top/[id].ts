@@ -20,6 +20,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         take: 3,
         where: {
           IsLocal: id || 0
+        },
+        include: {
+          Promotion: true
         }
       });
 

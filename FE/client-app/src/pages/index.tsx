@@ -145,7 +145,7 @@ export default function Home() {
         <div className="contact dk-flex dk-justify-between dk-text-sm dk-relative dk-z-10">
           <div className="contact-items dk-bg-white dk-text-lg dk-rounded-lg dk-p-4 dk-text-[#222] dk-font-Inter dk-font-semibold dk-flex dk-flex-nowrap dk-gap-5">
             <PhoneOutlined />
-            <p>Hỗ trợ chuyên viên - hotline: 0382033515</p>
+            <p>Hotline: 0382033515</p>
           </div>
           <div className="contact-items dk-bg-white dk-text-lg dk-rounded-lg dk-p-4 dk-text-[#222] dk-font-Inter dk-font-semibold dk-flex dk-flex-nowrap dk-gap-5">
             <GlobalOutlined />
@@ -158,7 +158,7 @@ export default function Home() {
         </div>
       </div>
       <div className="dk-text-[#222] content-container content-miss content-base dk-font-Roboto dk-gap-2 dk-relative dk-z-10 dk-mb-5 dk-flex dk-flex-col">
-        <h2 className="dk-text-[#222] dk-font-semibold dk-text-lg">
+        <h2 className="dk-text-[#222] dk-font-bold dk-text-2xl">
           Tours du lịch nổi bật trong nước
         </h2>
         <p className="dk-text-[#888] dk-font-semibold dk-text-sm">
@@ -175,7 +175,7 @@ export default function Home() {
         </div>
       </div>
       <div className="dk-text-[#222] content-container content-miss content-base dk-font-Roboto dk-gap-2 dk-relative dk-z-10 dk-mb-5 dk-flex dk-flex-col">
-        <h2 className="dk-text-[#222] dk-font-semibold dk-text-lg">
+        <h2 className="dk-text-[#222] dk-font-bold dk-text-2xl">
           Tours du lịch nổi bật ngoài nước
         </h2>
         <p className="dk-text-[#888] dk-font-semibold dk-text-sm">
