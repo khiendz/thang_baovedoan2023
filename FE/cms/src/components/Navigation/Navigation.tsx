@@ -215,6 +215,17 @@ const items: MenuProps["items"] = [
       </Link>
     ),
     key: "room-type",
+  },
+  {
+    label: (
+      <Link
+        href="/article"
+        className="dk-text-sm dk-text-[#222] dk-font-Inter dk-font-bold"
+      >
+        <span>Tin tức</span>
+      </Link>
+    ),
+    key: "article",
   }, 
 ];
 

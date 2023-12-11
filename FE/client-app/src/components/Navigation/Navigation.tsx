@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { HomeOutlined } from "@ant-design/icons";
+import { HomeOutlined, EditOutlined } from "@ant-design/icons";
 import type { MenuProps } from "antd";
 import { Menu } from "antd";
 import Link from "next/link";
@@ -18,6 +18,11 @@ const items: MenuProps["items"] = [
     ),
     key: "home",
     icon: <HomeOutlined />,
+  },
+  {
+    label: <Link href='/tin-tuc' className='dk-text-sm dk-text-[#222] dk-font-Inter dk-font-bold'><span>Tin tức</span></Link>,
+    key: 'news',
+    icon: <EditOutlined />
   },
   {
     label: (
