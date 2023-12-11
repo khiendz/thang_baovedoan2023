@@ -9,7 +9,6 @@ const { Meta } = Card;
 const TourCard: React.FC<any> = (props: any) => {
   const {className} = props;
   const data = props.data as TourType;
-  debugger
   return props.data ? (
     <a href={`/tour-detail/${data?.TourTypeId}`} className={`hover:dk-cursor-pointer hover:dk-scale-[1.2]
      hover:dk-transition-[transform_0.3s_ease] dk-shadow-xl dk-min-h-fit dk-h-[465px] ${className ? className : ""}`}>

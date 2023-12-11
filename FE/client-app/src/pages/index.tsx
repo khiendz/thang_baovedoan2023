@@ -13,6 +13,7 @@ import TourCard from "components/TourCard/indext";
 import { JoinFileCDN, getAllTouType, getTopTourType, getTourByRegion, typeRegion } from "services";
 import { removeAccents } from "utils/charactor-util";
 import Slides from "modules/Slides";
+import {CheckOutlined,HighlightOutlined,ClockCircleOutlined} from "@ant-design/icons";
 
 export default function Home() {
   const [tourTypesList, setTourTypeList] = useState<TourType[]>([]);
@@ -141,6 +142,15 @@ export default function Home() {
               498 khách đã đặt dịch vụ này
             </div>
           </div>
+          <div className="card-listing dk-flex dk-flex-wrap dk-gap-5 dk-justify-center dk-mt-2 dt-pb-5">
+          {tourTypeGlobal ? (
+            <div className="card-listing dk-flex dk-flex-wrap dk-gap-12 dk-justify-center dk-mt-8 dk-relative">
+              {tourTypeGlobal?.filter((ob: TourType) => ob?.Promotion?.length > 0)?.map((ele, index) => (
+                <TourCard key={index} data={ele} className="blinking"/>
+              ))}
+            </div>
+          ) : null}
+        </div>
         </div>
         <div className="contact dk-flex dk-justify-between dk-text-sm dk-relative dk-z-10">
           <div className="contact-items dk-bg-white dk-text-lg dk-rounded-lg dk-p-4 dk-text-[#222] dk-font-Inter dk-font-semibold dk-flex dk-flex-nowrap dk-gap-5">
@@ -155,6 +165,13 @@ export default function Home() {
             <DollarOutlined />
             <p>Thanh toán an toàn</p>
           </div>
+        </div>
+        <div className="dk-absolute dk-top-14 dk-right-8 dk-h-[50%] dk-w-[35%] content-miss dk-rounded-2xl dk-text-[#14274b] 
+        dk-text-[34px] dk-font-semibold dk-flex dk-flex-col dk-justify-center dk-items-center dk-gap-5">
+                <p>Trải nghiệm đa dạng <CheckOutlined /></p>
+                <p>Du lịch theo sở thích <HighlightOutlined /></p>
+                <p>Hỗ trợ 24/7 <ClockCircleOutlined /></p>
+                <p>Hotline: 0381232515 <PhoneOutlined /></p>
         </div>
       </div>
       <div className="dk-text-[#222] content-container content-miss content-base dk-font-Roboto dk-gap-2 dk-relative dk-z-10 dk-mb-5 dk-flex dk-flex-col">
