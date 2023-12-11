@@ -80,6 +80,7 @@ const CollectionCreateForm: React.FC<CollectionCreateFormProps> = ({
           state: result?.status == 200
         });
         onCreate();
+        window.location.reload();
       }}
     >
       <Form
