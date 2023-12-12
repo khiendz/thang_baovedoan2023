@@ -97,9 +97,9 @@ export default function Home() {
         <h2 className="dk-font-medium dk-text-xs dk-text-[#FFF]">
           Combo khách sạn - vé máy bay - đưa đón sân bay giá tốt nhất
         </h2>
-        <div className="search-form dk-flex dk-h-fit dk-min-h-[220px] dk-w-[750px] dk-p-4 
+        <div className="search-form dk-flex dk-h-fit dk-min-h-[220px] dk-min-w-[50%] dk-w-[50%] dk-p-4 
         dk-rounded dk-shadow-sm dk-mt-4 content-miss content-miss-v2 dk-gap-5 dk-relative dk-z-20 dk-justify-between">
-          <div className="field dk-relative dk-w-[750px]">
+          <div className="field dk-relative dk-min-w-full">
             <QuestionCircleOutlined className="dk-absolute dk-left-2 dk-top-4 dk-z-[3] dk-text-[#222]" />
             <input
               className="field dk-outline-none dk-text-sm dk-relative dk-z-[2] dk-text-[#222] dk-bg-[#FFF] dk-px-8 dk-appearance-none dk-rounded dk-h-12 dk-w-full dk-border-[2px] dk-border-amber-600 dk-border-dashed"
@@ -129,7 +129,7 @@ export default function Home() {
             }
           </div>
         </div>
-        <div className="search-form dk-flex dk-flex-col dk-h-fit dk-min-h-[220px] dk-w-fit dk-min-w-[760px] dk-p-4 dk-rounded dk-shadow-sm dk-mt-4 content-miss content-miss-v2 dk-gap-5 dk-relative dk-z-10">
+        <div className="search-form dk-flex dk-flex-col dk-h-fit dk-min-h-[220px] dk-w-fit dk-min-w-[50%] dk-p-4 dk-rounded dk-shadow-sm dk-mt-4 content-miss content-miss-v2 dk-gap-5 dk-relative dk-z-10">
           <div className="dk-flex dk-gap-4">
             <h2 className="dk-text-[#FFF] dk-font-bold dk-text-2xl dk-relative dk-z-[14]">
               Combo tốt nhất hôm nay
@@ -166,7 +166,7 @@ export default function Home() {
             <p>Thanh toán an toàn</p>
           </div>
         </div>
-        <div className="dk-absolute dk-top-14 dk-right-8 dk-h-[50%] dk-w-[35%] content-miss dk-rounded-2xl dk-text-[#14274b] 
+        <div className="dk-absolute dk-top-14 dk-right-8 dk-h-[50%] dk-w-[25%] content-miss dk-rounded-2xl dk-text-[#14274b] 
         dk-text-[34px] dk-font-semibold dk-flex dk-flex-col dk-justify-center dk-items-center dk-gap-5">
                 <p>Trải nghiệm đa dạng <CheckOutlined /></p>
                 <p>Du lịch theo sở thích <HighlightOutlined /></p>
