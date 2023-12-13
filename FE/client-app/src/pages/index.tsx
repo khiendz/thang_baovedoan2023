@@ -166,7 +166,7 @@ export default function Home() {
             <p>Thanh toán an toàn</p>
           </div>
         </div>
-        <div className="dk-absolute dk-top-14 dk-right-8 dk-h-[50%] dk-w-[25%] content-miss dk-rounded-2xl dk-text-[#14274b] 
+        <div className="dk-absolute dk-top-14 dk-right-8 dk-h-[50%] dk-w-[25%] dk-min-w-fit dk-p-4 content-miss dk-rounded-2xl dk-text-[#14274b] 
         dk-text-[34px] dk-font-semibold dk-flex dk-flex-col dk-justify-center dk-items-center dk-gap-5">
                 <p>Trải nghiệm đa dạng <CheckOutlined /></p>
                 <p>Du lịch theo sở thích <HighlightOutlined /></p>
